@@ -1,0 +1,40 @@
+{
+  "name": "crutchfield-theme",
+  "version": "1.0.0",
+  "description": "Under Development",
+  "main": "index.js",
+  "watch":{
+    "dev":{
+      "patterns": ["src"],
+      "extensions": "css,js,liquid",
+      "quiet": true
+    }
+  },
+  "scripts": {
+    "build:css": "postcss src/assets/css/tailwind.css -o dist/assets/application.css",
+    "dev": "cross-env NODE_ENV=development npm run build:css",
+    "deploy": "cross-env NODE_ENV=production npm run build:css",
+    "watch": "npm-watch dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryanYeh/crutchfield-theme.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BryanYeh/crutchfield-theme/issues"
+  },
+  "homepage": "https://github.com/BryanYeh/crutchfield-theme#readme",
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^3.0.0",
+    "autoprefixer": "^9.8.6",
+    "copyfiles": "^2.4.0",
+    "cross-env": "^7.0.2",
+    "cssnano": "^4.1.10",
+    "npm-watch": "^0.7.0",
+    "postcss-cli": "^8.1.0",
+    "tailwindcss": "^1.9.5"
+  }
+}
