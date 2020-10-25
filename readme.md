@@ -18,8 +18,8 @@ development:
 4. To make changes, edit theme files in ``src`` folder
 
 ### Made with
-[Themekit](https://github.com/Shopify/themekit)
-[Tailwind 1.9.5](https://tailwindcss.com/)
+-[Themekit](https://github.com/Shopify/themekit)
+-[Tailwind 1.9.5](https://tailwindcss.com/)
 
 ## License
 Released under the [MIT License](https://opensource.org/licenses/MIT).

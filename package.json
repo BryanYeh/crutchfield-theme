@@ -6,7 +6,7 @@
   "watch":{
     "dev":{
       "patterns": ["src"],
-      "extensions": "css,js,liquid",
+      "extensions": "css,js,liquid,json",
       "quiet": true
     }
   },

@@ -8,6 +8,7 @@ module.exports = {
                 './src/templates/*.liquid',
                 './src/sections/*.liquid',
                 './src/snippets/*.liquid',
+                './src/config/settings_schema.json'
             ],
             defaultExtractor: content => content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
         }),
