@@ -1,10 +1,58 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Themekit template theme",
-    "theme_version": "1.0.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://github.com/Shopify/themekit",
-    "theme_support_url": "https://github.com/Shopify/themekit/issues"
+    "theme_name": "Crutchfield Theme",
+    "theme_version": "0.0.1",
+    "theme_author": "BryanYeh",
+    "theme_documentation_url": "https://github.com/BryanYeh/crutchfield-theme",
+    "theme_support_url": "https://github.com/BryanYeh/crutchfield-theme"
+  },
+  {
+    "name": "Notification Bar",
+    "settings": [
+      {
+        "label": "Enable Notification",
+        "id": "show_notification_bar",
+        "type": "checkbox",
+        "default": false
+      },
+      {
+        "label": "Left Notification",
+        "id": "notification_left",
+        "type": "textarea",
+        "default": "<a href='#'>12 reasons to shop with us | Crutchfield B2B ></a>",
+        "info": "Display left side of notification bar"
+      },
+      {
+        "label": "Middle Notification",
+        "id": "notification_center",
+        "type": "textarea",
+        "default": "<a href='#' class='font-bold text-xl text-red-700 hover:text-black'>Free 2-day shipping to Caliornia <small class='font-normal text-xs'>See details</small></a>",
+        "info": "Display middle of notification bar"
+      },
+      {
+        "label": "Right Notification",
+        "id": "notification_right",
+        "type": "textarea",
+        "info": "Display right side of notification bar"
+      }
+    ]
+  },
+  {
+    "name": "Navigation Menu",
+    "settings": [
+      {
+        "label": "Desktop",
+        "id": "menu-desktop",
+        "type": "link_list",
+        "default": "main-menu"
+      },
+      {
+        "label": "Mobile",
+        "id": "menu-mobile",
+        "type": "link_list",
+        "default": "main-menu"
+      }
+    ]
   }
 ]

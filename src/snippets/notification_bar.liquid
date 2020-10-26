@@ -1,0 +1,13 @@
+{% if settings.show_notification_bar %}
+<div class="bg-gray-200 hidden md:flex">
+  <div class="flex-1 text-left px-3 py-2 m-2 hidden lg:block">
+    {{ settings.notification_left }}
+  </div>
+  <div class="flex-1 text-center px-3 py-2 m-2">
+    {{ settings.notification_center }}
+  </div>
+  <div class="flex-1 text-right px-3 py-2 m-2 hidden lg:block">
+    {{ settings.notification_right }}
+  </div>
+</div>
+{% endif %}

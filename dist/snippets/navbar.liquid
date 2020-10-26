@@ -1,0 +1,39 @@
+<nav
+  class="hidden items-center justify-between flex-wrap px-4 border-solid border-b-2 border-gray-200 relative md:flex">
+  <div class="w-full flex flex-grow">
+  {% for link in linklists[settings.menu-desktop].links %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if linklists[child_list_handle].links != blank %}
+      <div class="subnav flex">
+        <span class="p-4 hover:text-red-800 font-medium cursor-pointer">{{ link.title }} <i class="las la-angle-down"></i></span>
+      {% if linklists[child_list_handle].levels > 1 %}
+        <div class="absolute bg-white border border-gray-400 border-solid shadow-md mt-16 w-1/2 left-0 ml-4 hidden">
+          <div class="font-semibold border-b-2 boder-solid border-gray-300 py-3 px-6 w-full">
+            <a href="{{ link.url }}" class="block hover:text-red-800 ">{{ link.title }}</a>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-3">
+            {% for childlink in linklists[child_list_handle].links %}
+            <div class="block">
+              <a href="{{ childlink.url }}" class="block py-2 px-5 hover:text-red-800 font-semibold">{{ childlink.title }}</a>
+              {% assign grandchild_handle = childlink.title | handleize %}
+              {% for grandchildlink in linklists[grandchild_handle].links %}
+                <a href="{{ grandchildlink.url }}" class="block py-1 px-5 hover:text-red-800">{{ grandchildlink.title }}</a>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="absolute bg-white border border-gray-400 border-solid shadow-md mt-16 hidden">
+          {% for childlink in linklists[child_list_handle].links %}
+            <a href="{{ childlink.url }}" class="block py-3 px-5 hover:text-red-800">{{ childlink.title }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      </div>
+    {% else %}
+      <a href="{{ link.url }}" class="p-4 hover:text-red-700 font-medium">{{ link.title }}</a>
+    {% endif %}
+  {% endfor %}
+  </div>
+</nav>
