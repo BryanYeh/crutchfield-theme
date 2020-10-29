@@ -509,12 +509,6 @@ img {
   --bg-opacity: 0.75;
 }
 
-.border-gray-200 {
-  --border-opacity: 1;
-  border-color: #edf2f7;
-  border-color: rgba(237, 242, 247, var(--border-opacity));
-}
-
 .border-gray-300 {
   --border-opacity: 1;
   border-color: #e2e8f0;
@@ -543,10 +537,6 @@ img {
 
 .border-b-2 {
   border-bottom-width: 2px;
-}
-
-.border-b-4 {
-  border-bottom-width: 4px;
 }
 
 .cursor-pointer {
@@ -585,8 +575,8 @@ img {
   flex: 1 1 0%;
 }
 
-.flex-grow {
-  flex-grow: 1;
+.float-right {
+  float: right;
 }
 
 .font-normal {
@@ -630,32 +620,28 @@ img {
   margin-right: auto;
 }
 
-.ml-4 {
-  margin-left: 1rem;
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .mt-6 {
   margin-top: 1.5rem;
 }
 
-.mt-16 {
-  margin-top: 4rem;
-}
-
-.mb-20 {
-  margin-bottom: 5rem;
+.mb-40 {
+  margin-bottom: 10rem;
 }
 
 .overflow-auto {
   overflow: auto;
 }
 
-.p-3 {
-  padding: 0.75rem;
+.overflow-hidden {
+  overflow: hidden;
 }
 
-.p-4 {
-  padding: 1rem;
+.p-3 {
+  padding: 0.75rem;
 }
 
 .py-1 {
@@ -718,10 +704,6 @@ img {
   top: 0;
 }
 
-.left-0 {
-  left: 0;
-}
-
 .shadow-md {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -766,10 +748,6 @@ img {
   --text-opacity: 1;
   color: #9b2c2c;
   color: rgba(155, 44, 44, var(--text-opacity));
-}
-
-.w-1\/2 {
-  width: 50%;
 }
 
 .w-11\/12 {
@@ -842,6 +820,10 @@ img {
   }
 }
 
+.nav-logo{
+  max-height: 1.875rem;
+}
+
 @media (min-width: 640px) {
 
   .sm\:grid-cols-2 {
@@ -859,12 +841,26 @@ img {
     --bg-opacity: 0;
   }
 
+  .md\:border-gray-200 {
+    --border-opacity: 1;
+    border-color: #edf2f7;
+    border-color: rgba(237, 242, 247, var(--border-opacity));
+  }
+
   .md\:border-solid {
     border-style: solid;
   }
 
   .md\:border-0 {
     border-width: 0;
+  }
+
+  .md\:border-b-2 {
+    border-bottom-width: 2px;
+  }
+
+  .md\:block {
+    display: block;
   }
 
   .md\:flex {
@@ -879,6 +875,14 @@ img {
     flex-wrap: wrap;
   }
 
+  .md\:flex-grow {
+    flex-grow: 1;
+  }
+
+  .md\:float-none {
+    float: none;
+  }
+
   .md\:h-auto {
     height: auto;
   }
@@ -888,12 +892,20 @@ img {
     margin-bottom: 0;
   }
 
+  .md\:mt-16 {
+    margin-top: 4rem;
+  }
+
   .md\:overflow-visible {
     overflow: visible;
   }
 
   .md\:p-0 {
     padding: 0;
+  }
+
+  .md\:p-4 {
+    padding: 1rem;
   }
 
   .md\:px-4 {
@@ -905,12 +917,24 @@ img {
     position: static;
   }
 
+  .md\:absolute {
+    position: absolute;
+  }
+
   .md\:relative {
     position: relative;
   }
 
+  .md\:shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
   .md\:shadow-none {
     box-shadow: none;
+  }
+
+  .md\:w-auto {
+    width: auto;
   }
 
   .md\:w-full {

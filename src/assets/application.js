@@ -8,7 +8,7 @@ ready(() => {
     document.querySelectorAll('.subnav').forEach(subnavLink => {
       subnavLink.classList.remove('border-red-600')
       subnavLink.classList.remove('border-solid')
-      subnavLink.classList.remove('border-b-4')
+      subnavLink.classList.remove('border-b-3')
       subnavLink.querySelector('span>i').classList.remove('transform')
       subnavLink.querySelector('span>i').classList.remove('rotate-180')
       subnavLink.querySelector('div').classList.add('hidden')
@@ -22,9 +22,9 @@ ready(() => {
 
       let parent = e.target.parentNode
       if (parent.classList.contains('subnav') && shouldOpen) {
-        parent.classList.toggle('border-red-600')
-        parent.classList.toggle('border-solid')
-        parent.classList.toggle('border-b-4')
+        parent.classList.add('border-red-600')
+        parent.classList.add('border-solid')
+        parent.classList.add('border-b-3')
         parent.querySelector('span>i').classList.toggle('transform')
         parent.querySelector('span>i').classList.toggle('rotate-180')
         parent.querySelector('div').classList.toggle('hidden')
@@ -37,4 +37,10 @@ ready(() => {
       closeDropdown()
     }
   }
+
+  document.querySelector('.las.la-bars').addEventListener('click', (e) => {
+    document.querySelector('body').parentNode.classList.toggle('overflow-hidden')
+    document.querySelector('nav').parentNode.classList.toggle('hidden')
+  })
+
 });
