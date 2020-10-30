@@ -509,6 +509,12 @@ img {
   --bg-opacity: 0.75;
 }
 
+.border-black {
+  --border-opacity: 1;
+  border-color: #000;
+  border-color: rgba(0, 0, 0, var(--border-opacity));
+}
+
 .border-gray-300 {
   --border-opacity: 1;
   border-color: #e2e8f0;
@@ -567,6 +573,10 @@ img {
   align-items: center;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -615,9 +625,27 @@ img {
   margin: 0.5rem;
 }
 
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.mr-0 {
+  margin-right: 0;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 
 .mt-3 {
@@ -630,6 +658,11 @@ img {
 
 .mb-40 {
   margin-bottom: 10rem;
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .overflow-auto {
@@ -652,6 +685,11 @@ img {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .py-3 {
@@ -683,6 +721,24 @@ img {
   padding-bottom: 0.75rem;
 }
 
+.placeholder-gray-500::-moz-placeholder {
+  --placeholder-opacity: 1;
+  color: #a0aec0;
+  color: rgba(160, 174, 192, var(--placeholder-opacity));
+}
+
+.placeholder-gray-500:-ms-input-placeholder {
+  --placeholder-opacity: 1;
+  color: #a0aec0;
+  color: rgba(160, 174, 192, var(--placeholder-opacity));
+}
+
+.placeholder-gray-500::placeholder {
+  --placeholder-opacity: 1;
+  color: #a0aec0;
+  color: rgba(160, 174, 192, var(--placeholder-opacity));
+}
+
 .fixed {
   position: fixed;
 }
@@ -704,7 +760,15 @@ img {
   top: 0;
 }
 
+.right-0 {
+  right: 0;
+}
+
 .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.focus\:shadow-md:focus {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
@@ -750,6 +814,10 @@ img {
   color: rgba(155, 44, 44, var(--text-opacity));
 }
 
+.w-auto {
+  width: auto;
+}
+
 .w-11\/12 {
   width: 91.666667%;
 }
@@ -779,6 +847,10 @@ img {
 
 .rotate-180 {
   --transform-rotate: 180deg;
+}
+
+.-rotate-90 {
+  --transform-rotate: -90deg;
 }
 
 @-webkit-keyframes spin {
@@ -873,6 +945,10 @@ img {
 
   .md\:flex-wrap {
     flex-wrap: wrap;
+  }
+
+  .md\:flex-1 {
+    flex: 1 1 0%;
   }
 
   .md\:flex-grow {
