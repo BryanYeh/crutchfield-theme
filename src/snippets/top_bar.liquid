@@ -1,14 +1,28 @@
 <div class="flex my-3 px-4 justify-between">
   <div class="hidden md:flex md:flex-1"></div>
   <div class="flex-1">
-    <div class="flex relative">
-      <input
-        class="w-full px-4 py-3 placeholder-gray-500 border border-black focus:outline-none focus:shadow-md font-medium"
-        type="text" placeholder="Search products">
-      <button
-        class="w-auto flex justify-end items-center px-2 py-3 hover:text-red-700 absolute right-0 mr-0 mt-1 text-xl transform -rotate-90 font-bold">
-        <i class="las la-search"></i>
-      </button>
+    <div class="relative">
+      <form action="/search" method="get" class="flex relative" autocomplete="off">
+        <input
+          class="search-field w-full px-4 py-3 placeholder-gray-500 border border-black focus:outline-none focus:shadow-md font-medium"
+          type="text" placeholder="Search products" name="q">
+        <button type="submit"
+          class="w-auto flex justify-end items-center px-2 py-3 hover:text-red-700 absolute right-0 mr-0 mt-1 text-xl transform -rotate-90 font-bold focus:outline-none">
+          <i class="las la-search"></i>
+        </button>
+      </form>
+      {% if settings.enable_predictive_search %}
+      <div class="absolute bg-white border border-black shadow-md w-full divide-y divide-gray-400 z-10 hidden" id="search_results"></div>
+      <template id="search_results_template">
+        <a href="" class="flex px-4 py-3 border-b-1 border-gray-500 border-solid">
+          <img src="" alt="">
+          <div class="ml-4">
+            <div class="text-lg"></div>
+            <div class="text-sm font-bold"></div>
+          </div>
+        </a>
+      </template>
+      {% endif %}
     </div>
   </div>
   <div class="md:flex-1">

@@ -276,6 +276,10 @@ details {
  * Add the correct display in IE 10+.
  */
 
+template {
+  display: none;
+}
+
 /**
  * Add the correct display in IE 10.
  */
@@ -477,6 +481,46 @@ img {
   height: auto;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+.divide-y > :not(template) ~ :not(template) {
+  --divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--divide-y-reverse));
+}
+
+.divide-gray-400 > :not(template) ~ :not(template) {
+  --divide-opacity: 1;
+  border-color: #cbd5e0;
+  border-color: rgba(203, 213, 224, var(--divide-opacity));
+}
+
 .bg-black {
   --bg-opacity: 1;
   background-color: #000;
@@ -525,6 +569,12 @@ img {
   --border-opacity: 1;
   border-color: #cbd5e0;
   border-color: rgba(203, 213, 224, var(--border-opacity));
+}
+
+.border-gray-500 {
+  --border-opacity: 1;
+  border-color: #a0aec0;
+  border-color: rgba(160, 174, 192, var(--border-opacity));
 }
 
 .border-red-600 {
@@ -613,6 +663,14 @@ img {
   font-size: 0.75rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
 }
@@ -650,6 +708,10 @@ img {
 
 .mt-3 {
   margin-top: 0.75rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .mt-6 {
@@ -762,6 +824,10 @@ img {
 
 .right-0 {
   right: 0;
+}
+
+.resize {
+  resize: both;
 }
 
 .shadow-md {

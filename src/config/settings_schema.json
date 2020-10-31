@@ -54,5 +54,16 @@
         "default": "main-menu"
       }
     ]
+  },
+  {
+    "name": "Predictive Search",
+    "settings":[
+      {
+        "label": "Enable Predictive Search",
+        "id": "enable_predictive_search",
+        "type": "checkbox",
+        "default": true
+      }
+    ]
   }
 ]
