@@ -19,21 +19,21 @@
       {
         "label": "Left Notification",
         "id": "notification_left",
-        "type": "textarea",
+        "type": "html",
         "default": "<a href='#'>12 reasons to shop with us | Crutchfield B2B ></a>",
         "info": "Display left side of notification bar"
       },
       {
         "label": "Middle Notification",
         "id": "notification_center",
-        "type": "textarea",
+        "type": "html",
         "default": "<a href='#' class='font-bold text-xl text-red-700 hover:text-black'>Free 2-day shipping to Caliornia <small class='font-normal text-xs'>See details</small></a>",
         "info": "Display middle of notification bar"
       },
       {
         "label": "Right Notification",
         "id": "notification_right",
-        "type": "textarea",
+        "type": "html",
         "info": "Display right side of notification bar"
       }
     ]
