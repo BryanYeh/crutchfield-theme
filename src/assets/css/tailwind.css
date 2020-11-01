@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.nav-logo{
-    max-height: 1.875rem;
+.nav-logo {
+  max-height: 1.875rem;
+}
+
+.breadcrumb > a:not(:first-child)::before {
+  display: inline-block;
+  @apply px-3;
+  color: #6c757d;
+  content: "/";
 }

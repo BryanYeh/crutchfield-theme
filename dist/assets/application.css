@@ -908,6 +908,12 @@ img {
   color: rgba(255, 255, 255, var(--text-opacity));
 }
 
+.text-gray-700 {
+  --text-opacity: 1;
+  color: #4a5568;
+  color: rgba(74, 85, 104, var(--text-opacity));
+}
+
 .text-red-600 {
   --text-opacity: 1;
   color: #e53e3e;
@@ -1032,8 +1038,16 @@ img {
   }
 }
 
-.nav-logo{
+.nav-logo {
   max-height: 1.875rem;
+}
+
+.breadcrumb > a:not(:first-child)::before {
+  display: inline-block;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  color: #6c757d;
+  content: "/";
 }
 
 @media (min-width: 640px) {
