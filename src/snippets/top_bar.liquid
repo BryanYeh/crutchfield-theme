@@ -12,7 +12,8 @@
         </button>
       </form>
       {% if settings.enable_predictive_search %}
-      <div class="absolute bg-white border border-black shadow-md w-full divide-y divide-gray-400 z-10 hidden" id="search_results"></div>
+      <div class="absolute bg-white border border-black shadow-md w-full divide-y divide-gray-400 z-10 hidden"
+        id="search_results"></div>
       <template id="search_results_template">
         <a href="" class="flex px-4 py-3 border-b-1 border-gray-500 border-solid">
           <img src="" alt="">
@@ -26,6 +27,37 @@
     </div>
   </div>
   <div class="md:flex-1">
-    <div class="float-right mx-4 text-3xl"><i class="las la-user-alt"></i></div>
+    <div class="float-right ml-4">
+      {% if shop.customer_accounts_enabled %}
+      <div class="contents subnav">
+        <span class="hover:text-red-800 cursor-pointer text-3xl"><i class="las la-user-alt"></i></span>
+        <div class="bg-white border border-gray-400 absolute shadow-md mr-2 right-0 z-20 p-4 max-w-xs hidden">
+          {% if customer %}
+            <div class="flex justify-around">
+              <a href="{{ routes.account_url }}}"
+                class="bg-red-600 text-white border-red-600 border rounded hover:bg-white hover:text-red-600 px-5 py-2">My Account</a>
+              <a href="{{ routes.account_logout_url }}"
+                class="bg-white text-red-600 border-red-600 border rounded hover:bg-red-600 hover:text-white px-5 py-2">Log out</a>
+            </div>
+          {% else %}
+            <div class="flex justify-around">
+              <a href="{{ routes.account_login_url }}"
+                class="bg-red-600 text-white border-red-600 border rounded hover:bg-white hover:text-red-600 px-5 py-2">Sign
+                In</a>
+              <a href="{{ routes.account_register_url }}"
+                class="bg-white text-red-600 border-red-600 border rounded hover:bg-red-600 hover:text-white px-5 py-2">Create</a>
+            </div>
+            {% if settings.account_benefits %}
+            <div class="mt-3">
+              {{ settings.account_benefits }}
+            </div>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+
+      {% endif %}
+      <a href="/cart" class="hidden md:contents  text-3xl"><i class="las la-shopping-cart"></i></a>
+    </div>
   </div>
 </div>

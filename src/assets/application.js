@@ -63,15 +63,18 @@ ready(() => {
       subnavLink.classList.remove('border-red-600')
       subnavLink.classList.remove('border-solid')
       subnavLink.classList.remove('border-b-3')
-      subnavLink.querySelector('span>i').classList.remove('transform')
-      subnavLink.querySelector('span>i').classList.remove('rotate-180')
+      if (typeof (subnavLink.querySelector('.la-angle-down')) != 'undefined' && subnavLink.querySelector('.la-angle-down') != null){
+        subnavLink.querySelector('.la-angle-down').classList.remove('transform')
+        subnavLink.querySelector('.la-angle-down').classList.remove('rotate-180')          
+      }
       subnavLink.querySelector('div').classList.add('hidden')
     })
   }
 
   document.querySelectorAll('.subnav').forEach(subnavLink => {
     subnavLink.addEventListener('click', (e) => {
-      let shouldOpen = e.target.parentNode.classList.contains('subnav') && e.target.parentNode.querySelector('div').classList.contains('hidden')
+      let shouldOpen = (e.target.parentNode.classList.contains('subnav') && e.target.parentNode.querySelector('div').classList.contains('hidden')) ||
+        (e.target.parentNode.parentNode.classList.contains('subnav') && e.target.parentNode.parentNode.querySelector('div').classList.contains('hidden'))
       closeDropdown()
 
       let parent = e.target.parentNode
@@ -79,17 +82,32 @@ ready(() => {
         parent.classList.add('border-red-600')
         parent.classList.add('border-solid')
         parent.classList.add('border-b-3')
-        parent.querySelector('span>i').classList.toggle('transform')
-        parent.querySelector('span>i').classList.toggle('rotate-180')
+        if (typeof (parent.querySelector('.la-angle-down')) != 'undefined' && parent.querySelector('.la-angle-down') != null){
+          parent.querySelector('.la-angle-down').classList.toggle('transform')
+          parent.querySelector('.la-angle-down').classList.toggle('rotate-180')          
+        }
         parent.querySelector('div').classList.toggle('hidden')
       }
+
+      parent = parent.parentNode
+      if (parent.classList.contains('subnav') && shouldOpen) {
+        parent.classList.add('border-red-600')
+        parent.classList.add('border-solid')
+        parent.classList.add('border-b-3')
+        if (typeof (parent.querySelector('.la-angle-down')) != 'undefined' && parent.querySelector('.la-angle-down') != null){
+          parent.querySelector('.la-angle-down').classList.toggle('transform')
+          parent.querySelector('.la-angle-down').classList.toggle('rotate-180')          
+        }
+        parent.querySelector('div').classList.toggle('hidden')
+      }
+
     })
   })
 
   var search_element = document.getElementById('search_results');
 
   window.onclick = function (e) {
-    if (!e.target.matches('.subnav>span')) {
+    if (!e.target.matches('.subnav>span') && !e.target.matches('.subnav>span>i')) {
       closeDropdown()
     }
 
