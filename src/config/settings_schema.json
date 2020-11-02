@@ -57,7 +57,7 @@
   },
   {
     "name": "Predictive Search",
-    "settings":[
+    "settings": [
       {
         "label": "Enable Predictive Search",
         "id": "enable_predictive_search",
@@ -68,13 +68,28 @@
   },
   {
     "name": "Account Access",
-    "settings":[
+    "settings": [
       {
         "label": "Benefits",
         "id": "account_benefits",
         "type": "html",
         "default": "<div class='font-semibold text-lg'>Crutchfield account benefits</div><ul class='list-disc pl-4'><li>Earn 50 Free Rewards Points</li><li>Store billing and shipping info</li><li>Track your orders</li><li>Create and view a wishlist</li><li>Save your vehicle info</li></ul>",
         "info": "Will be displayed under Register/Login buttons"
+      }
+    ]
+  },
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "label": "Products per Page",
+        "id": "products_per_page",
+        "type": "range",
+        "default": 20,
+        "min": 1,
+        "max": 50,
+        "step": 1,
+        "unit": "ppp"
       }
     ]
   }

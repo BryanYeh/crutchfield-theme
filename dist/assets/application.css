@@ -608,6 +608,12 @@ img {
   border-color: rgba(229, 62, 62, var(--border-opacity));
 }
 
+.hover\:border-red-500:hover {
+  --border-opacity: 1;
+  border-color: #f56565;
+  border-color: rgba(245, 101, 101, var(--border-opacity));
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -626,6 +632,10 @@ img {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
 }
 
 .block {
@@ -650,6 +660,10 @@ img {
 
 .hidden {
   display: none;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .items-center {
@@ -714,6 +728,10 @@ img {
 
 .text-3xl {
   font-size: 1.875rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
 }
 
 .list-disc {
@@ -812,6 +830,11 @@ img {
   padding-right: 0.75rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -825,6 +848,11 @@ img {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .pb-3 {
@@ -956,6 +984,10 @@ img {
   color: rgba(155, 44, 44, var(--text-opacity));
 }
 
+.line-through {
+  text-decoration: line-through;
+}
+
 .w-auto {
   width: auto;
 }
@@ -974,6 +1006,11 @@ img {
 
 .z-20 {
   z-index: 20;
+}
+
+.gap-4 {
+  grid-gap: 1rem;
+  gap: 1rem;
 }
 
 .grid-cols-1 {
@@ -1192,5 +1229,12 @@ img {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+
+  .xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
