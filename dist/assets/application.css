@@ -614,6 +614,12 @@ img {
   border-color: rgba(245, 101, 101, var(--border-opacity));
 }
 
+.focus\:border-blue-200:focus {
+  --border-opacity: 1;
+  border-color: #bee3f8;
+  border-color: rgba(190, 227, 248, var(--border-opacity));
+}
+
 .rounded {
   border-radius: 0.25rem;
 }
@@ -760,6 +766,10 @@ img {
   margin-top: 0.25rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -795,6 +805,10 @@ img {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .p-3 {
@@ -916,6 +930,10 @@ img {
 
 .focus\:shadow-md:focus {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.focus\:shadow-outline:focus {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
 .text-left {

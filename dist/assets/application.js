@@ -4,33 +4,6 @@ var ready = (callback) => {
 }
 
 //// shopify image resize
-function preload(images, size) {
-  if (typeof images === 'string') {
-    images = [images];
-  }
-
-  for (let i = 0; i < images.length; i++) {
-    const image = images[i];
-    loadImage(getSizedImageUrl(image, size));
-  }
-}
-
-function loadImage(path) {
-  new Image().src = path;
-}
-
-function imageSize(src) {
-  const match = src.match(
-    /.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[_\.@]/
-  );
-
-  if (match) {
-    return match[1];
-  } else {
-    return null;
-  }
-}
-
 function getSizedImageUrl(src, size) {
   if (size === null) {
     return src;
