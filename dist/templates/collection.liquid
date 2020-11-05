@@ -4,7 +4,7 @@
 
   <div class="px-8 py-4 mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 bg-gray-200">
     {% for product in collection.products %}
-      <div class="border border-gray-400 bg-white p-4 hover:border-red-500 flex flex-col">
+      <div class="border border-gray-400 bg-white p-4 hover:border-red-500 flex flex-col" data-handle="{{ product.handle }}">
         <div class="h-full"> 
           <a href="{{ product.url | within: collection }}" class="">
             <img src="{{ product.featured_image.src | img_url: '500x500' }}" alt="{{ product.featured_image.alt | escape }}">
@@ -17,9 +17,9 @@
 
                
         {% if product.available %}
-          <div><i class="las la-check-circle"></i> In Stock</div>
+          <div><i class="availability las la-check-circle"></i> <span class="availability_text">In Stock<span></div>
         {% else %}
-          <i class="las la-times-circle"></i> Out of Stock
+          <div><i class="availability las la-times-circle"></i> <span class="availability_text">Out of Stock<span></div>
         {% endif %}
 
         <div class="text-right"> 
