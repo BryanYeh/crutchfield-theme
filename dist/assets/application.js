@@ -48,6 +48,25 @@ function closeDropdown() {
   });
 }
 
+//// add to cart
+function addToCart(id) {
+  fetch("/cart/add.js", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+      quantity: 1,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
 ready(() => {
   //// Navbar
   //// open/close nav
@@ -176,54 +195,102 @@ ready(() => {
   }
 
   //// variation select from products in collections
-  document.querySelectorAll(".variation-select").forEach((variationSelect) =>{
+  document.querySelectorAll(".variation-select").forEach((variationSelect) => {
     variationSelect.addEventListener("change", (e) => {
-      let product_card = e.target.closest('[data-handle]')
-      let product_handle = product_card.dataset.handle
+      let product_card = e.target.closest("[data-handle]");
+      let product_handle = product_card.dataset.handle;
 
-      let product_card_variations = []
-      product_card.querySelectorAll('.variation-select').forEach((variation)=>{
-        product_card_variations.push(variation.value)
-      })
+      let product_card_variations = [];
+      product_card
+        .querySelectorAll(".variation-select")
+        .forEach((variation) => {
+          product_card_variations.push(variation.value);
+        });
 
-      fetch('/products/' + product_handle + '.js')
-      .then((response) => response.json())
-      .then((product)=>{
-        console.log(product)
-        product.variants.forEach((variation)=>{
-          if(product_card_variations.every(i => variation.options.includes(i))){
-            let available_classes = ['bg-red-600','text-white','hover:bg-white','hover:text-red-600']
-            let unavailable_classes = ['bg-white', 'text-red-600', 'cursor-not-allowed']            
-            if(variation.available){
-              available_classes.forEach((a_class) => {
-                product_card.querySelector('button').classList.add(a_class)
-              })
-              unavailable_classes.forEach((u_class) => {
-                product_card.querySelector('button').classList.remove(u_class)
-              })
-              product_card.querySelector('button').value = "Add to Cart"
-              product_card.querySelector('.availability').classList.add('la-check-circle')
-              product_card.querySelector('.availability').classList.remove('la-times-circle')
-              product_card.querySelector('.availability_text').innerHTML = 'In Stock'
+      fetch("/products/" + product_handle + ".js")
+        .then((response) => response.json())
+        .then((product) => {
+          console.log(product);
+          product.variants.forEach((variation) => {
+            if (
+              product_card_variations.every((i) =>
+                variation.options.includes(i)
+              )
+            ) {
+              let available_classes = [
+                "bg-red-600",
+                "text-white",
+                "hover:bg-white",
+                "hover:text-red-600",
+                "add-to-cart",
+              ];
+              let unavailable_classes = [
+                "bg-white",
+                "text-red-600",
+                "cursor-not-allowed",
+              ];
+              if (variation.available) {
+                available_classes.forEach((a_class) => {
+                  product_card.querySelector("button").classList.add(a_class);
+                });
+                unavailable_classes.forEach((u_class) => {
+                  product_card
+                    .querySelector("button")
+                    .classList.remove(u_class);
+                });
+                product_card.querySelector("button").innerHTML = "Add to Cart";
+                product_card
+                  .querySelector(".availability")
+                  .classList.add("la-check-circle");
+                product_card
+                  .querySelector(".availability")
+                  .classList.remove("la-times-circle");
+                product_card.querySelector(".availability_text").innerHTML =
+                  "In Stock";
+              } else {
+                unavailable_classes.forEach((u_class) => {
+                  product_card.querySelector("button").classList.add(u_class);
+                });
+                available_classes.forEach((a_class) => {
+                  product_card
+                    .querySelector("button")
+                    .classList.remove(a_class);
+                });
+                product_card.querySelector("button").innerHTML = "Sold Out";
+                product_card
+                  .querySelector(".availability")
+                  .classList.remove("la-check-circle");
+                product_card
+                  .querySelector(".availability")
+                  .classList.add("la-times-circle");
+                product_card.querySelector(".availability_text").innerHTML =
+                  "Out of Stock";
+              }
+              product_card.querySelector("a").href =
+                product.url + "?variant=" + variation.id;
+              if (variation.featured_image) {
+                product_card.querySelector("img").src = resizeImg(
+                  variation.featured_image.src,
+                  "500x500"
+                );
+                product_card.querySelector("img").alt =
+                  variation.featured_image.alt ?? "";
+              }
+              product_card.querySelector(".sku").innerHTML = variation.sku
+                ? "Item #: " + variation.sku
+                : "";
+              product_card.dataset.id = variation.id;
             }
-            else{
-              unavailable_classes.forEach((u_class) => {
-                product_card.querySelector('button').classList.add(u_class)
-              })
-              available_classes.forEach((a_class) => {
-                product_card.querySelector('button').classList.remove(a_class)
-              })
-              product_card.querySelector('button').value = "Sold Out"
-              product_card.querySelector('.availability').classList.remove('la-check-circle')
-              product_card.querySelector('.availability').classList.add('la-times-circle')
-              product_card.querySelector('.availability_text').innerHTML = 'Out of Stock'
-            }
-            product_card.querySelector('a').href = product.url + '?variant=' + variation.id
-          }
-          
-        })
+          });
+        });
+    });
+  });
 
-      })
-    })
-  })
-})
+  //// add to cart
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      console.log(e.target.closest("[data-id]").dataset.id);
+      addToCart(e.target.closest("[data-id]").dataset.id);
+    });
+  });
+});

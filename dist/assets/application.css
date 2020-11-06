@@ -1206,6 +1206,11 @@ img {
     padding-right: 1rem;
   }
 
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   .md\:static {
     position: static;
   }
