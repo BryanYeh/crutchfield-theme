@@ -1105,6 +1105,10 @@ img {
   content: "/";
 }
 
+.nav-container {
+  height: calc(100vh - 200px);
+}
+
 @media (min-width: 640px) {
 
   .sm\:grid-cols-2 {

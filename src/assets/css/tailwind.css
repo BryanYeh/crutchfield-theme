@@ -12,3 +12,7 @@
   color: #6c757d;
   content: "/";
 }
+
+.nav-container {
+  height: calc(100vh - 200px);
+}
