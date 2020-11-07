@@ -12,14 +12,11 @@
           </a>
           <div class="sku">{% if product.sku %}Item #: {{ product.sku }}{% endif %}</div>
         </div>
-
-               
         {% if product.available %}
           <div><i class="availability las la-check-circle"></i> <span class="availability_text">In Stock<span></div>
         {% else %}
           <div><i class="availability las la-times-circle"></i> <span class="availability_text">Out of Stock<span></div>
         {% endif %}
-
         <div class="text-right"> 
           <div class="text-gray-700 line-through text-sm">
             {% if product.compare_at_price %}
@@ -33,7 +30,6 @@
           </div>
           <div class="font-bold text-lg">{{ product.price | money }}</div>
         </div>
-
         {% unless product.has_only_default_variant %}
           {% for option in product.options %}
           <label for="variation-select-{{ option | downcase }}">{{ option }}</label>
@@ -44,22 +40,25 @@
           </select>
           {% endfor %}
         {% endunless %}
-        
-
         {% if product.available %}
           <button class="add-to-cart border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 w-full px-3 py-2 mt-2">Add to Cart</button>
         {% else %}
           <button class="border border-red-600 bg-white text-red-600 cursor-not-allowed w-full px-3 py-2 mt-2">Sold Out</button>
         {% endif %}
-        
-          
       </div>
     {% else %}
       <p>no matches</p>
     {% endfor %}
-    {% if paginate.pages > 1 %}
-      {{ paginate | default_pagination }}
+  </div>
+
+  <div class="pb-4 px-4 md:px-8 bg-gray-200 flex">
+  {% for part in paginate.parts %}
+    {% if part.is_link %}
+      <a href="{{ part.url }}" class="px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600 hover:bg-red-600  hover:text-white">{{ part.title }}</a>
+    {% else %}
+      <a class=" px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600">{{ part.title }}</a>
     {% endif %}
+  {% endfor %}  
   </div>
 
 {% endpaginate %}

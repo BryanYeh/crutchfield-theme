@@ -632,6 +632,10 @@ img {
   border-width: 1px;
 }
 
+.border-r-0 {
+  border-right-width: 0;
+}
+
 .border-b-2 {
   border-bottom-width: 2px;
 }
@@ -873,6 +877,10 @@ img {
   padding-bottom: 0.75rem;
 }
 
+.pb-4 {
+  padding-bottom: 1rem;
+}
+
 .pl-4 {
   padding-left: 1rem;
 }
@@ -1091,6 +1099,10 @@ img {
     -webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);
             animation-timing-function: cubic-bezier(0,0,0.2,1);
   }
+}
+
+#admin-bar-iframe {
+  display: none !important;
 }
 
 .nav-logo {
