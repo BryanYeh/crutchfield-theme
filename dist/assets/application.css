@@ -1094,7 +1094,7 @@ img {
 }
 
 .nav-logo {
-  max-height: 1.875rem;
+  height: 1.875rem;
 }
 
 .breadcrumb > a:not(:first-child)::before {
