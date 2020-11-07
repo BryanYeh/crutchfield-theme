@@ -4,9 +4,9 @@
   <a href="/cart"><i class="las la-shopping-cart text-3xl"></i></a>
 </div>
 
-<div class="bg-black bg-opacity-50 w-full h-full fixed overflow-auto md:bg-transparent md:bg-opacity-0 md:h-auto md:static md:overflow-visible hidden md:block">
+<div class="bg-black bg-opacity-50 w-full h-full fixed overflow-auto md:bg-transparent md:bg-opacity-0 md:h-auto md:static md:overflow-visible hidden md:block" style="height:calc(100vh - 200px);">
   <nav
-    class="items-center justify-between md:flex-wrap md:px-4 md:border-solid md:border-b-2 md:border-t-2 md:border-gray-200 md:relative md:flex md:my-0 absolute mt-6 mb-40 w-full">
+    class="items-center justify-between md:flex-wrap md:px-4 md:border-solid md:border-b-2 md:border-t-2 md:border-gray-200 md:flex md:my-0 mt-6 mb-40 w-full h-full">
     <div class="bg-white mx-auto shadow-md w-11/12 md:shadow-none md:w-full md:flex md:flex-grow">
       {% for link in linklists[settings.menu-desktop].links %}
       {% assign child_list_handle = link.title | handleize %}
