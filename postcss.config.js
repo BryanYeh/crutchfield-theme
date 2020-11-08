@@ -18,6 +18,7 @@ module.exports = {
       ["./src/**/*.js",
         "./src/**/*.liquid",
         "./src/**/*.json",
+        "./src/assets/*.css",
         "./dist"
       ],
       {

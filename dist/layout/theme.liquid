@@ -9,8 +9,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   {{ content_for_header }} <!-- Header hook for plugins -->
   <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
   {{ 'application.css' | asset_url | stylesheet_tag }}
-  {{ 'application.js' | asset_url | script_tag }}
+  
 </head>
 <body>
   {% render 'header' %}
@@ -19,5 +20,8 @@
     {% render 'breadcrumb' %}
     {{ content_for_layout }}
   </main>
+
+  {{ 'swiper-bundle.min.js' | asset_url | script_tag }}
+  {{ 'application.js' | asset_url | script_tag }}
 </body>
 </html>

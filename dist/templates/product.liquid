@@ -1,12 +1,47 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
-<img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
-{% for image in product.images %}
-  <a href="{{ image.src | img_url: 'large' }}">
-    <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-  </a>
-{% endfor %}
-<h1>{{ product.title }}</h1>
+
+<h1 class="text-5xl font-bold px-8 pb-3">{{ product.title }}</h1>
+
+<div class="flex mx-auto flex-wrap">
+  <div class="w-full md:w-5/12 lg:w-7/12 px-4">
+    <div class="swiper-container gallery-top">
+      <div class="swiper-wrapper">
+        {% for image in product.images %}
+        <div class="swiper-slide">
+          <img src="{{ image.src | img_url: '1000x1000' }}" class="mx-auto" alt="{{ image.alt | escape }}">
+          <div class="zoom text-center">
+            <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
+            <i class="las la-search-plus float-right text-2xl"></i>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+    <div class="gallery-thumbs pt-1 pb-2 flex flex-wrap">
+        {% for image in product.images %}
+          <img src="{{ image.src | img_url: '90x90' }}" class="m-1 border border-gray-500 current-thumb p-3 hover:border-black" alt="{{ image.alt | escape }}" data-thumbs-index="{{ forloop.index0 }}">
+        {% endfor %}
+    </div>
+  </div>
+  <div class="w-auto">
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
   <select name="id" id="productSelect">
     {% for variant in product.variants %}
