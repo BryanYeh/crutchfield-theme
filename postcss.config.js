@@ -15,10 +15,10 @@ module.exports = {
     }),
     process.env.NODE_ENV === 'production' ? require('cssnano')({ preset: 'default' }) : null,
     require('copyfiles')(
-      ["./src/**/*.js",
+      [
         "./src/**/*.liquid",
         "./src/**/*.json",
-        "./src/assets/*.css",
+        "./src/assets/*",
         "./dist"
       ],
       {

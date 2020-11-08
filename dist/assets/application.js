@@ -338,4 +338,43 @@ ready(() => {
       galleryTop.slideToLoop(thumbnail.dataset.thumbsIndex)
     })
   })
+
+  //// product page photoswipe
+  var openPhotoSwipe = function () {
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+
+    var items = [];
+
+    document.querySelectorAll('.gallery-top img').forEach((img) => {
+      items.push({
+        src: img.src,
+        w: img.naturalWidth,
+        h: img.naturalHeight
+      })
+    })
+
+
+    // define options (if needed)
+    var options = {
+      history: false,
+      focus: false,
+
+      showAnimationDuration: 0,
+      hideAnimationDuration: 0,
+      index: galleryTop.realIndex
+
+    }
+
+    var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+    gallery.listen('afterChange', function () {
+      galleryTop.slideToLoop(gallery.getCurrentIndex())
+    })
+    gallery.init()
+  }
+
+  document.querySelectorAll('.zoom i, .gallery-top img').forEach((img) => {
+    img.addEventListener('click',(e)=>{
+      openPhotoSwipe()
+    })
+  })
 })
