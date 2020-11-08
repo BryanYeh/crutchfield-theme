@@ -298,6 +298,7 @@ ready(() => {
     spaceBetween: 10,
     centeredSlides: true,
     slidesPerView: 1,
+    initialSlide: document.querySelector('[data-default-slide]').dataset.defaultSlide,
     centerInsufficientSlides: true,
     navigation: {
       nextEl: '.swiper-button-next',

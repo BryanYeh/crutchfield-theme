@@ -8,7 +8,7 @@
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
         {% for image in product.images %}
-        <div class="swiper-slide">
+        <div class="swiper-slide" {% if image.src == featured_image %} data-default-slide="{{ forloop.index0 }}" {% endif %}>
           <img src="{{ image.src | img_url: '1000x1000' }}" class="mx-auto" alt="{{ image.alt | escape }}">
           <div class="zoom text-center">
             <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
