@@ -377,4 +377,24 @@ ready(() => {
       openPhotoSwipe()
     })
   })
+
+  document.querySelectorAll('.variation-option-select').forEach((optionSelect) =>{
+    optionSelect.addEventListener('change', (e) => {
+      let product_options = []
+      document.querySelectorAll('.variation-option-select').forEach((option) =>{
+        product_options.push(option.value)
+      })
+      let variant_json  = JSON.parse( document.getElementById('v_json').innerHTML)
+      
+      variant_json.forEach((option) => {
+        if(product_options.every((v,i) => option.options.includes(v))){
+          e.target.closest('[data-id]').dataset.id = option.id
+        }
+      })
+    })
+  })
+
+  // document.querySelector('.product-add-to-cart').addEventListener((e) => {
+  //   e.target.closest('[data-id]').dataset.id
+  // })
 })

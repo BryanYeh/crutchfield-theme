@@ -891,6 +891,11 @@ img {
   padding-right: 2rem;
 }
 
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -1273,8 +1278,8 @@ img {
     width: auto;
   }
 
-  .md\:w-5\/12 {
-    width: 41.666667%;
+  .md\:w-6\/12 {
+    width: 50%;
   }
 
   .md\:w-full {
@@ -1290,6 +1295,10 @@ img {
 
   .lg\:block {
     display: block;
+  }
+
+  .lg\:w-5\/12 {
+    width: 41.666667%;
   }
 
   .lg\:w-7\/12 {

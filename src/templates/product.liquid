@@ -3,8 +3,8 @@
 
 <h1 class="text-5xl font-bold px-8 pb-3">{{ product.title }}</h1>
 
-<div class="flex mx-auto flex-wrap">
-  <div class="w-full md:w-5/12 lg:w-7/12 px-4">
+<div class="flex mx-auto flex-wrap" data-id="{{ current_variant.id }}">
+  <div class="w-full md:w-6/12 lg:w-7/12 px-4">
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
         {% for image in product.images %}
@@ -26,26 +26,29 @@
         {% endfor %}
     </div>
   </div>
-  <div class="w-auto px-4">
-    <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-      <select name="id" id="productSelect">
-        {% for variant in product.variants %}
-          {% if variant.available %}
-            <option value="{{ variant.id }}" {% if current_variant == variant %} selected {% endif %}>
-              {{ variant.title }} - {{ variant.price | money_with_currency }}
-            </option>
-          {% else %}
-            <option disabled="disabled">
-              {{ variant.title }} - sold out
-            </option>
-          {% endif %}
+  <div class="w-full md:w-6/12 lg:w-5/12 px-4">
+    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+    {% if current_variant.available %}
+      <div class="text-lg"><i class="availability las la-check-circle"></i> <span class="availability_text">In Stock<span></div>
+    {% else %}
+      <div class="text-lg"><i class="availability las la-times-circle"></i> <span class="availability_text">Out of Stock<span></div>
+    {% endif %}
+
+    {% unless product.has_only_default_variant %}
+      {% for option in product.options %}
+      <label for="variation-select-{{ option | downcase }}" class="block mt-2">{{ option }}</label>
+      <select name="" id="variation-select-{{ option | downcase }}" class="variation-option-select border border-gray-500 p-2 focus:outline-none focus:shadow-outline focus:border-blue-200 block">
+        {% for option_value in product.options_by_name[option].values %}
+          <option value="{{ option_value }}" {% if current_variant.options contains option_value %}selected{% endif %}>{{ option_value }}</option>
         {% endfor %}
       </select>
-      {{ current_variant.price | money }}
-      <label for="Quantity">quantity</label>
-      <input type="number" id="Quantity" name="quantity" value="1" min="1">
-      <button type="submit" name="add" id="AddToCart">Add to cart</button>
-    </form>
+      {% endfor %}
+    {% endunless %}
+    {% if product.available %}
+      <button class="add-to-cart border border-red-600 bg-red-600 text-white text-3xl font-semibold hover:bg-white hover:text-red-600 focus:outline-none focus:shadow-md px-10 py-3 mt-3 block rounded">Add to Cart</button>
+    {% else %}
+      <button class="border border-red-600 bg-white text-red-600 cursor-not-allowed px-10 py-3 mt-2 text-3xl font-semibold block rounded">Sold Out</button>
+    {% endif %}
   </div>
 </div>
 
@@ -62,7 +65,9 @@
 
 
 <div>{{ product.description }}</div>
+<div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
 
+<script type="application/json" id="v_json">{{ product.variants | json }}</script>
 	<!-- Root element of PhotoSwipe. Must have class pswp. -->
 	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
