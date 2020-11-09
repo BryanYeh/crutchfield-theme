@@ -15,7 +15,7 @@
         <span class="md:p-4 hover:text-red-800 font-medium cursor-pointer block">{{ link.title }} <i
             class="las la-angle-down float-right md:float-none"></i></span>
         {% if linklists[child_list_handle].levels > 1 %}
-        <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto">
+        <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto z-10">
           <div class="font-semibold border-b-2 boder-solid border-gray-300 py-3 px-6 w-full">
             <a href="{{ link.url }}" class="block hover:text-red-800 ">{{ link.title }}</a>
           </div>
