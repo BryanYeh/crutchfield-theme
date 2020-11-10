@@ -3,9 +3,9 @@
 
 <h1 class="text-5xl font-bold px-8 pb-3">{{ product.title }}</h1>
 
-<div class="flex mx-auto flex-wrap" data-id="{{ current_variant.id }}">
+<div class="flex mx-auto flex-wrap mb-20" data-id="{{ current_variant.id }}">
   <div class="w-full md:w-6/12 lg:w-7/12 px-4">
-    <div class="swiper-container gallery-top">
+    <div class="swiper-container gallery-top hover:text-red-600 cursor-pointer">
       <div class="swiper-wrapper">
         {% for image in product.images %}
         <div class="swiper-slide" {% if image.src == featured_image %} data-default-slide="{{ forloop.index0 }}" {% endif %}>
@@ -26,7 +26,7 @@
         {% endfor %}
     </div>
   </div>
-  <div class="w-full md:w-6/12 lg:w-5/12 px-4">
+  <div class="w-full md:w-6/12 lg:w-5/12 px-4 border-l border-solid border-gray-500">
     <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
     {% if current_variant.available %}
       <div class="text-lg"><i class="availability las la-check-circle"></i> <span class="availability_text">In Stock<span></div>
@@ -52,6 +52,34 @@
   </div>
 </div>
 
+<ul class="lg:flex mx-auto hidden lg:w-8/12 flex-wrap">
+  <li class="flex-1">
+    <a class="bg-gray-200 font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="description">Description</a>
+  </li>
+  <li class="flex-1">
+    <a class="bg-white font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="reviews">Reviews</a>
+  </li>
+  <li class="flex-1">
+    <a class="bg-white font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="#">Recently Viewed</a>
+  </li>
+  <li class="flex-1">
+    <a class="bg-white font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="#">Articles</a>
+  </li>
+</ul>
+
+<div class="bg-gray-200 flex flex-wrap">
+  <div class="bg-white lg:p-4 lg:w-9/12 mx-auto my-10 shadow-md w-11/12">
+    <a class="block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="description"><i class="las la-angle-up"></i> Description</a>
+    <div id="description" class="hidden lg:block">
+      {{ product.description }}
+    </div>
+    <a class="block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="reviews"><i class="las la-angle-up"></i> Reviews</a>
+    <div id="reviews" class="hidden">
+      <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+    </div>
+  </div>
+
+</div>
 
 
 
@@ -64,8 +92,6 @@
 
 
 
-<div>{{ product.description }}</div>
-<div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
 
 <script type="application/json" id="v_json">{{ product.variants | json }}</script>
 	<!-- Root element of PhotoSwipe. Must have class pswp. -->
