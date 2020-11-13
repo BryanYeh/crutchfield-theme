@@ -394,7 +394,40 @@ ready(() => {
     })
   })
 
-  // document.querySelector('.product-add-to-cart').addEventListener((e) => {
-  //   e.target.closest('[data-id]').dataset.id
-  // })
+  //// product page tabs
+  document.querySelectorAll('.product-tab').forEach((tab) =>{
+    tab.addEventListener('click', (e) =>{
+      document.querySelectorAll('.product-tab').forEach((pTab) =>{
+        pTab.classList.remove('bg-gray-200')
+      })
+      e.target.classList.add('bg-gray-200')
+
+      document.querySelectorAll('.product-tab-content').forEach((tContent) => {
+        tContent.classList.add('hidden')
+        tContent.classList.remove('block')
+      })
+
+      document.querySelector('#' + e.target.dataset.href).classList.add('block')
+      document.querySelector('#' + e.target.dataset.href).classList.remove('hidden')
+    })
+  })
+
+  document.querySelectorAll('.product-tab-mobile').forEach((tab) =>{
+    tab.addEventListener('click', (e) =>{
+      document.querySelectorAll('.product-tab-mobile').forEach((i) =>{
+        i.querySelector('i').classList.remove('transform')
+        i.querySelector('i').classList.remove('rotate-180')
+      })
+      e.target.querySelector('i').classList.add('transform')
+      e.target.querySelector('i').classList.add('rotate-180')
+
+      document.querySelectorAll('.product-tab-content').forEach((tContent) => {
+        tContent.classList.add('hidden')
+        tContent.classList.remove('block')
+      })
+
+      document.querySelector('#' + e.target.dataset.href).classList.add('block')
+      document.querySelector('#' + e.target.dataset.href).classList.remove('hidden')
+    })
+  })
 })
