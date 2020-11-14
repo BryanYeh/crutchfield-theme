@@ -1,0 +1,97 @@
+<ul class="lg:flex mx-auto hidden lg:w-8/12 flex-wrap">
+  <li class="flex-1 text-center">
+    <a class="product-tab bg-gray-200 font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="description">Description</a>
+  </li>
+  <li class="flex-1 text-center">
+    <a class="product-tab font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="reviews">Reviews</a>
+  </li>
+</ul>
+
+<div class="bg-gray-200 flex flex-wrap">
+  <div class="bg-white lg:p-4 lg:w-9/12 mx-auto my-10 shadow-md w-11/12">
+    <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="description"><i class="las la-angle-up"></i> Description</a>
+    <div id="description" class="product-tab-content block p-4 lg:p-0">
+      {{ product.description }}
+    </div>
+
+    <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="reviews"><i class="las la-angle-up"></i> Reviews</a>
+    <div id="reviews" class="product-tab-content hidden p-4 lg:p-0">
+      <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+	"max_blocks": 5,
+  "blocks": [
+    {
+      "type": "checkbox",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "id": "show_decription",
+          "type": "checkbox",
+       		"label": "Show Description",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "HTML",
+      "settings": [
+        {
+          "id": "html_tab",
+          "type": "html",
+       		"label": "HTML"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "id": "html_page",
+          "type": "page",
+       		"label": "Display Page"
+        }
+      ]
+    },
+    {
+      "type": "article",
+      "name": "Article",
+      "settings": [
+        {
+          "id": "html_article",
+          "type": "article",
+       		"label": "Article"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs",
+      "category": "Product Page - Tabs",
+      "blocks": [
+        { 
+          "type": "html"
+        },
+        {
+          "type": "checkbox"
+        },
+        {
+          "type": "page"
+        },
+        {
+          "type": "article"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
