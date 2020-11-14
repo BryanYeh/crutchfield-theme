@@ -1,23 +1,29 @@
 <ul class="lg:flex mx-auto hidden lg:w-8/12 flex-wrap">
+  {% for block in section.blocks %}
   <li class="flex-1 text-center">
-    <a class="product-tab bg-gray-200 font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="description">Description</a>
+    <a class="{% if forloop.first %}bg-gray-200 {% endif %}product-tab font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="{{ block.settings.tab_title | handle }}-{{ block.id }}">{{ block.settings.tab_title }}</a>
   </li>
-  <li class="flex-1 text-center">
-    <a class="product-tab font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="reviews">Reviews</a>
-  </li>
+  {% endfor %}
 </ul>
 
 <div class="bg-gray-200 flex flex-wrap">
   <div class="bg-white lg:p-4 lg:w-9/12 mx-auto my-10 shadow-md w-11/12">
-    <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="description"><i class="las la-angle-up"></i> Description</a>
-    <div id="description" class="product-tab-content block p-4 lg:p-0">
-      {{ product.description }}
-    </div>
-
-    <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="reviews"><i class="las la-angle-up"></i> Reviews</a>
-    <div id="reviews" class="product-tab-content hidden p-4 lg:p-0">
-      <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
-    </div>
+    {% for block in section.blocks %}
+      <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="{{ block.settings.tab_title | handle }}-{{ block.id }}"><i class="las la-angle-up"></i> {{ block.settings.tab_title }}</a>
+      <div id="{{ block.settings.tab_title | handle }}-{{ block.id }}" class="product-tab-content {% if forloop.first %} block {% else %} hidden {% endif %} p-4 lg:p-0">
+        {% if block.type == "checkbox" and block.settings.show_description == true %}
+            {{ product.description }}
+        {% elsif block.type == "html" %}
+          {{ block.settings.html_tab }}
+        {% elsif block.type == "page" %}
+          {{ pages[block.settings.page_tab].content }}
+        {% elsif block.type == "article" %}
+          {{ articles[block.settings.article_tab].content }}
+        {% elsif block.type == "text" %}
+          {% include block.settings.text_tab %}
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
 </div>
 
@@ -32,7 +38,13 @@
       "limit": 1,
       "settings": [
         {
-          "id": "show_decription",
+          "id": "tab_title",
+          "type": "text",
+       		"label": "Tab Title",
+          "default": "Description"
+        },
+        {
+          "id": "show_description",
           "type": "checkbox",
        		"label": "Show Description",
           "default": true
@@ -43,6 +55,12 @@
       "type": "html",
       "name": "HTML",
       "settings": [
+        {
+          "id": "tab_title",
+          "type": "text",
+       		"label": "Tab Title",
+          "default": "HTML"
+        },
         {
           "id": "html_tab",
           "type": "html",
@@ -55,7 +73,13 @@
       "name": "Page",
       "settings": [
         {
-          "id": "html_page",
+          "id": "tab_title",
+          "type": "text",
+       		"label": "Tab Title",
+          "default": "Page"
+        },
+        {
+          "id": "page_tab",
           "type": "page",
        		"label": "Display Page"
         }
@@ -66,9 +90,39 @@
       "name": "Article",
       "settings": [
         {
-          "id": "html_article",
+          "id": "tab_title",
+          "type": "text",
+       		"label": "Tab Title",
+          "default": "Article"
+        },
+        {
+          "id": "article_tab",
           "type": "article",
        		"label": "Article"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Snippets",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Snippets",
+          "info": "To render snippets, create a snippet in snippets folder ie: reviews_shopify.liquid"
+        },
+        {
+          "id": "tab_title",
+          "type": "text",
+       		"label": "Tab Title",
+          "default": "Text"
+        },
+        {
+          "id": "text_tab",
+          "type": "text",
+       		"label": "Text",
+          "placeholder": "reviews_shopify",
+          "info": "Snippet file name only, .liquid not required"
         }
       ]
     }
@@ -89,6 +143,9 @@
         },
         {
           "type": "article"
+        },
+        {
+          "type": "text"
         }
       ]
     }
