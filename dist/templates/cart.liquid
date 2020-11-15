@@ -51,15 +51,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col flex-wrap text-center">
-          <div class="text-center text-2xl p-4">Forms of Payment</div>
-          <div class="bg-white shadow-md p-4 flex flex-wrap justify-around">
-            <img src="{{ 'card.jcb.svg' | asset_url }}" alt="" class="w-16 py-2">
-            <img src="{{ 'card.visa.svg' | asset_url }}" alt="" class="w-16 py-2">
-            <img src="{{ 'card.discover.svg' | asset_url }}" alt="" class="w-16 py-2">
-            <img src="{{ 'card.diners.svg' | asset_url }}" alt="" class="w-16 py-2">
-          </div>
-        </div>
+        {% section 'cart_payments' %}
       </div>
     </div>
   </form>
@@ -75,3 +67,5 @@
     </div>
   </div>
 {% endif %}
+
+
