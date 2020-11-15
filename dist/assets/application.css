@@ -513,6 +513,10 @@ img {
   border-color: rgba(203, 213, 224, var(--divide-opacity));
 }
 
+.bg-transparent {
+  background-color: transparent;
+}
+
 .bg-black {
   --bg-opacity: 1;
   background-color: #000;
@@ -814,6 +818,10 @@ img {
 
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .mt-2 {
@@ -1370,6 +1378,10 @@ img {
 
   .md\:w-8\/12 {
     width: 66.666667%;
+  }
+
+  .md\:w-9\/12 {
+    width: 75%;
   }
 
   .md\:w-10\/12 {

@@ -1,0 +1,24 @@
+<div class="flex flex-wrap p-4 bg-gray-200">
+    <div class="w-full md:w-6/12">
+      <img src="{{ 'secure_login.svg' | asset_url }}" alt="" class="w-full mx-auto">
+    </div>
+    <div class="w-full md:w-6/12 pl-4">
+      <h1 class="font-bold px-4 py-2 text-3xl">Register</h1>
+      <form action="/account" method="post" class="flex flex-wrap">
+        <div class="w-full p-4">
+          <input type="text" name="customer[first_name]" id="" placeholder="First Name" class="w-full md:w-4/12 shadow-md p-4">
+          <input type="text" name="customer[last_name]" id="" placeholder="Last Name" class="w-full md:w-4/12 shadow-md p-4 mt-4">
+        </div>
+        <div class="w-full px-4 pb-4">
+          <input type="text" name="customer[email]" id="" placeholder="Enter your email" class="w-full shadow-md p-4 md:w-9/12">
+        </div>
+        <div class="w-full px-4 pb-4">
+          <input type="password" name="customer[password]" id="" placeholder="Enter your password" class="w-full shadow-md p-4 md:w-9/12">
+        </div>
+        <div class="w-full px-4 pb-4 flex">
+          <input type="submit" value="Submit" class="bg-red-600 border border-red-600 cursor-pointer font-bold hover:bg-transparent hover:text-red-600 md:w-4/12 p-4 text-lg text-white w-full">
+          <a href="{{ shop.url }}" class="bg-transparent border border-red-600 font-bold hover:bg-red-600 hover:text-white md:w-4/12 ml-1 p-4 text-center text-red-600 text-lg w-full">Cancel</a>
+        </div>
+      </form>
+    </div>
+</div>
