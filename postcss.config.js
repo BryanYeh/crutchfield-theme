@@ -19,6 +19,7 @@ module.exports = {
         "./src/**/*.liquid",
         "./src/**/*.json",
         "./src/assets/*",
+        "./src/assets/*.*.svg",
         "./dist"
       ],
       {

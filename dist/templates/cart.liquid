@@ -1,46 +1,77 @@
 {% if cart.item_count > 0 %}
-  <h1>cart</h1>
-  <form action="/cart" method="post" novalidate>
-    <table>
-      <thead>
-        <th colspan="2">Prod</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>total</th>
-      </thead>
-      <tbody>
+  <h1 class="text-5xl font-bold px-8 pb-3"><i class="las la-shopping-cart"></i> Your Cart</h1>
+  <form action="/cart" method="post" novalidate class="bg-gray-200">
+    <div class="flex flex-wrap w-full md:w-10/12 mx-auto">
+      <div class="px-2 w-full md:w-8/12 flex flex-row flex-wrap my-10">
         {% for item in cart.items %}
-          <tr>
-            <td>
+          <div class="w-full bg-white flex flex-wrap p-4 shadow-md {% if forloop.first == false %} mt-4 {% endif %}">
+            <div class="w-4/12">
               <a href="{{ item.url | within: collections.all }}">
-                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                <img class="mb-4" src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
               </a>
-            </td>
-            <td>
-              <a href="{{ item.url }}">{{ item.product.title }}</a>
-              {{ item.variant.title }}
-              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
-            </td>
-            <td>{{ item.price | money }}</td>
-            <td>
-              <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
-            </td>
-            <td>
-              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
-              {{ item.line_price | money }}
-              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
-            </td>
-          </tr>
+              <a class="mt-4" href="/cart/change?line={{ forloop.index }}&amp;quantity=0"><i class="las la-times"></i> Remove</a>
+            </div>
+            <div class="px-4 w-8/12 md:w-4/12">
+              <a class="font-bold text-xl" href="{{ item.url }}">{{ item.product.title }}</a>
+              {% if item.variant.title != "Default Title" %}
+                <p class="text-sm text-gray-600">{{ item.variant.title }}<p>
+              {% endif %}
+              {% if item.variant.sku != blank %}
+                <p class="text-sm">#{{ item.variant.sku }}</p>
+              {% endif %}
+              {% if item.product.compare_at_price %}
+                <p class="text-red-600 line-through">{{ item.product.compare_at_price | money }}</p>
+              {% endif %}
+              <p class="font-semibold">{{ item.original_price | money }}</p>
+            </div>
+            <div class="md:hidden w-4/12"></div>
+            <div class="px-4 w-4/12 md:w-2/12">
+              <input class="border border-gray-500 p-2 w-full focus:outline-none focus:shadow" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
+            </div>
+            <div class="px-4 w-4/12 md:w-2/12 text-right font-bold">
+              <p class="text-2xl">{{ item.line_price | money }}</p>
+            </div>
+          </div>
         {% endfor %}
-      </tbody>
-    </table>
-    <div>
-      <p>sub total : {{ cart.total_price | money }}</p>
-      <button type="submit" name="update">Update</button>
-      <button type="submit" name="checkout">Checkout</button>
+      </div>
+      <div class="px-2 w-full md:w-4/12 my-10">
+        <button type="submit" name="update" class="border-2 border-red-600 bg-white text-red-600 p-4 w-full mb-4 hover:bg-red-600 hover:text-white shadow-md text-xl font-semibold"><i class="las la-sync"></i> Update Cart</button>
+
+        <div class="flex flex-col flex-wrap shadow-md bg-white">
+          <div class="bg-black text-white text-center text-2xl font-bold py-4">
+            Your Total
+          </div>
+          <div class="p-4">
+            <div class="flex flex-wrap pb-2">Subtotal <span class="flex-1 text-right">{{ cart.items_subtotal_price | money }}</span></div>
+            <div class="flex flex-wrap pb-2">Shipping <span class="flex-1 text-right">Calculated at checkout</span></div>
+            <div class="flex flex-wrap border-b border-gray-600 pb-2 text-xl font-bold">Total <span class="flex-1 text-right">{{ cart.total_price | money }}</span></div>
+          </div>
+          <div class="px-4 pb-4">
+            <button type="submit" name="checkout" class="border border-green-600 bg-green-600 text-white text-2xl p-4 w-full rounded hover:bg-white hover:text-green-600"><i class="las la-shield-alt"></i> Go to Secure Checkout <i class="las la-angle-right"></i></button>         
+          </div>
+        </div>
+
+        <div class="flex flex-col flex-wrap text-center">
+          <div class="text-center text-2xl p-4">Forms of Payment</div>
+          <div class="bg-white shadow-md p-4 flex flex-wrap justify-around">
+            <img src="{{ 'card.jcb.svg' | asset_url }}" alt="" class="w-16 py-2">
+            <img src="{{ 'card.visa.svg' | asset_url }}" alt="" class="w-16 py-2">
+            <img src="{{ 'card.discover.svg' | asset_url }}" alt="" class="w-16 py-2">
+            <img src="{{ 'card.diners.svg' | asset_url }}" alt="" class="w-16 py-2">
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 {% else %}
-  <h2>cart</h2>
-  Cart is empty
+  <div class="bg-gray-200 p-10 relative">
+    <img class="mx-auto" src="{{ 'empty_cart.svg' | asset_url }}" alt="">
+    
+    <div class="absolute text-center top-0">
+      <h1 class="font-bold p-4 text-2xl text-gray-700">Empty Cart</h1>
+      <a class="bg-red-600 border border-red-600 focus:outline-none font-semibold hover:bg-transparent hover:text-red-600 p-4 text-white" href="/collections/all">
+        View Collections
+      </a>        
+    </div>
+  </div>
 {% endif %}
