@@ -1,2 +1,16 @@
+<div class="flex bg-gray-200 p-4">
+  <div class="w-full md:w-6/12 mx-auto text-center">
+    <img src="{{ 'lost.svg' | asset_url }}" alt="404 Not found">
+    <div class="font-bold mb-4 p-4 text-3xl">
+      <h1>Looks like you got lost</h1>
+    </div>
+    <div>
+      <a href="/" class="p-4 bg-red-600 border border-red-600 text-white hover:text-red-600 hover:bg-white">Let's bring you home</a>
+    </div>
+  </div>
+</div>
+
+{% comment %}
 <h1>{{ 'general.404.title' | t }}</h1>
-<p>{{ 'general.404.subtext_html' | t }}</p>
+<p>Looks like you are lost</p>
+{% endcomment %}
