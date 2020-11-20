@@ -290,7 +290,6 @@ template {
 
 h1,
 h2,
-h5,
 p {
   margin: 0;
 }
@@ -408,8 +407,7 @@ button {
 }
 
 h1,
-h2,
-h5 {
+h2 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -751,6 +749,10 @@ img {
 
 .font-bold {
   font-weight: 700;
+}
+
+.h-48 {
+  height: 12rem;
 }
 
 .h-full {

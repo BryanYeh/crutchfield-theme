@@ -56,13 +56,30 @@
     ]
   },
   {
-    "name": "Predictive Search",
+    "name": "Search",
     "settings": [
+      {
+        "type": "header",
+        "content": "Predictive Search"
+      },
       {
         "label": "Enable Predictive Search",
         "id": "enable_predictive_search",
         "type": "checkbox",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Search Page"
+      },
+      {
+        "label": "Results per page",
+        "id": "search_results_per_page",
+        "type": "range",
+        "default": 20,
+        "min": 1,
+        "max": 50,
+        "step": 1
       }
     ]
   },
@@ -88,8 +105,7 @@
         "default": 20,
         "min": 1,
         "max": 50,
-        "step": 1,
-        "unit": "ppp"
+        "step": 1
       }
     ]
   }
