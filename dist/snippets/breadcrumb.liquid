@@ -31,7 +31,7 @@
       {{ blog.title | link_to: blog.url }}
       <a href="{{ article.url }}" class="py-2 hover:text-red-600">{{ article.title }}</a>
     {%- else -%}
-      <a href="{{ page_title }}" class="py-2 hover:text-red-600">Home</a>
+      <a class="py-2 hover:text-red-600 cursor-default">{{ page_title }}</a>
   {%- endcase -%}
 </div>
 
