@@ -1,0 +1,21 @@
+{% form 'customer' %}
+  {{ form.errors | default_errors }}
+  {% if form.posted_successfully? %}
+    <p class="form--success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+  {% else %}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <label for="NewsletterEmail" class="text-sm mb-2 text-gray-600">
+      {% if label %}
+        <div class="rte">{{ label }}</div>
+      {% else %}
+        {{ subtext }}
+      {% endif %}
+    </label>
+    <div class="flex max-w-xl">
+      <input class="appearance-none bg-white block border border-gray-300 focus:outline-none focus:shadow-md px-4 py-2 w-full" type="email" value="john@doe.com" placeholder="Your Email" name="contact[email]" autocorrect="off" autocapitalize="off">
+      <div class="">
+        <button type="submit" class="bg-red-600 border border-red-600 btn hover:bg-white hover:text-red-600 ml-1 px-4 py-2 text-white" name="commit" id="Subscribe">Subscribe</button>
+      </div>
+    </div>
+  {% endif %}
+{% endform %}

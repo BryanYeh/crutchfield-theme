@@ -25,6 +25,8 @@
     {{ content_for_layout }}
   </main>
 
+  {% section 'footer' %}
+  
   {{ 'swiper-bundle.min.js' | asset_url | script_tag }}
   {% if template == "product" %} 
   {{ 'photoswipe.min.js' | asset_url | script_tag }}

@@ -1,0 +1,163 @@
+<footer class="bg-gray-400 flex flex-wrap p-4">
+  {% case section.blocks.size %}
+    {% when 0 %}
+    {% when 1 %}
+      {% assign column_width = "w-full" %}
+    {% when 2 %}
+      {% assign column_width = "w-full md:w-1/2" %}
+    {% when 3 %}
+      {% assign column_width = "w-full sm:w-1/2 md:w-4/12" %}
+    {% when 4 %}
+      {% assign column_width = "w-full sm:w-1/2 md:w-4/12 lg:w-3/12" %}
+  {% endcase %}  
+
+  {% for block in section.blocks %}
+  <div class="{{ column_width }} p-4">
+    {% if block.settings.title %}
+    <h3 class="uppercase font-bold">{{ block.settings.title | escape }}</h3>
+    {% endif %}
+    {% case block.type %}
+      {% when 'menu' %}
+        {% render "footer_menu", block: block %}
+      {% when 'text' %}
+
+      {% when 'newsletter' %}
+        {% render "footer_newsletter", subtext: block.settings.subtext %}
+      {% when 'blog' %}
+        {% render "footer_blog", block: block %}
+    {% endcase %}
+  </div>
+  {% endfor %}
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copyright",
+      "label": "Show copyright",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_media",
+      "label": "Show Social Media",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "social_media_location",
+      "options": [
+         { "value": "1", "label": "Column 1"},
+         { "value": "2", "label": "Column 2"},
+         { "value": "3", "label": "Column 3"},
+         { "value": "4", "label": "Column 4"}
+
+      ],
+      "label": "Social Media Location"
+    },
+    {
+      "type": "text",
+      "id": "social_media_header",
+      "default": "Follow Us",
+      "label": "Social Media Header"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Links",
+          "label": "Heading"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "This menu won't show dropdown items"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Contact us",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": "Text",
+          "default": "<p>Use this text to share information about your brand with your customers.</p>"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter signup",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Newsletter",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "<p>Promotions, new products and sales. Directly to your inbox.</p>"
+        },
+        {
+          "type": "paragraph",
+          "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+        }
+      ]
+    },
+    {
+      "type": "blog",
+      "name": "Blog",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Recent News",
+          "label": "Heading"
+        },
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog"
+        },
+        {
+          "type":      "range",
+          "id":        "blog_posts_count",
+          "min":       1,
+          "max":        20,
+          "step":       1,
+          "label":     "Number of Posts",
+          "default":   5
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
