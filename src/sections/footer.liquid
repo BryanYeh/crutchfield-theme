@@ -1,4 +1,4 @@
-<footer class="bg-gray-400 flex flex-wrap p-4">
+<footer class="bg-gray-400">
   {% case section.blocks.size %}
     {% when 0 %}
     {% when 1 %}
@@ -11,23 +11,35 @@
       {% assign column_width = "w-full sm:w-1/2 md:w-4/12 lg:w-3/12" %}
   {% endcase %}  
 
-  {% for block in section.blocks %}
-  <div class="{{ column_width }} p-4">
-    {% if block.settings.title %}
-    <h3 class="uppercase font-bold">{{ block.settings.title | escape }}</h3>
-    {% endif %}
-    {% case block.type %}
-      {% when 'menu' %}
-        {% render "footer_menu", block: block %}
-      {% when 'text' %}
-        {% render "footer_text", block: block %}
-      {% when 'newsletter' %}
-        {% render "footer_newsletter", subtext: block.settings.subtext %}
-      {% when 'blog' %}
-        {% render "footer_blog", block: block %}
-    {% endcase %}
+  <div class="p-4 flex flex-wrap">
+    {% for block in section.blocks %}
+    <div class="{{ column_width }} p-4">
+      {% if block.settings.title %}
+      <h3 class="uppercase font-bold">{{ block.settings.title | escape }}</h3>
+      {% endif %}
+      {% case block.type %}
+        {% when 'menu' %}
+          {% render "footer_menu", block: block %}
+        {% when 'text' %}
+          {% render "footer_text", block: block %}
+        {% when 'newsletter' %}
+          {% render "footer_newsletter", subtext: block.settings.subtext %}
+        {% when 'blog' %}
+          {% render "footer_blog", block: block %}
+      {% endcase %}
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
+  {% if section.settings.show_social_media_icons == true or section.settings.show_copyright == true %}
+    <div class="bg-gray-500 flex flex-wrap p-4 w-full">
+      {% if  section.settings.show_copyright == true %}
+        <div class="w-1/2 px-4">
+          {{ shop.name }} &copy; {{ "now" | date: "%Y" }} All Rights Reserved
+        </div>
+      {% endif %}
+    </div>    
+  {% endif %}
+
 </footer>
 
 {% schema %}
@@ -37,39 +49,15 @@
   "settings": [
     {
       "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "Show payment icons",
-      "default": true
-    },
-    {
-      "type": "checkbox",
       "id": "show_copyright",
       "label": "Show copyright",
       "default": true
     },
     {
       "type": "checkbox",
-      "id": "show_social_media",
-      "label": "Show Social Media",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "social_media_location",
-      "options": [
-         { "value": "1", "label": "Column 1"},
-         { "value": "2", "label": "Column 2"},
-         { "value": "3", "label": "Column 3"},
-         { "value": "4", "label": "Column 4"}
-
-      ],
-      "label": "Social Media Location"
-    },
-    {
-      "type": "text",
-      "id": "social_media_header",
-      "default": "Follow Us",
-      "label": "Social Media Header"
+      "id": "show_social_media_icons",
+      "label": "Show social media icons",
+      "default": true
     }
   ],
   "blocks": [
