@@ -2,57 +2,9 @@
 <div class="flex flex-col flex-wrap text-center">
     <div class="text-center text-2xl p-4">Forms of Payment</div>
     <div class="bg-white shadow-md p-4 flex flex-wrap justify-around">
-      {% if section.settings.card_alipay == true %}
-        <img src="{{ 'card.alipay.svg' | asset_url }}" alt="Alipay" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_amex == true %}
-        <img src="{{ 'card.amex.svg' | asset_url }}" alt="Amex Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_apple_pay == true %}
-        <img src="{{ 'card.apple_pay.svg' | asset_url }}" alt="Apple Pay" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_diners == true %}
-        <img src="{{ 'card.diners.svg' | asset_url }}" alt="Diners Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_discover == true %}
-        <img src="{{ 'card.discover.svg' | asset_url }}" alt="Discover Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_elo == true %}
-        <img src="{{ 'card.elo.svg' | asset_url }}" alt="Elo Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_google_pay == true %}
-        <img src="{{ 'card.google_pay.svg' | asset_url }}" alt="Google Pay" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_hiper == true %}
-        <img src="{{ 'card.hiper.svg' | asset_url }}" alt="Hiper Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_hiper_card == true %}
-        <img src="{{ 'card.hipercard.svg' | asset_url }}" alt="Hiper Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_jcv == true %}
-        <img src="{{ 'card.jcb.svg' | asset_url }}" alt="JCB Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_maestro == true %}
-        <img src="{{ 'card.maestro.svg' | asset_url }}" alt="Maestro" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_mastercard == true %}
-        <img src="{{ 'card.mastercard.svg' | asset_url }}" alt="Master Card" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_mir == true %}
-        <img src="{{ 'card.mir.svg' | asset_url }}" alt="Mir" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_paypal == true %}
-        <img src="{{ 'card.paypal.svg' | asset_url }}" alt="Paypal" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_shop_pay== true %}
-        <img src="{{ 'card.shop_pay.svg' | asset_url }}" alt="Shop Pay" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_unionpay == true %}
-        <img src="{{ 'card.unionpay.svg' | asset_url }}" alt="Union Pay" class="w-16 py-2">
-      {% endif %}
-      {% if section.settings.card_visa == true %}
-        <img src="{{ 'card.visa.svg' | asset_url }}" alt="Visa Card" class="w-16 py-2">
-      {% endif %}
+      {% for type in shop.enabled_payment_types %}
+        {{ type | payment_type_svg_tag }}
+      {% endfor %}
     </div>
 </div>  
 {% endif %}
@@ -65,108 +17,6 @@
         "id": "show_payments",
         "type": "checkbox",
         "label": "Show Payments",
-        "default": true
-      },
-      {
-        "id": "card_alipay",
-        "type": "checkbox",
-        "label": "Alipay",
-        "default": false
-      },
-      {
-        "id": "card_amex",
-        "type": "checkbox",
-        "label": "American Express",
-        "default": true
-      },
-      {
-        "id": "card_apple_pay",
-        "type": "checkbox",
-        "label": "Apple Pay",
-        "default": false
-      },
-      {
-        "id": "card_diners",
-        "type": "checkbox",
-        "label": "Diners",
-        "default": false
-      },
-      {
-        "id": "card_discover",
-        "type": "checkbox",
-        "label": "Discover",
-        "default": true
-      },
-      {
-        "id": "card_elo",
-        "type": "checkbox",
-        "label": "Elo",
-        "default": false
-      },
-      {
-        "id": "card_google_pay",
-        "type": "checkbox",
-        "label": "Google Pay",
-        "default": false
-      },
-      {
-        "id": "card_hiper",
-        "type": "checkbox",
-        "label": "Hiper",
-        "default": false
-      },
-      {
-        "id": "card_hiper_card",
-        "type": "checkbox",
-        "label": "Hiper Card",
-        "default": false
-      },
-      {
-        "id": "card_jcv",
-        "type": "checkbox",
-        "label": "JCB",
-        "default": false
-      },
-      {
-        "id": "card_maestro",
-        "type": "checkbox",
-        "label": "Maestro",
-        "default": false
-      },
-      {
-        "id": "card_mastercard",
-        "type": "checkbox",
-        "label": "Mastercard",
-        "default": true
-      },
-      {
-        "id": "card_mir",
-        "type": "checkbox",
-        "label": "Mir",
-        "default": false
-      },
-      {
-        "id": "card_paypal",
-        "type": "checkbox",
-        "label": "Paypal",
-        "default": false
-      },
-      {
-        "id": "card_shop_pay",
-        "type": "checkbox",
-        "label": "Shop Pay",
-        "default": true
-      },
-      {
-        "id": "card_unionpay",
-        "type": "checkbox",
-        "label": "UnionPay",
-        "default": false
-      },
-      {
-        "id": "card_visa",
-        "type": "checkbox",
-        "label": "Visa",
         "default": true
       }
     ]
