@@ -32,9 +32,34 @@
   </div>
   {% if section.settings.show_social_media_icons == true or section.settings.show_copyright == true %}
     <div class="bg-gray-500 flex flex-wrap p-4 w-full">
-      {% if  section.settings.show_copyright == true %}
-        <div class="w-1/2 px-4">
+      {% if section.settings.show_copyright == true %}
+        <div class="{% if section.settings.show_social_media == true %} w-1/2 {% else %} w-full {% endif %} px-4">
           {{ shop.name }} &copy; {{ "now" | date: "%Y" }} All Rights Reserved
+        </div>
+      {% endif %}
+      {% if section.settings.show_social_media == true %}
+        <div class="{% if section.settings.show_copyright == true %} w-1/2 {% else %} w-full {% endif %} px-4 text-right">
+          {% if settings.social_facebook != blank %}
+            <a href="{{ settings.social_facebook }}" class="text-lg hover:text-red-600"><i class="lab la-facebook"></i></a>
+          {% endif %}
+          {% if settings.social_twitter != blank %}
+            <a href="{{ settings.social_twitter }}" class="text-lg hover:text-red-600"><i class="lab la-twitter"></i></a>
+          {% endif %}
+          {% if settings.social_pinterest != blank %}
+            <a href="{{ settings.social_pinterest }}" class="text-lg hover:text-red-600"><i class="lab la-pinterest"></i></a>
+          {% endif %}
+          {% if settings.social_instagram != blank %}
+            <a href="{{ settings.social_instagram }}" class="text-lg hover:text-red-600"><i class="lab la-instagram"></i></a>
+          {% endif %}
+          {% if settings.social_snapchat != blank %}
+            <a href="{{ settings.social_snapchat }}" class="text-lg hover:text-red-600"><i class="lab la-snapchat"></i></a>
+          {% endif %}
+          {% if settings.social_youtube != blank %}
+            <a href="{{ settings.social_youtube }}" class="text-lg hover:text-red-600"><i class="lab la-youtube"></i></a>
+          {% endif %}
+          {% if settings.social_linkedin != blank %}
+            <a href="{{ settings.social_linkedin }}" class="text-lg hover:text-red-600"><i class="lab la-linkedin"></i></a>
+          {% endif %}
         </div>
       {% endif %}
     </div>    
@@ -55,7 +80,7 @@
     },
     {
       "type": "checkbox",
-      "id": "show_social_media_icons",
+      "id": "show_social_media",
       "label": "Show social media icons",
       "default": true
     }
