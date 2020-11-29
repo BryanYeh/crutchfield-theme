@@ -1157,6 +1157,10 @@ img {
   text-transform: uppercase;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .line-through {
   text-decoration: line-through;
 }
