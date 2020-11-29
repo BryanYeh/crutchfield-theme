@@ -1,8 +1,18 @@
 <div class="w-full mb-4">
-  {% if section.settings.banner_image %}
-    <img src="{{ section.settings.banner_image | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}">
+  {% if section.settings.banner_url != blank %}
+    <a href="{{ section.settings.banner_url }}">
+      {% if section.settings.banner_image %}
+        <img src="{{ section.settings.banner_image | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}">
+      {% else %}
+        {{ 'lifestyle-1'  | placeholder_svg_tag }}
+      {% endif %}
+    </a>
   {% else %}
-    {{ 'lifestyle-1'  | placeholder_svg_tag }}
+    {% if section.settings.banner_image %}
+      <img src="{{ section.settings.banner_image | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}">
+    {% else %}
+      {{ 'lifestyle-1'  | placeholder_svg_tag }}
+    {% endif %}
   {% endif %}
 </div>
 
@@ -14,6 +24,11 @@
       "type": "image_picker",
       "id": "banner_image",
       "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "banner_url",
+      "label": "Link"
     }
   ],
   "presets": [
