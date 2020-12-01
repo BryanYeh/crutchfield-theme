@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Under Development",
   "main": "index.js",
-  "watch":{
-    "dev":{
-      "patterns": ["src"],
+  "watch": {
+    "dev": {
+      "patterns": [
+        "src"
+      ],
       "extensions": "css,js,liquid,json",
       "quiet": true
     }
@@ -29,6 +31,7 @@
   "homepage": "https://github.com/BryanYeh/crutchfield-theme#readme",
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^3.0.0",
+    "@tailwindcss/typography": "^0.3.1",
     "autoprefixer": "^9.8.6",
     "copyfiles": "^2.4.0",
     "cross-env": "^7.0.2",

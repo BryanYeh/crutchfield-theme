@@ -14,7 +14,7 @@
         <div class="font-bold">
           {{ article.title }}
         </div>
-        <p>{{ article.excerpt }}</p>
+        <p>{{ article.excerpt | truncate: 110 }}</p>
       </div>
       <p class="text-right text-red-600"><a href="{{ article.url }}">Read More</a></p>
     </div>

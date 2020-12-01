@@ -2,40 +2,50 @@
 {% if comment and comment.created_at %}
   {% assign number_of_comments = article.comments_count %}
 {% endif %}
-
-<h1>{{ article.title }}</h1>
-{% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}
-{% capture date %}<time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>{% endcapture %}
-{{ article.author }} @ {{ article.created_at }}
-
-<div>{{ article.content }}</div>
-{% if blog.comments_enabled? %}
-  <h2>{{ number_of_comments }} comments</h2>
-  {% paginate article.comments by 5 %}
-    {% for comment in article.comments %}
-      <div>
-        <div>{{ comment.content }}</div>
-        {{ comment.author }} @ {{ comment.created_at }}
-      </div>
-    {% endfor %}
-    {% if paginate.pages > 1 %}
-      {{ paginate | default_pagination }}
-    {% endif %}
-  {% endpaginate %}
-
-  <div>
-    {% form 'new_comment', article %}
-      {{ form.errors | default_errors }}
-      <label for="CommentAuthor">name</label>
-      <input type="text" name="comment[author]" id="CommentAuthor" placeholder="name" value="{{ form.author }}" autocapitalize="words">
-
-      <label for="CommentEmail">email</label>
-      <input type="email" name="comment[email]" id="CommentEmail" placeholder="email" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
-
-      <label for="CommentBody">message</label>
-      <textarea name="comment[body]" id="CommentBody" placeholder="message">{{ form.body }}</textarea>
-
-      <input type="submit" value="post">
-    {% endform %}
+<div class="px-8">
+  {% if article.image %}
+    <img src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}">
+  {% endif %}
+  
+  <h1 class="text-2xl font-bold">{{ article.title }}</h1>
+  <p class="py-4">
+    <span class="font-semibold">{{ article.author }}</span> <time class="text-sm" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: "%b %d, %Y" }}</time>
+  </p>
+  <div class="prose max-w-none pb-4">
+    {{ article.content }}
   </div>
-{% endif %}
+  {% if blog.comments_enabled? %}
+    <div class="border-t-2 border-gray-300">
+      <h2 class="font-semibold text-xl py-2">{{ number_of_comments }} comments</h2>
+      {% paginate article.comments by 10 %}
+        {% for comment in article.comments %}
+          <div {% if forloop.first == false %}class="border-t-2 border-gray-300 mt-2"{% endif %}>
+            <div class="font-semibold">{{ comment.author }}</div>
+            <p class="text-sm text-gray-600 italic">{{ comment.created_at | date: "%B %d, %Y at %I:%M %P" }}</p>
+            <div>{{ comment.content }}</div>
+          </div>
+        {% endfor %}
+        {% if paginate.pages > 1 %}
+          {{ paginate | default_pagination }}
+        {% endif %}
+      {% endpaginate %}
+      {% form 'new_comment', article %}
+        <div class="flex flex-col w-full md:w-7/12">
+          {{ form.errors | default_errors }}
+          <label for="CommentAuthor" class="text-gray-700 py-2">Name:</label>
+          <input class="border border-gray-600 hover:shadow-md focus:border-red-600 focus:shadow-md p-4" type="text" name="comment[author]" id="CommentAuthor" placeholder="name" value="{{ form.author }}" autocapitalize="words">
+
+          <label for="CommentEmail" class="text-gray-700 py-2">Email:</label>
+          <input class="border border-gray-600 hover:shadow-md focus:border-red-600 focus:shadow-md p-4" type="email" name="comment[email]" id="CommentEmail" placeholder="email" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+
+          <label for="CommentBody" class="text-gray-700 py-2">Comment:</label>
+          <textarea class="border border-gray-600 hover:shadow-md focus:border-red-600 focus:shadow-md p-4" rows="5" name="comment[body]" id="CommentBody" placeholder="message">{{ form.body }}</textarea>
+
+          <input type="submit" value="Post Comment" class="p-4 border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 my-4 cursor-pointer">
+        </div>
+      {% endform %}
+    </div>
+
+  {% endif %}
+
+</div>
