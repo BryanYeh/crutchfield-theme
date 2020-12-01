@@ -14,7 +14,13 @@
         <div class="font-bold">
           {{ article.title }}
         </div>
-        <p>{{ article.excerpt | truncate: 110 }}</p>
+        <p>
+          {% if article.excerpt.size > 0 %}
+            {{ article.excerpt | truncate: 100 }}
+          {% else %}
+            <p>{{ article.content | strip_html | truncate: 100 }}</p>
+          {% endif %}
+        </p>
       </div>
       <p class="text-right text-red-600"><a href="{{ article.url }}">Read More</a></p>
     </div>
