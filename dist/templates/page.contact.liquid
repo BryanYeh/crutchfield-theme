@@ -1,14 +1,21 @@
-<h1>{{ page.title }}</h1>
+<h1 class="font-bold text-2xl mx-auto text-center w-full lg:w-7/12">{{ page.title }}</h1>
+
 {% form 'contact' %}
-  {% if form.posted_successfully? %} Thank you for your contact {% endif %}
-  {{ form.errors | default_errors }}
-  <label for="ContactFormName">name</label>
-  <input type="text" id="ContactFormName" name="contact[name]">
-  <label for="ContactFormEmail">email</label>
-  <input type="email" id="ContactFormEmail" name="contact[email]">
-  <label for="ContactFormPhone">phone</label>
-  <input type="tel" id="ContactFormPhone" name="contact[phone]">
-  <label for="ContactFormMessage">message</label>
-  <textarea rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
-  <input type="submit" value="send">
+  <div class="flex flex-wrap w-full lg:w-7/12 mx-auto px-4 flex-col">
+    {% if form.posted_successfully? %} Thank you for your contact {% endif %}
+    {% if form.errors %}
+      {{ form.errors | default_errors }}
+    {% endif %}
+    <label for="ContactFormName">Name *</label>
+    <input type="text" id="ContactFormName" name="contact[name]" placeholder="name" class="px-4 py-2 border border-gray-500 focus:border-red-600 focus:shadow-md mb-2">
+    <label for="ContactFormEmail">Email *</label>
+    <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="email" class="px-4 py-2 border border-gray-500 focus:border-red-600 focus:shadow-md mb-2">
+    <label for="ContactFormPhone">Phone</label>
+    <input type="tel" id="ContactFormPhone" name="contact[phone]" placeholder="phone" class="px-4 py-2 border border-gray-500 focus:border-red-600 focus:shadow-md mb-2">
+    <label for="ContactFormMessage">Message *</label>
+    <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="message" class="px-4 py-2 border border-gray-500 focus:border-red-600 focus:shadow-md mb-2"></textarea>
+    <input type="submit" value="Send" class="px-4 py-2 border border-red-600 bg-red-600 text-white hover:shadow-md hover:text-red-600 hover:bg-white mb-4 cursor-pointer">
+  </div>
 {% endform %}
+
+
