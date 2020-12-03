@@ -17,10 +17,10 @@
   {{ 'application.css' | asset_url | stylesheet_tag }}
   
 </head>
-<body>
+<body class="h-screen flex flex-col">
   {% render 'header' %}
 
-  <main role="main min-h-screen">
+  <main role="main" class="flex-grow">
     {% render 'breadcrumb' %}
     {{ content_for_layout }}
   </main>

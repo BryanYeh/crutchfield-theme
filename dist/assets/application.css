@@ -883,6 +883,10 @@ img {
   flex: 1 1 0%;
 }
 
+.flex-grow {
+  flex-grow: 1;
+}
+
 .float-right {
   float: right;
 }
@@ -909,6 +913,10 @@ img {
 
 .h-full {
   height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .text-xs {
@@ -1037,10 +1045,6 @@ img {
 
 .max-w-xl {
   max-width: 36rem;
-}
-
-.min-h-screen {
-  min-height: 100vh;
 }
 
 .focus\:outline-none:focus {
