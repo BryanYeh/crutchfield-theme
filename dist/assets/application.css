@@ -935,6 +935,10 @@ img {
   font-size: 1.875rem;
 }
 
+.text-4xl {
+  font-size: 2.25rem;
+}
+
 .text-5xl {
   font-size: 3rem;
 }
