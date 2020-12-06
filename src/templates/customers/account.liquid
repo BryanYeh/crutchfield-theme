@@ -1,1 +1,70 @@
-<!-- /templates/customers/account.liquid -->
+<div class="bg-gray-200 h-full">
+  <h1 class="font-bold text-3xl p-4 md:px-8">Your Account</h1>
+
+  <div class="flex flex-wrap">
+    <div class="w-full md:w-8/12">
+      {% paginate customer.orders by 20 %}
+        <div class="p-4 md:px-8">
+          <div class="bg-gray-300">
+            <h1 class="font-semibold text-2xl p-4">
+              Orders
+            </h1>
+          </div>
+          <div class="bg-white p-4">
+            <table class="table-fixed">
+              <thead>
+                <tr class="text-left">
+                  <th class="w-1/5">Order</th>
+                  <th class="w-1/5">Date</th>
+                  <th class="w-1/5">Fulfillment Status</th>
+                  <th class="w-1/5">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in customer.orders %}
+                  <tr>
+                    <td class="py-2"><a class="font-semibold text-red-500 hover:text-red-700" href="{{ order.customer_url }}">{{ order.order_name }}</a></td>
+                    <td class="py-2">{{ order.created_at | date: format: 'abbreviated_date' }}</td>
+                    <td class="py-2">{{ order.fulfillment_status | capitalize  }}</td>
+                    <td class="py-2">{{ order.total_price | money }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="pb-4 px-4 md:px-8 bg-gray-200 flex">
+        {% for part in paginate.parts %}
+          {% if part.is_link %}
+            <a href="{{ part.url }}" class="px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600 hover:bg-red-600  hover:text-white">{{ part.title }}</a>
+          {% else %}
+            <a class=" px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600">{{ part.title }}</a>
+          {% endif %}
+        {% endfor %}  
+        </div>
+      {% endpaginate %}  
+    </div>
+
+    <div class="w-full md:w-4/12">
+      <div class="p-4">
+        <h2 class="font-semibold text-2xl">{{ customer.name }}</h2>
+        <div>{{ customer.email }}</div>
+        {% if customer.default_address %}
+          <p class="font-semibold mt-2">Default Address</p>
+          <p>{{ customer.default_address.address1 }}</p>
+          {% if customer.default_address.address2 != "" %}
+            <p>{{ customer.default_address.address2 }}</p>
+          {% endif %}
+          <p>{{ customer.default_address.city}}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</p>
+          <p>{{ customer.default_address.zip }}</p>
+          <p>{{ customer.default_address.phone }}</p>
+        {% endif %}
+        <div class="mt-2"><a class="text-red-500 hover:text-red-700" href="{{ routes.account_addresses_url }}">View Addresses</a></div>
+        <div class="border border-gray-400 border-r-0 border-l-0 py-10 mt-4">
+          <a class="text-red-500 hover:text-red-700" href="{{ routes.account_logout_url }}"><i class="las la-sign-out-alt"></i> Sign out</a>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+</div>
