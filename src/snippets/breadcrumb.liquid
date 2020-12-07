@@ -30,6 +30,9 @@
     {%- when 'article' -%}
       {{ blog.title | link_to: blog.url }}
       <a href="{{ article.url }}" class="py-2 hover:text-red-600">{{ article.title }}</a>
+    {% when 'customers/order' %}
+      <a href="{{ routes.account_url }}" class="py-2 hover:text-red-600">Account</a>
+      <a class="py-2 hover:text-red-600 cursor-default">{{ page_title }}</a>
     {%- else -%}
       <a class="py-2 hover:text-red-600 cursor-default">{{ page_title }}</a>
   {%- endcase -%}
