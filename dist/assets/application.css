@@ -1338,6 +1338,12 @@ img {
   color: rgba(74, 85, 104, var(--text-opacity));
 }
 
+.text-gray-800 {
+  --text-opacity: 1;
+  color: #2d3748;
+  color: rgba(45, 55, 72, var(--text-opacity));
+}
+
 .text-red-500 {
   --text-opacity: 1;
   color: #f56565;
@@ -1424,6 +1430,10 @@ img {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-1\/4 {
+  width: 25%;
 }
 
 .w-1\/5 {
