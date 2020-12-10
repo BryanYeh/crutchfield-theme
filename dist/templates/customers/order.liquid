@@ -88,7 +88,25 @@
       <div class="p-4">
         <div><span class="font-semibold">Order Date</span>: {{ order.created_at | date: format: 'abbreviated_date' }}</div>
         <div><span class="font-semibold">Tracking</span>: <a class="text-red-600 hover:text-red-700" href="{{ order.order_status_url }}">View</a></div>
-        <div><button class="px-4 py-2 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white">Reorder</button></div>
+        
+        {% capture variant_ids %}{% for line_item in order.line_items %}{{ line_item.variant_id }},{% endfor %}{% endcapture %}
+        {% capture variant_quantities %}{% for line_item in order.line_items %}{{ line_item.quantity }},{% endfor %}{% endcapture %}
+        {% capture variant_inventories %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_quantity }},{% endfor %}{% endcapture %}
+        {% capture variant_inventory_policies %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_policy }},{% endfor %}{% endcapture %}
+        {% capture variant_inventory_trackers %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_management }},{% endfor %}{% endcapture %}
+
+        <div>
+          <button
+            class="reorder px-4 py-2 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+            data-variant-ids="{{ variant_ids }}"
+            data-variant-quantities="{{ variant_quantities }}"
+            data-variant-inventories="{{ variant_inventories }}"
+            data-variant-inventory-policies="{{ variant_inventory_policies }}"
+            data-variant-inventory-trackers="{{ variant_inventory_trackers }}">
+            Reorder
+          </button>
+        </div>
+        
         <div class="mt-3">
           <h2 class="font-semibold text-xl">Billing Address</h2>
           <p>Payment Status: {{ order.financial_status | capitalize }}</p>

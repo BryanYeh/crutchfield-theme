@@ -49,7 +49,7 @@ function closeDropdown() {
 }
 
 //// add to cart
-function addToCart(id) {
+function addToCart(id,qty = 1) {
   fetch('/cart/add.js', {
     method: 'POST',
     headers: {
@@ -58,12 +58,42 @@ function addToCart(id) {
     },
     body: JSON.stringify({
       id: id,
-      quantity: 1,
+      quantity: qty,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
       console.log(data)
+    })
+}
+
+function addToCartQueue(i, data, el){
+  console.log(data)
+  //LOW STOCK -- add as many as possible if stock is below requested ammount
+  if(data[i].check_inventory){
+    data[i].quantity = Math.min(parseInt(data[i].inventory), parseInt(data[i].quantity));
+  }
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      quantity: data[i].quantity,
+      id: data[i].id
+    }),
+  })
+    .then((response) => response.json())
+    .then((res) => {
+      if(i >= data.length - 1){
+        //products from queue are now added to the cart -> stop loading signal and go to cart
+        window.location.href = '/cart';
+        return;
+      }else{
+        // Calls are async as required by Shopify Docs
+        addToCartQueue(i+1, data, el)
+      }
     })
 }
 
@@ -331,6 +361,7 @@ ready(() => {
       },
     },
   })
+  
 
   //// product page thumbnails
   document.querySelectorAll('.gallery-thumbs img').forEach((thumbnail) => {
@@ -429,5 +460,31 @@ ready(() => {
       document.querySelector('#' + e.target.dataset.href).classList.add('block')
       document.querySelector('#' + e.target.dataset.href).classList.remove('hidden')
     })
+  })
+
+  /// reorder
+  document.querySelector('.reorder').addEventListener('click', (e) => {
+    var ids = e.target.dataset.variantIds.split(',')
+    var quantities = e.target.dataset.variantQuantities.split(',')
+    var inventories = e.target.dataset.variantInventories.split(',')
+    var inventory_policies = e.target.dataset.variantInventoryPolicies.split(',')
+    var inventory_trackers = e.target.dataset.variantInventoryTrackers.split(',')
+
+    ids.splice(-1, 1)
+    quantities.splice(-1, 1)
+    inventories.splice(-1, 1)
+    inventory_policies.splice(-1, 1)
+    inventory_trackers.splice(-1, 1)
+
+    var data = [];
+    for(var i=0; i<ids.length; i++){
+      data.push({
+        id: ids[i],
+        quantity: quantities[i],
+        inventory: inventories[i],
+        check_inventory: (inventory_policies[i] == "deny" && inventory_trackers[i] != "")
+      });
+    }
+    addToCartQueue(0, data, e);
   })
 })
