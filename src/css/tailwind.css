@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* purgecss ignore */
+#admin-bar-iframe, #preview-bar-iframe {
+  display: none !important;
+}
