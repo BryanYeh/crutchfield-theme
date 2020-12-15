@@ -1,0 +1,136 @@
+{% if section.settings.show_announcement_bar == true %}
+    {% if section.settings.show_only_home == true and template == 'index' %}
+        <div class="hidden md:flex justify-between bg-gray-200 items-center flex-wrap px-4">
+            <a href="#" class="text-2xl p-6">View on Github</a>
+            <a href="#">This is a demo store <span class="text-sm">See Details</span></a>
+            <a href="#">Theme under development</a>
+        </div>
+    {% elsif section.settings.show_only_home == false %}
+        <div class="hidden md:flex justify-between bg-gray-200 items-center flex-wrap px-4">
+            <a href="#" class="text-2xl p-6">View on Github</a>
+            <a href="#">This is a demo store <span class="text-sm">See Details</span></a>
+            <a href="#">Theme under development</a>
+        </div>
+    {% endif %}
+{% endif %}
+
+{% schema %}
+    {
+        "name": "Announcement Bar",
+        "settings": [
+            {
+                "label": "Show Announcements",
+                "id": "show_announcement_bar",
+                "type": "checkbox",
+                "default": false
+            },
+            {
+                "label": "Home page only",
+                "id": "show_only_home",
+                "type": "checkbox",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Announcements Location"
+            },
+            {
+                "type": "paragraph",
+                "content": "Content will be placed as in order inputted"
+            },
+            {
+                "type": "checkbox",
+                "id": "left_announcement",
+                "label": "Show Left Announcement",
+                "default": false
+            },
+            {
+                "type": "checkbox",
+                "id": "middle_announcement",
+                "label": "Show Middle Announcement",
+                "default": false
+            },
+            {
+                "type": "checkbox",
+                "id": "right_announcement",
+                "label": "Show Right Announcement",
+                "default": false
+            }
+        ],
+        "max_blocks": 3,
+        "blocks": [
+            {
+                "type": "url",
+                "name": "Link",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "announcement_link_text",
+                        "label": "Link Text",
+                        "default": "See more info"
+                    },
+                    {
+                        "type": "url",
+                        "id": "announcement_link",
+                        "label": "Link"
+                    }
+                ]
+            },
+            {
+                "type": "richtext",
+                "name": "Text",
+                "settings": [
+                    {
+                        "type": "richtext",
+                        "id": "announcemet_richtext",
+                        "label": "Text",
+                        "default": "<p></p>"
+                    }
+                ]
+            },
+            {
+                "type": "html",
+                "name": "HTML",
+                "settings": [
+                    {
+                        "type": "html",
+                        "id": "announcement_html",
+                        "label": "HTML",
+                        "default": "<div></div>"
+                    }
+                ]
+            },
+            {
+                "type": "link_list",
+                "name": "Menu",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "announcement_link_text",
+                        "label": "Link Text",
+                        "info": "Leave empty to use menu title"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "announcement_menu",
+                        "label": "Menu",
+                        "info": "No sublinks will be shown"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "name": "Social Media",
+                "settings":[
+                    {
+                        "type": "checkbox",
+                        "id": "announcement_social_media",
+                        "label": "Show social media",
+                        "default": true,
+                        "info": "Social media configuration can be found in Theme Settings"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}
