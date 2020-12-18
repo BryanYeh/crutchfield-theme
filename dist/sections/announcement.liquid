@@ -1,15 +1,42 @@
 {% if section.settings.show_announcement_bar == true %}
-    {% if section.settings.show_only_home == true and template == 'index' %}
-        <div class="hidden md:flex justify-between bg-gray-200 items-center flex-wrap px-4">
-            <a href="#" class="text-2xl p-6">View on Github</a>
-            <a href="#">This is a demo store <span class="text-sm">See Details</span></a>
-            <a href="#">Theme under development</a>
-        </div>
-    {% elsif section.settings.show_only_home == false %}
-        <div class="hidden md:flex justify-between bg-gray-200 items-center flex-wrap px-4">
-            <a href="#" class="text-2xl p-6">View on Github</a>
-            <a href="#">This is a demo store <span class="text-sm">See Details</span></a>
-            <a href="#">Theme under development</a>
+    {% if section.settings.show_only_home == false or template == 'index' %}
+        <div class="{% if section.settings.show_on_mobile == false %} hidden md:flex {% endif%} justify-between bg-gray-200 items-center flex-wrap p-4 flex">
+            
+            {% assign columns = section.settings.no_columns %}
+            {% case columns %}
+                {% when 1 %}
+                    <div class="w-full
+                                {% if section.settings.one_column == 'left' %} text-left
+                                {% elsif section.settings.one_column == 'center' %} text-center
+                                {% else %} text-right {%- endif -%}">
+                        {% if section.blocks.size > 0 %}
+                            {% render 'announcement', block: section.blocks[0] %}
+                        {% endif %}
+                    </div>
+                {% when 2 %}
+                    {% for block in section.blocks limit: 2 %}
+                        {% assign column_width = section.settings.two_columns %}
+                        <div class="w-full
+                                    {% if column_width == 'half' %} md:w-1/2
+                                    {% elsif column_width == 'one_two' and forloop.index == 1 %} md:w-1/3
+                                    {% elsif column_width == 'one_two' and forloop.index == 2 %} md:w-2/3
+                                    {% elsif column_width == 'two_one' and forloop.index == 1 %} md:w-2/3
+                                    {% else %} md:w-1/3
+                                    {% endif %}
+                                    {% if forloop.index == 2 %} text-right {%- endif -%}">
+                            {% render 'announcement', block: block %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for block in section.blocks limit: 3%}
+                        {% assign column_width = section.settings.two_columns %}
+                        <div class="w-full md:w-1/3
+                                    {% if forloop.index == 2 %} text-center
+                                    {% elsif forloop.index == 3 %} text-right {%- endif -%}">
+                            {% render 'announcement', block: block %}
+                        </div>
+                    {% endfor %}
+            {% endcase %}
         </div>
     {% endif %}
 {% endif %}
@@ -25,36 +52,73 @@
                 "default": false
             },
             {
+                "label": "Enable on Mobile",
+                "id": "show_on_mobile",
+                "type": "checkbox",
+                "default": true
+            },
+            {
                 "label": "Home page only",
                 "id": "show_only_home",
                 "type": "checkbox",
                 "default": true
             },
             {
+                "type": "range",
+                "id": "no_columns",
+                "min": 1,
+                "max": 3,
+                "step": 1,
+                "label": "Columns",
+                "default": 1
+            },
+            {
                 "type": "header",
-                "content": "Announcements Location"
+                "content": "1 column Settings"
             },
             {
-                "type": "paragraph",
-                "content": "Content will be placed as in order inputted"
+                "type": "select",
+                "id": "one_column",
+                "label": "Text alignment",
+                "options": [
+                    {
+                    "value": "left",
+                    "label": "Left"
+                    },
+                    {
+                    "value": "center",
+                    "label": "Center"
+                    },
+                    {
+                    "value": "right",
+                    "label": "Right"
+                    }
+                ],
+                "default": "center"
             },
             {
-                "type": "checkbox",
-                "id": "left_announcement",
-                "label": "Show Left Announcement",
-                "default": false
+                "type": "header",
+                "content": "2 columns Settings"
             },
             {
-                "type": "checkbox",
-                "id": "middle_announcement",
-                "label": "Show Middle Announcement",
-                "default": false
-            },
-            {
-                "type": "checkbox",
-                "id": "right_announcement",
-                "label": "Show Right Announcement",
-                "default": false
+                "type": "select",
+                "id": "two_columns",
+                "label": "Column Width",
+                "options": [
+                    {
+                    "value": "half",
+                    "label": "50% - 50%"
+                    },
+                    {
+                    "value": "one_two",
+                    "label": "33.33% - 66.66%"
+                    },
+                    {
+                    "value": "two_one",
+                    "label": "66.66% - 33.33%"
+                    }
+                ],
+                "default": "half"
             }
         ],
         "max_blocks": 3,
@@ -82,9 +146,8 @@
                 "settings": [
                     {
                         "type": "richtext",
-                        "id": "announcemet_richtext",
-                        "label": "Text",
-                        "default": "<p></p>"
+                        "id": "announcement_richtext",
+                        "label": "Text"
                     }
                 ]
             },
@@ -95,8 +158,7 @@
                     {
                         "type": "html",
                         "id": "announcement_html",
-                        "label": "HTML",
-                        "default": "<div></div>"
+                        "label": "HTML"
                     }
                 ]
             },
@@ -104,12 +166,6 @@
                 "type": "link_list",
                 "name": "Menu",
                 "settings": [
-                    {
-                        "type": "text",
-                        "id": "announcement_link_text",
-                        "label": "Link Text",
-                        "info": "Leave empty to use menu title"
-                    },
                     {
                         "type": "link_list",
                         "id": "announcement_menu",
@@ -121,6 +177,7 @@
             {
                 "type": "checkbox",
                 "name": "Social Media",
+                "limit": 1,
                 "settings":[
                     {
                         "type": "checkbox",

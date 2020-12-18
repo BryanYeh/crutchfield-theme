@@ -1,0 +1,17 @@
+{% assign block_type = block.type %}
+{% case block_type %}
+    {% when 'url' %}
+        <a class="text-red-600 hover:text-black font-bold text-xl" href="{{ block.settings.announcement_link }}">{{- block.settings.announcement_link_text -}}</a>
+    {% when 'richtext' %}
+        <div class="prose">{{- block.settings.announcement_richtext -}}</div>
+    {% when 'html' %}
+        <div class="prose">{{- block.settings.announcement_html -}}</div>
+    {% when 'link_list' %}
+        {% for link in linklists[block.settings.announcement_menu].links %}
+            <a class="py-4 px-3" href="{{ link.url }}">{{- link.title -}}</a>
+        {% endfor %}
+    {% when 'checkbox' %}
+        {% render 'social_media' %}
+    {% else %}
+        
+{% endcase %}

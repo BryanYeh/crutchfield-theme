@@ -6,5 +6,52 @@
     "theme_author": "BryanYeh",
     "theme_documentation_url": "https://github.com/BryanYeh/crutchfield-theme",
     "theme_support_url": "https://github.com/BryanYeh/crutchfield-theme"
+  },
+  {
+    "name": "Social Media",
+    "settings":[
+      {
+        "label": "Facebook",
+        "id": "social_facebook",
+        "type": "text",
+        "info": "https://www.facebook.com/shopify"
+      },
+      {
+        "label": "Twitter",
+        "id": "social_twitter",
+        "type": "text",
+        "info": "https://twitter.com/shopify"
+      },
+      {
+        "label": "Pinterest",
+        "id": "social_pinterest",
+        "type": "text",
+        "info": "https://www.pinterest.com/shopify"
+      },
+      {
+        "label": "Instagram",
+        "id": "social_instagram",
+        "type": "text",
+        "info": "https://instagram.com/shopify"
+      },
+      {
+        "label": "Snapchat",
+        "id": "social_snapchat",
+        "type": "text",
+        "info": "https://snapchat.com/add/shopify"
+      },
+      {
+        "label": "Youtube",
+        "id": "social_youtube",
+        "type": "text",
+        "info": "https://www.youtube.com/user/shopify"
+      },
+      {
+        "label": "Linkedin",
+        "id": "social_linkedin",
+        "type": "text",
+        "info": "https://www.linkedin.com/in/shopify"
+      }
+    ]
   }
 ]
