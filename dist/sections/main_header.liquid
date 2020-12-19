@@ -1,0 +1,103 @@
+<div class="flex flex-wrap items-center justify-between p-4">
+    <div class="w-1/2 md:w-1/3">
+        <a href="{{ shop.secure_url }}">
+            {%- if settings.logo == blank -%}
+                <h1 class="text-2xl font-bold">{{ shop.name }}</h1>
+            {%- else -%}
+                <img src="{{ settings.logo | img_url: 'master' }}" class="w-full lg:w-1/2 lg:pr-4">
+            {%- endif -%}
+            {%- if settings.slogan != blank -%}
+                <div class="hidden lg:flex">{{- settings.slogan -}}</div>
+            {%- endif -%}
+        </a>
+    </div>
+    <div class="hidden md:flex md:w-1/3 justify-center">
+        <div class="relative w-full">
+            <form action="{{ routes.search_url }}" method="get" autocomplete="off">
+                <div class="relative">
+                    <input type="search" class="border p-3 w-full focus:ring-3 focus:ring-gray-300 search-field" placeholder="Search products">
+                    <button type="submit" class="absolute inset-y-0 right-0 p-3">
+                        <svg version="1.1" class="h-6 font-semibold" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 52.966 52.966" style="enable-background:new 0 0 52.966 52.966;" xml:space="preserve">
+                            <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
+                            c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
+                            C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
+                            S32.459,40,21.983,40z"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            {%- if settings.predictive_search == true -%}
+                <div class="absolute bg-white border border-gray-500 border-t-0 shadow-md w-full divide-y divide-gray-400 z-10 hidden"
+                    id="search_results"></div>
+                <template id="search_results_template">
+                    <a href="" class="flex px-4 py-3 border-b-1 border-gray-500 border-solid">
+                    <img src="" alt="">
+                    <div class="ml-4">
+                        <div class="text-lg"></div>
+                        <div class="text-sm font-bold"></div>
+                    </div>
+                    </a>
+                </template>
+            {%- endif -%}
+        </div>
+    </div>
+    <div class="w-1/2 md:w-1/3 justify-end flex">
+        {%- if section.settings.contact_page != blank -%}
+            <a class="mx-2" href="{{ section.settings.contact_page }}">
+                <div class="text-center">
+                    <i class="las la-comment hidden text-4xl md:block"></i>
+                    Contact Us
+                </div>
+            </a>            
+        {%- endif -%}
+        {% if shop.customer_accounts_enabled %}
+            <div class="mx-2 hidden md:block cursor-pointer">
+                <div class="text-center">
+                    <i class="las la-user text-4xl block"></i>
+                    Your Account
+                </div>
+            </div>  
+        {% endif %}
+        <a href="/cart" class="mx-2 hidden md:block">
+            <div class="text-center">
+                {%- if section.settings.cart_icon == 'bag' -%}
+                    <i class="las la-shopping-bag text-4xl block"></i>
+                    Your Bag
+                {%- else -%}
+                    <i class="las la-shopping-cart text-4xl block"></i>
+                    Your Cart
+                {%- endif -%}
+            </div>
+        </a>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Header",
+        "settings": [
+            {
+                "type": "url",
+                "id": "contact_page",
+                "label": "Contact Us"
+            },
+            {
+                "type": "select",
+                "id": "cart_icon",
+                "label": "Shopping Cart Icon",
+                "options": [
+                    {
+                        "value": "bag",
+                        "label": "Shopping Bag"
+                    },
+                    {
+                        "value": "cart",
+                        "label": "Shopping Cart"
+                    }
+                ],
+                "default": "cart"
+            }
+        ]
+    }
+{% endschema %}

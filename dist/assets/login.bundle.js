@@ -1,21 +1,170 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is not neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
+
+/***/ "./node_modules/@shopify/theme-images/images.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@shopify/theme-images/images.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "preload": () => /* binding */ preload,
+/* harmony export */   "loadImage": () => /* binding */ loadImage,
+/* harmony export */   "imageSize": () => /* binding */ imageSize,
+/* harmony export */   "getSizedImageUrl": () => /* binding */ getSizedImageUrl,
+/* harmony export */   "removeProtocol": () => /* binding */ removeProtocol
+/* harmony export */ });
+/**
+ * Image Helper Functions
+ * -----------------------------------------------------------------------------
+ * https://github.com/Shopify/slate.git.
+ *
+ */
+
+/**
+ * Preloads an image in memory and uses the browsers cache to store it until needed.
+ *
+ * @param {Array} images - A list of image urls
+ * @param {String} size - A shopify image size attribute
+ */
+
+function preload(images, size) {
+  if (typeof images === 'string') {
+    images = [images];
+  }
+
+  for (let i = 0; i < images.length; i++) {
+    const image = images[i];
+    loadImage(getSizedImageUrl(image, size));
+  }
+}
+
+/**
+ * Loads and caches an image in the browsers cache.
+ * @param {string} path - An image url
+ */
+function loadImage(path) {
+  new Image().src = path;
+}
+
+/**
+ * Find the Shopify image attribute size
+ *
+ * @param {string} src
+ * @returns {null}
+ */
+function imageSize(src) {
+  const match = src.match(
+    /.+_((?:pico|icon|thumb|small|compact|medium|large|grande)|\d{1,4}x\d{0,4}|x\d{1,4})[_\.@]/
+  );
+
+  if (match) {
+    return match[1];
+  } else {
+    return null;
+  }
+}
+
+/**
+ * Adds a Shopify size attribute to a URL
+ *
+ * @param src
+ * @param size
+ * @returns {*}
+ */
+function getSizedImageUrl(src, size) {
+  if (size === null) {
+    return src;
+  }
+
+  if (size === 'master') {
+    return removeProtocol(src);
+  }
+
+  const match = src.match(/\.(jpg|jpeg|gif|png|bmp|bitmap|tiff|tif)(\?v=\d+)?$/i);
+
+  if (match) {
+    const prefix = src.split(match[0]);
+    const suffix = match[0];
+
+    return removeProtocol(`${prefix[0]}_${size}${suffix}`);
+  } else {
+    return null;
+  }
+}
+
+function removeProtocol(path) {
+  return path.replace(/http(s)?:/, '');
+}
+
+
+/***/ }),
 
 /***/ "./src/js/layout/theme.js":
 /*!********************************!*\
   !*** ./src/js/layout/theme.js ***!
   \********************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("\n\n//# sourceURL=webpack://shopify-webpack-tailwindcss/./src/js/layout/theme.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _shopify_theme_images__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shopify/theme-images */ "./node_modules/@shopify/theme-images/images.js");
+
+
+var ready = function ready(callback) {
+  if (document.readyState != "loading") callback();else document.addEventListener("DOMContentLoaded", callback);
+};
+
+ready(function () {
+  var search_element = document.getElementById("search_results");
+  var delay_by_in_ms = 700;
+  var scheduled_function = false;
+
+  var search_call = function search_call(search_term) {
+    if (search_term != "") {
+      fetch("/search/suggest.json?q=" + search_term + "&resources[type]=product&resources[options][unavailable_products]=last").then(function (response) {
+        return response.json();
+      }).then(function (suggestions) {
+        var productSuggestions = suggestions.resources.results.products;
+
+        if (productSuggestions.length > 0) {
+          var container = document.getElementById("search_results");
+          var template = document.querySelector("#search_results_template");
+          container.innerHTML = "";
+          productSuggestions.forEach(function (el) {
+            var clone = template.content.cloneNode(true);
+            clone.querySelector("a").href = el.url;
+
+            if (el.image) {
+              clone.querySelector("img").src = _shopify_theme_images__WEBPACK_IMPORTED_MODULE_0__.getSizedImageUrl(el.image, "70x70");
+              clone.querySelector("img").alt = el.title;
+            }
+
+            clone.querySelector("div").children[0].textContent = el.title;
+            clone.querySelector("div").children[1].textContent = "$" + el.price;
+            container.appendChild(clone);
+          });
+          container.classList.toggle("hidden");
+        }
+      });
+    }
+  };
+
+  if (typeof search_element != "undefined" && search_element != null) {
+    document.querySelector(".search-field").addEventListener("keyup", function (e) {
+      document.getElementById("search_results").innerHTML = "";
+      document.getElementById("search_results").classList.add("hidden");
+      var search_term = document.querySelector(".search-field").value;
+
+      if (scheduled_function) {
+        clearTimeout(scheduled_function);
+      }
+
+      scheduled_function = setTimeout(search_call, delay_by_in_ms, search_term);
+    });
+  }
+});
 
 /***/ }),
 
@@ -25,8 +174,9 @@ eval("\n\n//# sourceURL=webpack://shopify-webpack-tailwindcss/./src/js/layout/th
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _layout_theme_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/theme.js */ \"./src/js/layout/theme.js\");\n/* harmony import */ var _layout_theme_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_layout_theme_js__WEBPACK_IMPORTED_MODULE_0__);\n\n\n//# sourceURL=webpack://shopify-webpack-tailwindcss/./src/js/templates/login.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _layout_theme_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/theme.js */ "./src/js/layout/theme.js");
+
 
 /***/ })
 
@@ -56,18 +206,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _lay
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports

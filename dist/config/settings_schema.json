@@ -8,6 +8,22 @@
     "theme_support_url": "https://github.com/BryanYeh/crutchfield-theme"
   },
   {
+    "name": "Logo",
+    "settings":[
+      {
+        "label": "Logo image",
+        "id": "logo",
+        "type": "image_picker"
+      },
+      {
+        "label": "Slogan",
+        "id": "slogan",
+        "type": "text",
+        "info": "Will be displayed in large screens or bigger under logo"
+      }
+    ]
+  },
+  {
     "name": "Favicon",
     "settings":[
       {
@@ -15,6 +31,17 @@
         "id": "favicon",
         "type": "image_picker",
         "info": "Will be scaled down to 32x32 px"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "label": "Enable predictive search",
+        "id": "predictive_search",
+        "type": "checkbox",
+        "default": true
       }
     ]
   },
