@@ -11,6 +11,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: mode,
+  watch: mode === "development",
+  devtool: false,
   entry: glob.sync("./src/js/**/*.js").reduce((acc, path) => {
     const entry = path.replace(/^.*[\\\/]/, "").replace(".js", "");
     acc[entry] = path;
@@ -27,6 +29,16 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
       {
         test: /\.css$/i,
         use: [
@@ -85,7 +97,7 @@ if (mode === "development") {
           // live_deploy,
           live_watch,
         ],
-        parallel: false,
+        parallel: true,
       },
     })
   );
