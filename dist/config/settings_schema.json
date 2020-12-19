@@ -8,6 +8,17 @@
     "theme_support_url": "https://github.com/BryanYeh/crutchfield-theme"
   },
   {
+    "name": "Favicon",
+    "settings":[
+      {
+        "label": "Favicon image",
+        "id": "favicon",
+        "type": "image_picker",
+        "info": "Will be scaled down to 32x32 px"
+      }
+    ]
+  },
+  {
     "name": "Social Media",
     "settings":[
       {
