@@ -52,10 +52,26 @@
             </a>            
         {%- endif -%}
         {% if shop.customer_accounts_enabled %}
-            <div class="mx-2 hidden md:block cursor-pointer">
+            <div class="mx-2 hidden md:block cursor-pointer subnav">
                 <div class="text-center">
                     <i class="las la-user text-4xl block"></i>
                     Your Account
+                </div>
+                <div class="bg-white border border-gray-400 shadow-md absolute p-4 right-2 space-y-4 mt-4 hidden">
+                    {%- if customer -%}
+                        <a href="{{ routes.account_url }}">My Account</a>
+                        <a href="{{ routes.account_logout_url }}">Logout</a>
+                    {%- else -%}
+                        <div class="text-center py-2">
+                            <a href="{{ routes.account_login_url }}" class="text-white bg-red-500 px-5 py-2 rounded mr-2 hover:bg-white hover:text-red-500 border border-red-500">Sign In</a>
+                            <a href="{{ routes.account_register_url }}" class="text-red-500 bg-white border border-red-500 px-5 py-2 rounded hover:text-white hover:bg-red-500">Create</a>
+                        </div>
+                        {%- if section.settings.benefits != blank -%}
+                            <div class="prose max-w-none">
+                                {{ section.settings.benefits }}
+                            </div>
+                        {%- endif -%}
+                    {%- endif -%}
                 </div>
             </div>  
         {% endif %}
@@ -97,6 +113,12 @@
                     }
                 ],
                 "default": "cart"
+            },
+            {
+                "type": "html",
+                "id": "benefits",
+                "label": "Account Benefits",
+                "default": "<strong>Account benefits</strong><ul><li>Earn 50 Free Rewards Points</li><li>Store billing and shipping info</li><li>Track your orders</li><li>Create and view a wishlist</li></ul>"
             }
         ]
     }
