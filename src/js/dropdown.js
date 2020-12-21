@@ -85,4 +85,27 @@ ready(() => {
       search_element.classList.add("hidden");
     }
   };
+
+  // maybe redo mobile nav
+  let position_y = 0;
+  let open = false
+
+  document.querySelector('.las.la-bars').addEventListener('click', (e) => {
+    if(open === false){
+      position_y = window.scrollY
+    }
+    
+    document
+      .querySelector('body')
+      .parentNode.classList.toggle('overflow-hidden')
+    document.querySelector('nav').parentNode.classList.toggle('hidden')
+
+    if(open === true){
+      window.scrollTo(0,position_y)
+    }
+
+    open = !open
+  })
+
 });
+

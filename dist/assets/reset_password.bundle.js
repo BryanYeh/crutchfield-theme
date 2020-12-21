@@ -175,7 +175,25 @@ ready(function () {
       search_element.innerHTML = "";
       search_element.classList.add("hidden");
     }
-  };
+  }; // maybe redo mobile nav
+
+
+  var position_y = 0;
+  var open = false;
+  document.querySelector('.las.la-bars').addEventListener('click', function (e) {
+    if (open === false) {
+      position_y = window.scrollY;
+    }
+
+    document.querySelector('body').parentNode.classList.toggle('overflow-hidden');
+    document.querySelector('nav').parentNode.classList.toggle('hidden');
+
+    if (open === true) {
+      window.scrollTo(0, position_y);
+    }
+
+    open = !open;
+  });
 });
 
 /***/ }),
