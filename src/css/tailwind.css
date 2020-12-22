@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 /* purgecss ignore */
+html{
+  padding-bottom: 0 !important;
+}
 #admin-bar-iframe, #preview-bar-iframe {
   display: none !important;
 }
