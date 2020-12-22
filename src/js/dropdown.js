@@ -91,20 +91,20 @@ ready(() => {
   let open = false
 
   document.querySelector('.las.la-bars').addEventListener('click', (e) => {
-    if(open === false){
-      position_y = window.scrollY
-    }
+    // if(open === false){
+    //   position_y = window.scrollY
+    // }
     
     document
       .querySelector('body')
       .parentNode.classList.toggle('overflow-hidden')
     document.querySelector('nav').parentNode.classList.toggle('hidden')
 
-    if(open === true){
-      window.scrollTo(0,position_y)
-    }
+    // if(open === true){
+    //   window.scrollTo(0,position_y)
+    // }
 
-    open = !open
+    // open = !open
   })
 
 });
