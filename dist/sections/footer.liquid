@@ -1,0 +1,35 @@
+<footer class="pt-4">
+{%- if section.settings.show_social_media_icons == true or section.settings.show_copyright == true -%}
+    <div class="bg-gray-300 flex flex-wrap p-4">
+        {%- if section.settings.show_copyright == true -%}
+            <div class="{% if section.settings.show_social_media == true %} w-1/2 {% else %} w-full {% endif %} px-4">
+                <a class="hover:text-red-600" href="{{ shop.secure_url }}">{{- shop.name }}</a> &copy; {{ "now" | date: "%Y" -}}. All Rights Reserved
+            </div>
+        {%- endif -%}
+        {%- if section.settings.show_social_media == true -%}
+            <div class="{% if section.settings.show_copyright == true %} w-1/2 {% else %} w-full {% endif %} px-4 text-right">
+                {%- render 'social_media' -%}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endif -%}
+</footer>
+{% schema %}
+    {
+        "name": "Footer",
+        "settings": [
+            {
+                "type": "checkbox",
+                "id": "show_copyright",
+                "label": "Show copyright",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "show_social_media",
+                "label": "Show social media icons",
+                "default": true
+            }
+        ]
+    }
+{% endschema %}
