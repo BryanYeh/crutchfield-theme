@@ -1,4 +1,74 @@
-<footer class="pt-4">
+<footer class="pt-4 bg-gray-200">
+{% case section.blocks.size %}
+    {% when 0 %}
+    {% when 1 %}
+        {% assign column_width = "w-full" %}
+    {% when 2 %}
+        {% assign column_width = "w-full md:w-1/2" %}
+    {% when 3 %}
+        {% assign column_width = "w-full sm:w-1/2 md:w-4/12" %}
+    {% when 4 %}
+        {% assign column_width = "w-full sm:w-1/2 md:w-4/12 lg:w-3/12" %}
+{% endcase %}
+
+  <div class="p-4 flex flex-wrap">
+    {% for block in section.blocks %}
+    <div class="{{ column_width }} p-4">
+        {%- if block.settings.title -%}
+            <h3 class="uppercase font-bold text-2xl">{{ block.settings.title | escape }}</h3>
+        {%- endif -%}
+        {%- case block.type -%}
+            {% when 'menu' %}
+                <ul>
+                    {% for link in linklists[block.settings.menu].links %}
+                        <li class="py-2"><a href="{{ link.url }}" class="hover:text-red-600">{{ link.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% when 'text' %}
+                <div class="prose max-w-none pt-2">
+                    {{- block.settings.richtext -}}
+                </div>
+            {% when 'newsletter' %}
+                {% form 'customer', class: "pt-2" %}
+                    {% if form.errors %}
+                    <ul>
+                        {% for field in form.errors %}
+                            <li class="text-red-800 font-semibold">
+                                {{ field }} {{ form.errors.messages[field] }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if form.posted_successfully? %}
+                        <p class="text-yellow-400 font-semibold text-lg">You have successfully subscribed to our newsletter.</p>
+                    {% else %}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <label for="NewsletterEmail" class="text-sm mb-2 text-gray-600">
+                            {% if label %}
+                                <div class="rte">{{ label }}</div>
+                            {% else %}
+                                {{ block.settings.subtext }}
+                            {% endif %}
+                            </label>
+                        <div class="flex max-w-xl">
+                            <input class="appearance-none bg-white block border border-gray-300 focus:outline-none focus:shadow-md px-4 py-2 w-full" type="email" placeholder="Your Email" name="contact[email]" autocorrect="off" autocapitalize="off">
+                            <div class="">
+                                <button type="submit" class="bg-red-600 border border-red-600 hover:bg-transparent hover:text-red-600 ml-1 px-4 py-2 text-white" name="commit" id="Subscribe">Subscribe</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endform %}
+            {% when 'blog' %}
+                <ul>
+                    {% for article in blogs[block.settings.blog].articles %}
+                        <li class="py-2"><a href="{{ article.url }}" class="hover:text-red-600">{{ article.title }}</a></li>
+                    {% endfor %}
+                </ul>
+        {%- endcase -%}
+    </div>
+    {% endfor %}
+  </div>
+
 {%- if section.settings.show_social_media_icons == true or section.settings.show_copyright == true -%}
     <div class="bg-gray-300 flex flex-wrap p-4">
         {%- if section.settings.show_copyright == true -%}
@@ -17,6 +87,7 @@
 {% schema %}
     {
         "name": "Footer",
+        "max_blocks": 4,
         "settings": [
             {
                 "type": "checkbox",
@@ -29,6 +100,93 @@
                 "id": "show_social_media",
                 "label": "Show social media icons",
                 "default": true
+            }
+        ],
+        "blocks": [
+            {
+                "type": "menu",
+                "name": "Menu",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "default": "Links",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "menu",
+                        "label": "Menu",
+                        "info": "This menu won't show dropdown items"
+                    }
+                ]
+            },
+            {
+                "type": "text",
+                "name": "Text",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "default": "Contact us",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "richtext",
+                        "label": "Text",
+                        "default": "<p>Use this text to share information about your brand with your customers.</p>"
+                    }
+                ]
+            },
+            {
+                "type": "newsletter",
+                "name": "Newsletter signup",
+                "limit": 1,
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "default": "Newsletter",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "subtext",
+                        "label": "Subtext",
+                        "default": "<p>Promotions, new products and sales. Directly to your inbox.</p>"
+                    },
+                    {
+                        "type": "paragraph",
+                        "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+                    }
+                ]
+            },
+            {
+                "type": "blog",
+                "name": "Blog",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "default": "Recent News",
+                        "label": "Heading"
+                    },
+                    {
+                        "type": "blog",
+                        "id": "blog",
+                        "label": "Blog"
+                    },
+                    {
+                        "type":      "range",
+                        "id":        "blog_posts_count",
+                        "min":       1,
+                        "max":        20,
+                        "step":       1,
+                        "label":     "Number of Posts",
+                        "default":   5
+                    }
+                ]
             }
         ]
     }
