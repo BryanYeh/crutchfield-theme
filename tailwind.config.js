@@ -14,7 +14,12 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {},
+  variants: {
+    extend: {
+      translate: ['group-hover'],
+      animation: ['group-hover'],
+    }
+  },
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),

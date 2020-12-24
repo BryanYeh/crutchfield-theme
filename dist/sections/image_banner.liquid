@@ -1,0 +1,237 @@
+{% case section.settings.bg_padding %}
+    {% when 'padding_4' %}
+        {% assign padding = 'p-4' %}
+    {% when 'padding_10' %}
+        {% assign padding = 'p-10' %}
+    {% else %}
+        {% assign padding = 'p-20' %}
+{% endcase %}
+
+{% case section.settings.position %}
+    {% when 'left_top' %}
+        {% assign position = 'top-4 left-4' %}
+    {% when 'left_middle' %}
+        {% assign position = 'top-1/2 left-4 transform -translate-y-1/2' %}
+    {% when 'left_bottom' %}
+        {% assign position = 'bottom-4 left-4' %}
+    {% when 'right_top' %}
+        {% assign position = 'top-4 right-4' %}
+    {% when 'right_middle' %}
+        {% assign position = 'top-1/2 right-4 transform -translate-y-1/2' %}
+    {% when 'right_bottom' %}
+        {% assign position = 'bottom-4 right-4' %}
+    {% when 'middle_top' %}
+        {% assign position = 'top-4 left-1/2 transform -translate-x-1/2' %}
+    {% when 'middle_bottom' %}
+        {% assign position = 'bottom-4 left-1/2 transform -translate-x-1/2' %}
+    {% else %}
+        {% assign position = 'top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2' %}
+{% endcase %}
+
+{% case section.settings.animation %}
+    {% when 'bounce' %}
+        {% assign animation = 'group-hover:animate-bounce' %}
+    {% when 'pulse' %}
+        {% assign animation = 'group-hover:animate-pulse' %}
+    {% when 'ping' %}
+        {% assign animation = 'group-hover:anime-ping' %}
+    {% when 'spin' %}
+        {% assign animation = 'group-hover:animate-spin' %}
+    {% else %}
+        {% assign animation = '' %}
+{% endcase %}
+
+<div class="relative group">
+    {%- if section.settings.enable_content == true -%}
+        <div class="absolute text-center {{ position }} {% if section.settings.enable_background -%} {{ padding }} bg-black bg-opacity-50 {%- endif %}">
+            {%- if section.settings.title != blank -%}
+                <h1 class="font-bold text-white text-6xl">{{ section.settings.title | escape }}</h1>
+            {%- endif -%}
+            {%- if section.settings.subtitle != blank -%}
+                <h2 class="font-semibold text-yellow-500 text-lg">{{ section.settings.subtitle }}</h2>
+            {%- endif -%}
+            {%- if section.settings.btn_text != blank and section.settings.btn_link -%}
+                <a href="{{- section.settings.btn_link -}}" class="py-2 px-4 bg-white text-red-600 text-lg inline-block {{ animation -}}">{{ section.settings.btn_text }}</a>
+            {%- endif -%}
+        </div>        
+    {%- endif -%}
+
+    {%- if section.settings.enable_content == false and section.settings.btn_text != blank and section.settings.btn_link -%}
+        <a href="{{- section.settings.btn_link -}}">
+    {%- endif -%}
+    <img src="{{ section.settings.banner_image  | img_url: 'master' }}" alt="{{ section.settings.banner_image.alt }}"/>
+    {%- if section.settings.enable_content == false and section.settings.btn_text != blank and section.settings.btn_link -%}
+        </a>
+    {%- endif -%}
+</div>
+
+{% schema %}
+    {
+        "name":"Banner",
+        "settings":[
+            {
+                "type":"header",
+                "content":"Image"
+            },
+            {
+                "type":"image_picker",
+                "id":"banner_image",
+                "label":"Image"
+            },
+            {
+                "type":"url",
+                "id":"link",
+                "label":"Link"
+            },
+            {
+                "type":"header",
+                "content":"Text"
+            },
+            {
+                "type":"text",
+                "id":"title",
+                "label":"Title"
+            },
+            {
+                "type":"text",
+                "id":"subtitle",
+                "label":"Subtitle"
+            },
+            {
+                "type":"header",
+                "content":"Button"
+            },
+            {
+                "type":"url",
+                "id":"btn_link",
+                "label":"Link"
+            },
+            {
+                "type":"text",
+                "id":"btn_text",
+                "label":"Button Text"
+            },
+            {
+                "type":"select",
+                "id":"animation",
+                "label":"Animation",
+                "options":[
+                    {
+                        "value":"none",
+                        "label":"None"
+                    },
+                    {
+                        "value":"bounce",
+                        "label":"Bounce"
+                    },
+                    {
+                        "value":"pulse",
+                        "label":"Pulse"
+                    },
+                    {
+                        "value":"ping",
+                        "label":"Ping"
+                    },
+                    {
+                        "value":"spin",
+                        "label":"Spin"
+                    }
+                ],
+                "default":"none",
+                "info":"Simple button animation when hovered anywhere within the banner image"
+            },
+            {
+                "type":"header",
+                "content":"Customization"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_content",
+                "label": "Show Text/Button",
+                "default": true
+            },
+            {
+                "type": "select",
+                "id": "position",
+                "label": "Position",
+                "options": [
+                    {
+                        "value": "left_top",
+                        "label": "Left Top"
+                    },
+                    {
+                        "value": "left_middle",
+                        "label": "Left Middle"
+                    },
+                    {
+                        "value": "left_bottom",
+                        "label": "Left Bottom"
+                    },
+                    {
+                        "value": "middle_top",
+                        "label": "Middle Top"
+                    },
+                    {
+                        "value": "center",
+                        "label": "Center"
+                    },
+                    {
+                        "value": "middle_bottom",
+                        "label": "Middle bottom"
+                    },
+                    {
+                        "value": "right_top",
+                        "label": "Right Top"
+                    },
+                    {
+                        "value": "right_middle",
+                        "label": "Right Middle"
+                    },
+                    {
+                        "value": "right_bottom",
+                        "label": "Right Bottom"
+                    }
+                ],
+                "default": "center"
+            },
+            {
+                "type":"checkbox",
+                "id":"enable_background",
+                "label":"Show Background",
+                "default":false
+            },
+            {
+                "type":"select",
+                "id":"bg_padding",
+                "label":"Background Padding",
+                "options":[
+                    {
+                        "value":"padding_4",
+                        "label":"Normal"
+                    },
+                    {
+                        "value":"padding_10",
+                        "label":"Big"
+                    },
+                    {
+                        "value":"padding_20",
+                        "label":"Large"
+                    }
+                ],
+                "default":"padding_4"
+            }
+        ],
+        "presets":[
+            {
+                "name":"Banner",
+                "category":"Image"
+            }
+        ]
+    }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
