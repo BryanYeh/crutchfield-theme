@@ -1,0 +1,56 @@
+{%- case section.settings.padding_y -%}
+    {%- when 1 -%}
+        {% assign column_width = "py-1" %}
+    {%- when 2 -%}
+        {% assign column_width = "py-2" %}
+    {%- when 3 -%}
+        {% assign column_width = "py-3" %}
+    {%- when 4 -%}
+        {% assign column_width = "py-4" %}
+    {%- when 5 -%}
+        {% assign column_width = "py-5" %}
+    {%- when 6 -%}
+        {% assign column_width = "py-6" %}
+    {%- when 7 -%}
+        {% assign column_width = "py-7" %}
+    {%- when 8 -%}
+        {% assign column_width = "py-8" %}
+    {%- when 9 -%}
+        {% assign column_width = "py-9" %}
+    {%- when 10 -%}
+        {% assign column_width = "py-10" %}
+    {%- when 11 -%}
+        {% assign column_width = "py-11" %}
+    {%- else -%}
+        {% assign column_width = "py-12" %}
+{%- endcase -%}
+
+<div class="w-full {{ column_width }}"></div>
+{% schema %}
+    {
+        "name": "Spacer",
+        "settings": [
+            {
+                "type": "range",
+                "id": "padding_y",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Space",
+                "default": 4
+            }
+        ],
+        "presets": [
+            {
+                "name": "Spacer",
+                "category": "Spacer"
+            }
+        ]
+    }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
