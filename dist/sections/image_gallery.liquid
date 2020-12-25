@@ -10,7 +10,7 @@
     {% else %}
         {% assign columns = '' %}
 {% endcase %}
-<div class="grid p-4 {{ columns }}">
+<div class="grid py-4 container {{ columns }}">
     {% for block in section.blocks %}
         {% if block.settings.link != blank %}
             <a href="{{ block.settings.link }}">
