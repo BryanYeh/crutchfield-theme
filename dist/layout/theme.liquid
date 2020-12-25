@@ -17,11 +17,10 @@
   {{ 'application.bundle.css' | asset_url | stylesheet_tag }}
 </head>
 <body class="h-screen flex flex-col">
-  {% section 'announcement' %}
-  {% section 'main_header' %}
-  {% section 'navbar' %}
-
   <main role="main" class="flex-grow">
+    {% section 'announcement' %}
+    {% section 'main_header' %}
+    {% section 'navbar' %}
     {{ content_for_layout }}
   </main>
 
