@@ -13,6 +13,7 @@
   <link rel="canonical" href="{{ canonical_url }}">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   {{ content_for_header }} <!-- Header hook for plugins -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   {{ 'line-awesome.min.css' | asset_url | stylesheet_tag }}
   {{ 'application.bundle.css' | asset_url | stylesheet_tag }}
 </head>
@@ -26,6 +27,7 @@
 
   {% section 'footer' %}
 
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   {% capture layout_bundle_js %}{{ template.name }}.bundle.js{% endcapture %}
   {{ layout_bundle_js | asset_url | script_tag }}
 </body>
