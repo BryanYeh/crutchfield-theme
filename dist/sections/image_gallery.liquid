@@ -1,0 +1,58 @@
+{% case section.blocks.size %}
+    {% when 1 %}
+        {% assign columns = 'grid-cols-1' %}
+    {% when 2 %}
+        {% assign columns = 'grid-cols-1 sm:grid-cols-2 sm:gap-2' %}
+    {% when 3 %}
+        {% assign columns = 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-2 md:gap-4' %}
+    {% when 4 %}
+        {% assign columns = 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4 sm:gap-2 md:gap-4' %}
+    {% else %}
+        {% assign columns = '' %}
+{% endcase %}
+<div class="grid p-4 {{ columns }}">
+    {% for block in section.blocks %}
+        {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}">
+        {% endif %}
+        <img src="{{ block.settings.img | img_url: 'master' }}" alt="{{ block.settings.img.alt }}">
+        {% if block.settings.link != blank %}
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% schema %}
+    {
+        "name": "Gallery",
+        "class": "flex justify-center",
+        "max_blocks": 4,
+        "settings": [
+            
+        ],
+        "blocks":[
+            {
+                "type": "image_picker",
+                "name": "Image",
+                "settings":[
+                    {
+                        "type": "image_picker",
+                        "id": "img",
+                        "label": "Image"
+                    },
+                    {
+                        "type":"url",
+                        "id":"link",
+                        "label":"Link"
+                    }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name":"Gallery",
+                "category":"Image"
+            }
+        ]
+    }
+{% endschema %}
