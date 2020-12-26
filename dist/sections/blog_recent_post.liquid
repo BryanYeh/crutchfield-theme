@@ -1,0 +1,43 @@
+<div class="pb-4">
+    {% for article in blogs[section.settings.selected_blog].articles limit:1 %}
+        <div class="py-4 px-6 container {% if section.settings.enable_bg %} bg-no-repeat bg-cover bg-opacity-50 min-h-96 justify-center flex flex-col {% endif %}" 
+                {% if section.settings.enable_bg %}style="background-image: url('{{ article | img_url: 'master' }}');"{% endif %}>
+            <h3 class="font-bold text-3xl">{{ article.title }}</h3>
+            <p>{{ article.excerpt_or_content | truncatewords: 150, '...' }}</p>
+            <a class="text-sm hover:text-red-600" href="{{ article.url }}">Read More</a>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% schema %}
+    {
+        "name": "Recent Post",
+        "class": "flex justify-center",
+        "settings": [
+            {
+                "type": "blog",
+                "id": "selected_blog",
+                "label": "Blog"
+            },
+            {
+                "type": "checkbox",
+                "id": "enable_bg",
+                "label": "Show Background",
+                "default": false
+            }
+        ],
+        "presets": [
+            {
+                "name": "Recent Post",
+                "category": "Blog Post"
+            }
+        ]
+    }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
