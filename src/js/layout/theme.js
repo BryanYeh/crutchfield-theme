@@ -1,7 +1,7 @@
 import * as images from "@shopify/theme-images";
-import * as cart from '../theme-cart';
-import '../dropdown';
-import * as toast from '../alert-toast';
+import * as cart from "../theme-cart";
+import "../dropdown";
+import * as toast from "../alert-toast";
 
 var ready = (callback) => {
   if (document.readyState != "loading") callback();
@@ -11,7 +11,7 @@ var ready = (callback) => {
 ready(() => {
   let search_element = document.getElementById("search_results");
 
-  const delay_by_in_ms = 700;  // delay querying shopify search for 700ms
+  const delay_by_in_ms = 700; // delay querying shopify search for 700ms
   let scheduled_function = false;
 
   // search callback function
@@ -34,7 +34,7 @@ ready(() => {
 
             // empty the search results container, in case there were results before
             container.innerHTML = "";
-            
+
             // for each search result, use the search results template and display it
             productSuggestions.forEach((el) => {
               const clone = template.content.cloneNode(true); // copy the empty template
@@ -81,27 +81,125 @@ ready(() => {
   }
 
   // add to cart
-  document.querySelectorAll('.add-to-cart').forEach((button) => {
-    button.addEventListener('click', (e) => {
-      e.target.textContent = 'Adding to Cart';
-      e.target.setAttribute('disabled',true);
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.target.textContent = "Adding to Cart";
+      e.target.setAttribute("disabled", true);
       let quantity = 1;
-      cart.addItem(Number(e.target.closest('[data-id]').dataset.id), {quantity: quantity}).then(result => {
-        if(result.status == 422){
-          toast.showToast('error',result.message,result.description);
-        }
-        else{
-          toast.showToast('success','Successfully added to cart',quantity + " " + result.title);
-        }
-      })
+      cart
+        .addItem(Number(e.target.closest("[data-id]").dataset.id), {
+          quantity: quantity,
+        })
+        .then((result) => {
+          if (result.status == 422) {
+            toast.showToast("error", result.message, result.description);
+          } else {
+            toast.showToast(
+              "success",
+              "Successfully added to cart",
+              quantity + " " + result.title
+            );
+          }
+        });
 
-      e.target.removeAttribute('disabled');
-      e.target.textContent = 'Add to Cart';      
-    })
-  })
+      e.target.removeAttribute("disabled");
+      e.target.textContent = "Add to Cart";
+    });
+  });
 
-  document.querySelector('.alert-toast').addEventListener('click', (e)=>{
+  // close notification toast
+  document.querySelector(".alert-toast").addEventListener("click", (e) => {
     toast.hideToast();
-  })
+  });
 
+  // edit variation
+  document.querySelectorAll(".variation-select").forEach((variationSelect) => {
+    variationSelect.addEventListener("change", (e) => {
+      let product_card = e.target.closest("[data-handle]");
+      let product_handle = product_card.dataset.handle;
+
+      let product_card_variations = [];
+      product_card
+        .querySelectorAll(".variation-select")
+        .forEach((variation) => {
+          product_card_variations.push(variation.value);
+        });
+
+      fetch("/products/" + product_handle + ".js")
+        .then((response) => response.json())
+        .then((product) => {
+          product.variants.forEach((variation) => {
+            if (
+              product_card_variations.every((i) =>
+                variation.options.includes(i)
+              )
+            ) {
+              let available_classes = [
+                "bg-red-600",
+                "text-white",
+                "hover:bg-white",
+                "hover:text-red-600",
+                "add-to-cart",
+              ];
+              let unavailable_classes = [
+                "bg-white",
+                "text-red-600",
+                "cursor-not-allowed",
+              ];
+              if (variation.available) {
+                available_classes.forEach((a_class) => {
+                  product_card.querySelector("button").classList.add(a_class);
+                });
+                unavailable_classes.forEach((u_class) => {
+                  product_card
+                    .querySelector("button")
+                    .classList.remove(u_class);
+                });
+                product_card.querySelector("button").innerHTML = "Add to Cart";
+                product_card
+                  .querySelector(".availability")
+                  .classList.add("la-check-circle");
+                product_card
+                  .querySelector(".availability")
+                  .classList.remove("la-times-circle");
+                product_card.querySelector(".availability_text").innerHTML =
+                  "In Stock";
+              } else {
+                unavailable_classes.forEach((u_class) => {
+                  product_card.querySelector("button").classList.add(u_class);
+                });
+                available_classes.forEach((a_class) => {
+                  product_card
+                    .querySelector("button")
+                    .classList.remove(a_class);
+                });
+                product_card.querySelector("button").innerHTML = "Sold Out";
+                product_card
+                  .querySelector(".availability")
+                  .classList.remove("la-check-circle");
+                product_card
+                  .querySelector(".availability")
+                  .classList.add("la-times-circle");
+                product_card.querySelector(".availability_text").innerHTML =
+                  "Out of Stock";
+              }
+              product_card.querySelector("a").href =
+                product.url + "?variant=" + variation.id;
+              if (variation.featured_image) {
+                product_card.querySelector("img").src = images.getSizedImageUrl(
+                  variation.featured_image.src,
+                  "500x500"
+                );
+                product_card.querySelector("img").alt =
+                  variation.featured_image.alt ?? "";
+              }
+              product_card.querySelector(".sku").innerHTML = variation.sku
+                ? "Item #: " + variation.sku
+                : "";
+              product_card.dataset.id = variation.id;
+            }
+          });
+        });
+    });
+  });
 });

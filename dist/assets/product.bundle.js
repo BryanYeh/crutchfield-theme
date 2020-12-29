@@ -349,26 +349,86 @@ ready(function () {
   } // add to cart
 
 
-  document.querySelectorAll('.add-to-cart').forEach(function (button) {
-    button.addEventListener('click', function (e) {
-      e.target.textContent = 'Adding to Cart';
-      e.target.setAttribute('disabled', true);
+  document.querySelectorAll(".add-to-cart").forEach(function (button) {
+    button.addEventListener("click", function (e) {
+      e.target.textContent = "Adding to Cart";
+      e.target.setAttribute("disabled", true);
       var quantity = 1;
-      _theme_cart__WEBPACK_IMPORTED_MODULE_1__.addItem(Number(e.target.closest('[data-id]').dataset.id), {
+      _theme_cart__WEBPACK_IMPORTED_MODULE_1__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
         quantity: quantity
       }).then(function (result) {
         if (result.status == 422) {
-          _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast('error', result.message, result.description);
+          _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("error", result.message, result.description);
         } else {
-          _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast('success', 'Successfully added to cart', quantity + " " + result.title);
+          _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
         }
       });
-      e.target.removeAttribute('disabled');
-      e.target.textContent = 'Add to Cart';
+      e.target.removeAttribute("disabled");
+      e.target.textContent = "Add to Cart";
     });
-  });
-  document.querySelector('.alert-toast').addEventListener('click', function (e) {
+  }); // close notification toast
+
+  document.querySelector(".alert-toast").addEventListener("click", function (e) {
     _alert_toast__WEBPACK_IMPORTED_MODULE_3__.hideToast();
+  }); // edit variation
+
+  document.querySelectorAll(".variation-select").forEach(function (variationSelect) {
+    variationSelect.addEventListener("change", function (e) {
+      var product_card = e.target.closest("[data-handle]");
+      var product_handle = product_card.dataset.handle;
+      var product_card_variations = [];
+      product_card.querySelectorAll(".variation-select").forEach(function (variation) {
+        product_card_variations.push(variation.value);
+      });
+      fetch("/products/" + product_handle + ".js").then(function (response) {
+        return response.json();
+      }).then(function (product) {
+        product.variants.forEach(function (variation) {
+          if (product_card_variations.every(function (i) {
+            return variation.options.includes(i);
+          })) {
+            var available_classes = ["bg-red-600", "text-white", "hover:bg-white", "hover:text-red-600", "add-to-cart"];
+            var unavailable_classes = ["bg-white", "text-red-600", "cursor-not-allowed"];
+
+            if (variation.available) {
+              available_classes.forEach(function (a_class) {
+                product_card.querySelector("button").classList.add(a_class);
+              });
+              unavailable_classes.forEach(function (u_class) {
+                product_card.querySelector("button").classList.remove(u_class);
+              });
+              product_card.querySelector("button").innerHTML = "Add to Cart";
+              product_card.querySelector(".availability").classList.add("la-check-circle");
+              product_card.querySelector(".availability").classList.remove("la-times-circle");
+              product_card.querySelector(".availability_text").innerHTML = "In Stock";
+            } else {
+              unavailable_classes.forEach(function (u_class) {
+                product_card.querySelector("button").classList.add(u_class);
+              });
+              available_classes.forEach(function (a_class) {
+                product_card.querySelector("button").classList.remove(a_class);
+              });
+              product_card.querySelector("button").innerHTML = "Sold Out";
+              product_card.querySelector(".availability").classList.remove("la-check-circle");
+              product_card.querySelector(".availability").classList.add("la-times-circle");
+              product_card.querySelector(".availability_text").innerHTML = "Out of Stock";
+            }
+
+            product_card.querySelector("a").href = product.url + "?variant=" + variation.id;
+
+            if (variation.featured_image) {
+              var _variation$featured_i;
+
+              product_card.querySelector("img").src = _shopify_theme_images__WEBPACK_IMPORTED_MODULE_0__.getSizedImageUrl(variation.featured_image.src, "500x500");
+              product_card.querySelector("img").alt = (_variation$featured_i = variation.featured_image.alt) !== null && _variation$featured_i !== void 0 ? _variation$featured_i : "";
+            }
+
+            product_card.querySelector(".sku").innerHTML = variation.sku ? "Item #: " + variation.sku : "";
+            product_card.dataset.id = variation.id;
+          }
+        });
+      });
+    });
   });
 });
 
