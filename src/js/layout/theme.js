@@ -1,6 +1,7 @@
 import * as images from "@shopify/theme-images";
 import * as cart from '../theme-cart';
 import '../dropdown';
+import * as toast from '../alert-toast';
 
 var ready = (callback) => {
   if (document.readyState != "loading") callback();
@@ -87,26 +88,10 @@ ready(() => {
       let quantity = 1;
       cart.addItem(Number(e.target.closest('[data-id]').dataset.id), {quantity: quantity}).then(result => {
         if(result.status == 422){
-          document.querySelector('.alert-title').classList.remove('text-green-600');
-          document.querySelector('.alert-toast').classList.remove('border-green-600'); 
-
-          document.querySelector('.alert-title').classList.add('text-red-600');
-          document.querySelector('.alert-title').innerHTML = result.message;
-          document.querySelector('.alert-title').classList.add('text-red-500');
-          document.querySelector('.alert-text').innerHTML = result.description;
-          document.querySelector('.alert-toast').classList.remove('hidden');
-          document.querySelector('.alert-toast').classList.add('border-red-600');
+          toast.showToast('error',result.message,result.description);
         }
         else{
-          document.querySelector('.alert-title').classList.remove('text-red-600');
-          document.querySelector('.alert-title').classList.remove('text-red-500');
-          document.querySelector('.alert-text').innerHTML = '';
-
-          document.querySelector('.alert-title').classList.add('text-green-600');
-          document.querySelector('.alert-title').innerHTML = 'Successfully added to cart:'
-          document.querySelector('.alert-text').innerHTML = quantity + " " + result.title;
-          document.querySelector('.alert-toast').classList.remove('hidden');
-          document.querySelector('.alert-toast').classList.add('border-green-600');
+          toast.showToast('success','Successfully added to cart',quantity + " " + result.title);
         }
       })
 
@@ -116,14 +101,7 @@ ready(() => {
   })
 
   document.querySelector('.alert-toast').addEventListener('click', (e)=>{
-    document.querySelector('.alert-title').classList.remove('text-red-600');
-    document.querySelector('.alert-title').innerHTML = '';
-    document.querySelector('.alert-title').classList.remove('text-red-500');
-    document.querySelector('.alert-text').innerHTML = '';
-    document.querySelector('.alert-toast').classList.add('hidden');
-    document.querySelector('.alert-toast').classList.remove('border-red-600');
-    document.querySelector('.alert-title').classList.remove('text-green-600');
-    document.querySelector('.alert-toast').classList.remove('border-green-600'); 
+    toast.hideToast();
   })
 
 });
