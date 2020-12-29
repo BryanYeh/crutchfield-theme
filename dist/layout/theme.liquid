@@ -25,6 +25,8 @@
     {{ content_for_layout }}
   </main>
 
+  {% render 'notification_toast' %}
+
   {% section 'footer' %}
 
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
