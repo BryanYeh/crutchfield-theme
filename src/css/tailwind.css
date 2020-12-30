@@ -10,3 +10,9 @@ html {
 #preview-bar-iframe {
   display: none !important;
 }
+.breadcrumb > a:not(:first-child)::before {
+  @apply inline-block;
+  @apply px-3;
+  @apply text-gray-500;
+  content: "/";
+}

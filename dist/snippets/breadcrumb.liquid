@@ -1,0 +1,42 @@
+{% assign templates_exclude = "index,cart,list-collections,404,customers/register,customer/login,search" | split: ',' %}
+{%- unless templates_exclude contains template -%}
+{%- assign t = template | split: '.' | first -%}
+
+<div class="breadcrumb py-3 px-4 text-gray-700">
+  <a href="{{ shop.url }}" class="pl-4 py-2 hover:text-red-600">Home</a>
+  {%- case t -%}
+    {%- when 'page' -%}
+      <a href="{{ page.url }}" class="py-2 hover:text-red-600">{{ page.title }}</a>
+    {%- when 'product' -%}
+      {%- if collection.url -%}
+        {{ collection.title | link_to: collection.url }}
+      {%- endif -%}
+      <a href="{{ product.url }}" class="py-2 hover:text-red-600">{{ product.title }}</a>
+    {%- when 'collection' and collection.handle -%}
+      {%- if current_tags -%}
+        {{ collection.title | link_to: collection.url }}
+        {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+"}}{%- endcapture -%}
+        <a href="{{ tag_url }}" class="py-2 hover:text-red-600">{{ current_tags | join: " + "}}</a>
+      {%- else -%}
+        <a href="{{ collection.url }}" class="py-2 hover:text-red-600">{{ collection.title }}</a>
+      {%- endif -%}
+    {%- when 'blog' -%}
+      {%- if current_tags -%}
+        {{ blog.title | link_to: blog.url }}
+        {%- capture tag_url -%}{{blog.url}}/tagged/{{ current_tags | join: "+" }}{%- endcapture -%}
+        <a href="{{ tag_url }}" class="py-2 hover:text-red-600">{{ current_tags | join: " + " }}</a>
+      {%- else -%}
+        <a href="{{ blog.url }}" class="py-2 hover:text-red-600">{{ blog.title }}</a>
+      {%- endif -%}
+    {%- when 'article' -%}
+      {{ blog.title | link_to: blog.url }}
+      <a href="{{ article.url }}" class="py-2 hover:text-red-600">{{ article.title }}</a>
+    {% when 'customers/order' %}
+      <a href="{{ routes.account_url }}" class="py-2 hover:text-red-600">Account</a>
+      <a class="py-2 hover:text-red-600 cursor-default">{{ page_title }}</a>
+    {%- else -%}
+      <a class="py-2 hover:text-red-600 cursor-default">{{ page_title }}</a>
+  {%- endcase -%}
+</div>
+
+{%- endunless -%}

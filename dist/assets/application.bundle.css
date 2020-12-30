@@ -33361,6 +33361,15 @@ html {
   display: none !important;
 }
 
+.breadcrumb > a:not(:first-child)::before {
+  display: inline-block;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  --tw-text-opacity: 1;
+  color: rgba(107, 114, 128, var(--tw-text-opacity));
+  content: "/";
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -196010,3 +196019,4 @@ html {
             animation: bounce 1s infinite;
   }
 }
+
