@@ -91,5 +91,19 @@
         "info": "https://www.linkedin.com/in/shopify"
       }
     ]
+  },
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "label": "Producs per Page",
+        "id": "products_per_page",
+        "type": "range",
+        "min": 12,
+        "max": 48,
+        "step": 12,
+        "default": 12
+      }
+    ]
   }
 ]
