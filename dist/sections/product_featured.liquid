@@ -6,54 +6,7 @@
 
 <div class="px-4 md:px-0 mx-auto container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
     {% for product in collections[section.settings.collection_set].products limit:section.settings.product_limit %}
-        <div class="border border-gray-400 bg-white p-4 hover:border-red-500 flex flex-col group"
-                data-handle="{{ product.handle }}"
-                data-id="{{ product.first_available_variant.id }}">
-            <div class="h-full"> 
-                <a href="{{ product.url | within: collection }}" class="">
-                    <img src="{{ product.featured_image.src | img_url: '500x500' }}" alt="{{ product.featured_image.alt | escape }}">
-                    <div class="font-bold text-lg group-hover:text-red-600 py-2">{{ product.title }}</div>
-                </a>
-                <div class="sku">{% if product.sku %}Item #: {{ product.sku }}{% endif %}</div>
-            </div>
-
-            {% if product.available %}
-                <div><i class="availability las la-check-circle"></i> <span class="availability_text">In Stock<span></div>
-            {% else %}
-                <div><i class="availability las la-times-circle"></i> <span class="availability_text">Out of Stock<span></div>
-            {% endif %}
-
-        <div class="text-right"> 
-            <div class="text-gray-700 line-through text-sm">
-                {% if product.compare_at_price %}
-                    {{ product.compare_at_price | money }}
-                {% endif %}
-            </div>
-            <div class="text-red-600">
-                {% if product.compare_at_price %}
-                    {{ product.compare_at_price | minus:product.price | money }} Discount
-                {% endif %}
-            </div>
-            <div class="font-bold text-lg">{{ product.price | money }}</div>
-        </div>
-
-        {% unless product.has_only_default_variant %}
-            {% for option in product.options %}
-                <label for="variation-select-{{ option | downcase }}">{{ option }}</label>
-                    <select name="" id="variation-select-{{ option | downcase }}" class="variation-select border border-gray-500 p-2 focus:outline-none focus:shadow-outline focus:border-blue-200">
-                    {% for option_value in product.options_by_name[option].values %}
-                        <option value="{{ option_value }}">{{ option_value }}</option>
-                    {% endfor %}
-                </select>
-            {% endfor %}
-        {% endunless %}
-
-        {% if product.available %}
-            <button class="add-to-cart border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 w-full px-3 py-2 mt-2">Add to Cart</button>
-        {% else %}
-            <button class="border border-red-600 bg-white text-red-600 cursor-not-allowed w-full px-3 py-2 mt-2">Sold Out</button>
-        {% endif %}
-        </div>
+        {% render 'product_card', product: product %}
     {% endfor %}
 </div>
 
