@@ -16,6 +16,7 @@
             <form action="{{ routes.search_url }}" method="get" autocomplete="off">
                 <div class="relative">
                     <input type="search" name="q" class="border p-3 w-full focus:ring-3 focus:ring-gray-300 search-field" placeholder="Search products">
+                    <input type="hidden" name="type" value="product" />
                     <button type="submit" class="absolute inset-y-0 right-0 p-3">
                         <svg version="1.1" class="h-6 font-semibold" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                         viewBox="0 0 52.966 52.966" style="enable-background:new 0 0 52.966 52.966;" xml:space="preserve">
