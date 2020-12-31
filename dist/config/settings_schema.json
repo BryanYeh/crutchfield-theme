@@ -9,7 +9,7 @@
   },
   {
     "name": "Logo",
-    "settings":[
+    "settings": [
       {
         "label": "Logo image",
         "id": "logo",
@@ -25,7 +25,7 @@
   },
   {
     "name": "Favicon",
-    "settings":[
+    "settings": [
       {
         "label": "Favicon image",
         "id": "favicon",
@@ -47,7 +47,7 @@
   },
   {
     "name": "Social Media",
-    "settings":[
+    "settings": [
       {
         "label": "Facebook",
         "id": "social_facebook",
@@ -103,6 +103,27 @@
         "max": 48,
         "step": 12,
         "default": 12
+      }
+    ]
+  },
+  {
+    "name": "404 Page",
+    "settings": [
+      {
+        "type": "select",
+        "id": "page_not_found",
+        "label": "Image",
+        "options": [
+          {
+            "value": "404",
+            "label": "404"
+          },
+          {
+            "value": "not_found",
+            "label": "Not found"
+          }
+        ],
+        "default": "404"
       }
     ]
   }

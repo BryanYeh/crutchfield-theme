@@ -1,2 +1,9 @@
-<h1>{{ 'general.404.title' | t }}</h1>
-<p>{{ 'general.404.subtext_html' | t }}</p>
+<h1 class="text-center text-3xl font-bold pt-4">{{ 'general.404.title' | t }}</h1>
+<p class="text-center text-xl">{{ 'general.404.subtext_html' | t }}</p>
+<div class="mx-auto py-4 w-10/12">
+    {% if settings.page_not_found == '404' %}
+        {% render 'svg_404' %}
+    {% else %}
+        {% render 'svg_not_found' %}
+    {% endif %}
+</div>
