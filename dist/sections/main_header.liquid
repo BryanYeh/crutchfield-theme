@@ -57,7 +57,7 @@
                     <i class="las la-user text-4xl block"></i>
                     Your Account
                 </div>
-                <div class="bg-white border border-gray-400 shadow-md absolute p-4 right-2 space-y-4 mt-4 hidden">
+                <div class="bg-white border border-gray-400 shadow-md absolute p-4 right-2 space-y-4 mt-4 hidden z-20">
                     {%- if customer -%}
                         <a href="{{ routes.account_url }}">My Account</a>
                         <a href="{{ routes.account_logout_url }}">Logout</a>
