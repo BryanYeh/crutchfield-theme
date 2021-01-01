@@ -1,41 +1,68 @@
 {% assign number_of_comments = article.comments_count %}
 {% if comment and comment.created_at %}
-  {% assign number_of_comments = article.comments_count %}
+    {% assign number_of_comments = article.comments_count %}
 {% endif %}
+<div class="container p-4 md:px-0 mx-auto">
+    <div class="flex flex-wrap-reverse pb-4">
+        {% if article.image %}
+            <div class="flex w-full md:w-1/2 px-2">
+                <img src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}" class="w-full">
+            </div>
+        {% endif %}
+        <div class="flex flex-wrap md:w-1/2 px-2 self-center w-full">
+            <div class="my-1 w-full">
+                {%- for tag in article.tags -%}
+                    {{- tag | link_to_tag: tag | replace: 'title=', 'class="p-2 text-sm bg-gray-200 hover:bg-red-500 hover:text-white mr-2"" title=' -}}
+                {%- endfor -%}            
+            </div>
+            <div class="py-4">
+                <h1 class="text-2xl font-bold md:text-3xl w-full">{{ article.title }}</h1>
+                <p>
+                    <span class="font-medium">{{ article.author }}</span> - 
+                    <time class="text-sm" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: "%b %d, %Y" }}</time>
+                </p>
+            </div>
+        </div>
+    </div>
 
-<h1>{{ article.title }}</h1>
-{% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}
-{% capture date %}<time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>{% endcapture %}
-{{ article.author }} @ {{ article.created_at }}
+    <div class="prose max-w-5xl pb-4 mx-auto">
+        {{ article.content }}
+    </div>
 
-<div>{{ article.content }}</div>
-{% if blog.comments_enabled? %}
-  <h2>{{ number_of_comments }} comments</h2>
-  {% paginate article.comments by 5 %}
-    {% for comment in article.comments %}
-      <div>
-        <div>{{ comment.content }}</div>
-        {{ comment.author }} @ {{ comment.created_at }}
-      </div>
-    {% endfor %}
-    {% if paginate.pages > 1 %}
-      {{ paginate | default_pagination }}
+    {% if blog.comments_enabled? %}
+        <div class="border-gray-300 border-t-2 max-w-5xl mx-auto">
+            <h2 class="font-semibold text-xl py-2">{{ number_of_comments }} comments</h2>
+            
+            {% paginate article.comments by 10 %}
+                {% for comment in article.comments %}
+                    <div class="{% if forloop.first == false %}border-t-2 border-gray-200 {% endif %} py-4">
+                        <div class="font-semibold text-lg">{{ comment.author }}</div>
+                        <p class="text-sm text-gray-600 italic">{{ comment.created_at | date: "%B %d, %Y at %I:%M %P" }}</p>
+                        <div>{{ comment.content }}</div>
+                    </div>
+                {% endfor %}
+
+                {% if paginate.pages > 1 %}
+                    {{ paginate | default_pagination }}
+                {% endif %}
+
+            {% endpaginate %}
+
+            {% form 'new_comment', article %}
+                <div class="flex flex-col w-full md:w-7/12 mx-auto">
+                    {{ form.errors | default_errors }}
+                    <label for="CommentAuthor" class="text-gray-700 pt-2 font-medium">Name:</label>
+                    <input class="border border-gray-600 hover:shadow-md focus:border-red-600 focus:shadow-md px-4 py-2" type="text" name="comment[author]" id="CommentAuthor" placeholder="name" value="{{ form.author }}" autocapitalize="words">
+
+                    <label for="CommentEmail" class="text-gray-700 pt-2 font-medium">Email:</label>
+                    <input class="border border-gray-600 hover:shadow-md focus:border-red-600 focus:shadow-md px-4 py-2" type="email" name="comment[email]" id="CommentEmail" placeholder="email" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+
+                    <label for="CommentBody" class="text-gray-700 pt-2 font-medium">Comment:</label>
+                    <textarea class="border border-gray-600 hover:shadow-md focus:border-red-600 focus:shadow-md px-4 py-2" rows="5" name="comment[body]" id="CommentBody" placeholder="comment">{{ form.body }}</textarea>
+
+                    <input type="submit" value="Post Comment" class="p-4 border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 my-4 cursor-pointer">
+                </div>
+            {% endform %}
+        </div>
     {% endif %}
-  {% endpaginate %}
-
-  <div>
-    {% form 'new_comment', article %}
-      {{ form.errors | default_errors }}
-      <label for="CommentAuthor">name</label>
-      <input type="text" name="comment[author]" id="CommentAuthor" placeholder="name" value="{{ form.author }}" autocapitalize="words">
-
-      <label for="CommentEmail">email</label>
-      <input type="email" name="comment[email]" id="CommentEmail" placeholder="email" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
-
-      <label for="CommentBody">message</label>
-      <textarea name="comment[body]" id="CommentBody" placeholder="message">{{ form.body }}</textarea>
-
-      <input type="submit" value="post">
-    {% endform %}
-  </div>
-{% endif %}
+</div>
