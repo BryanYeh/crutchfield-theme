@@ -116,6 +116,20 @@
     ]
   },
   {
+    "name": "Blog",
+    "settings": [
+      {
+        "label": "Articles per Page",
+        "id": "articles_per_page",
+        "type": "range",
+        "min": 12,
+        "max": 48,
+        "step": 12,
+        "default": 12
+      }
+    ]
+  },
+  {
     "name": "404 Page",
     "settings": [
       {
