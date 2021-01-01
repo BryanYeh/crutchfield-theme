@@ -14,6 +14,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   {{ content_for_header }} <!-- Header hook for plugins -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  {%- if template == "product" -%}
+    {{ 'photoswipe.min.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
   {{ 'line-awesome.min.css' | asset_url | stylesheet_tag }}
   {{ 'application.bundle.css' | asset_url | stylesheet_tag }}
 </head>
@@ -30,7 +33,14 @@
 
   {% section 'footer' %}
 
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  {%- if template == "product" -%}
+    {{ 'photoswipe.min.js' | asset_url | script_tag }}
+    {{ 'photoswipe-ui-default.min.js' | asset_url | script_tag }}
+  {%- endif -%}
+  {%- if template == "product" or template == "index" -%}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  {%- endif -%}
+
   {% capture layout_bundle_js %}{{ template.name }}.bundle.js{% endcapture %}
   {{ layout_bundle_js | asset_url | script_tag }}
 </body>
