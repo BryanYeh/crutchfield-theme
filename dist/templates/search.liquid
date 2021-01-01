@@ -1,22 +1,45 @@
-{% paginate search.results by 10 %}
-  <form action="/search" method="get" role="search">
-    <input type="search" name="q" value="{{ search.terms | escape }}">
-    <button type="submit">search</button>
-  </form>
+<div class="container flex md:px-0 mx-auto pt-4 px-4">
+    <form action="{{ routes.search_url }}" method="get" autocomplete="off" class="w-full">
+        <div class="relative">
+            <input type="search" name="q" class="border p-3 w-full focus:ring-3 focus:ring-gray-300 search-field" placeholder="Search products" value="{{ search.terms | escape }}">
+            <input type="hidden" name="type" value="product" />
+            <button type="submit" class="absolute inset-y-0 right-0 p-3">
+                <svg version="1.1" class="h-6 font-semibold" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 52.966 52.966" style="enable-background:new 0 0 52.966 52.966;" xml:space="preserve">
+                    <path d="M51.704,51.273L36.845,35.82c3.79-3.801,6.138-9.041,6.138-14.82c0-11.58-9.42-21-21-21s-21,9.42-21,21s9.42,21,21,21
+                    c5.083,0,9.748-1.817,13.384-4.832l14.895,15.491c0.196,0.205,0.458,0.307,0.721,0.307c0.25,0,0.499-0.093,0.693-0.279
+                    C52.074,52.304,52.086,51.671,51.704,51.273z M21.983,40c-10.477,0-19-8.523-19-19s8.523-19,19-19s19,8.523,19,19
+                    S32.459,40,21.983,40z"/>
+                </svg>
+            </button>
+        </div>
+    </form>
+</div>
 
-  {% if search.performed %}
-    {% for item in search.results %}
-      {% if item.featured_image %}
-        <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
-          {{ item.featured_image.src | img_url: 'medium' | img_tag: item.featured_image.alt }}
-        </a>
-      {% endif %}
-      <h5>{{ item.title | link_to: item.url }}</h5>
-      <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
-    {% else %}
-      no results
-    {% endfor %}
-  {% endif %}
+{% paginate search.results by settings.results_per_page %}
+    {% if search.performed %}
+        {% if search.results_count > 0 %}
+            <div class="p-4 md:px-0 mx-auto container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {% for product in search.results %}
+                    {% render 'product_card', product: product %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="p-4 md:px-0 mx-auto container">
+                <p class="">Your search for "{{ search.terms | escape }}" didn't return any results.</p>  
+            </div>
+        {% endif %}
+    {% endif %}
 
-  {% if paginate.pages > 1 %}{{ paginate | default_pagination }}{% endif %}
+    {% if paginate.pages > 1 %}
+        <div class="container flex md:px-0 mx-auto pb-4 px-4">
+        {% for part in paginate.parts %}
+            {% if part.is_link %}
+            <a href="{{ part.url }}" class="px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600 hover:bg-red-600  hover:text-white">{{ part.title }}</a>
+            {% else %}
+            <a class=" px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600">{{ part.title }}</a>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
 {% endpaginate %}

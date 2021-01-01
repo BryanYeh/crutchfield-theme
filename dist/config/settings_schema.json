@@ -42,6 +42,15 @@
         "id": "predictive_search",
         "type": "checkbox",
         "default": true
+      },
+      {
+        "label": "Results per Page",
+        "id": "results_per_page",
+        "type": "range",
+        "min": 12,
+        "max": 48,
+        "step": 12,
+        "default": 12
       }
     ]
   },
