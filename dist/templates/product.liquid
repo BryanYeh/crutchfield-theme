@@ -53,10 +53,10 @@
             {% endif %}
         </div>
     </div>
-
-
-    <script type="application/json" id="v_json">{{ product.variants | json }}</script>
-
-    {% render 'photoswipe' %}
 </div>
 
+{% section 'product_tab' %}
+
+<script type="application/json" id="v_json">{{ product.variants | json }}</script>
+
+{% render 'photoswipe' %}

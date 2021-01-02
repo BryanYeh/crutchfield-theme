@@ -1,0 +1,160 @@
+<ul class="lg:flex mx-auto hidden lg:w-8/12 flex-wrap">
+    {% for block in section.blocks %}
+        <li class="flex-1 text-center">
+            <a class="{% if forloop.first %}bg-gray-300 {% endif %}product-tab font-semibold hover:text-red-600 inline-block px-10 py-4 text-2xl text-black cursor-pointer" data-href="{{ block.settings.tab_title | handle }}-{{ block.id }}">{{ block.settings.tab_title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class="bg-gray-300 flex flex-wrap px-4">
+    <div class="bg-white container mx-auto my-10 shadow-md">
+        {% for block in section.blocks %}
+            <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="{{ block.settings.tab_title | handle }}-{{ block.id }}"><i class="las la-angle-up"></i> {{ block.settings.tab_title }}</a>
+            <div id="{{ block.settings.tab_title | handle }}-{{ block.id }}" class="product-tab-content {% if forloop.first %} block {% else %} hidden {% endif %} py-6 px-10 lg:px-20">
+                <div class="prose max-w-none">
+                    {%- if block.type == "checkbox" and block.settings.show_description == true -%}
+                        {{ product.description }}
+                    {%- elsif block.type == "html" -%}
+                        {{ block.settings.html_tab }}
+                    {%- elsif block.type == "page" -%}
+                        {{ pages[block.settings.page_tab].content }}
+                    {%- elsif block.type == "article" -%}
+                        {% assign article = articles[block.settings.article_tab] %}
+                        <div class="container p-4 md:px-0 mx-auto">
+                            <div class="flex flex-wrap-reverse pb-4">
+                                {% if article.image %}
+                                    <div class="flex w-full md:w-1/2 px-2">
+                                        <img src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}" class="w-full">
+                                    </div>
+                                {% endif %}
+                                <div class="flex flex-wrap md:w-1/2 px-2 self-center w-full">
+                                    <div class="my-1 w-full">
+                                        {%- for tag in article.tags -%}
+                                            {{- tag | link_to_tag: tag | replace: 'title=', 'class="p-2 text-sm bg-gray-200 hover:bg-red-500 hover:text-white mr-2"" title=' -}}
+                                        {%- endfor -%}            
+                                    </div>
+                                    <div class="py-4">
+                                        <h1 class="text-2xl font-bold md:text-3xl w-full">{{ article.title }}</h1>
+                                        <p>
+                                            <span class="font-medium">{{ article.author }}</span> - 
+                                            <time class="text-sm" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: "%b %d, %Y" }}</time>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pb-4 mx-auto">
+                                {{ article.content }}
+                            </div>
+                        </div>
+                    {%- elsif block.type == "text" -%}
+                        {% include block.settings.text_tab %}
+                    {%- endif -%}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Product Tabs",
+	"max_blocks": 5,
+    "blocks": [
+        {
+            "type": "checkbox",
+            "name": "Description",
+            "limit": 1,
+            "settings": [
+                {
+                    "id": "tab_title",
+                    "type": "text",
+                    "label": "Tab Title",
+                    "default": "Description"
+                },
+                {
+                    "id": "show_description",
+                    "type": "checkbox",
+                    "label": "Show Description",
+                    "default": true
+                }
+            ]
+        },
+        {
+            "type": "html",
+            "name": "HTML",
+            "settings": [
+                {
+                    "id": "tab_title",
+                    "type": "text",
+                    "label": "Tab Title",
+                    "default": "HTML"
+                },
+                {
+                    "id": "html_tab",
+                    "type": "html",
+                    "label": "HTML"
+                }
+            ]
+        },
+        {
+            "type": "page",
+            "name": "Page",
+            "settings": [
+                {
+                    "id": "tab_title",
+                    "type": "text",
+                    "label": "Tab Title",
+                    "default": "Page"
+                },
+                {
+                    "id": "page_tab",
+                    "type": "page",
+                    "label": "Display Page"
+                }
+            ]
+        },
+        {
+            "type": "article",
+            "name": "Article",
+            "settings": [
+                {
+                    "id": "tab_title",
+                    "type": "text",
+                    "label": "Tab Title",
+                    "default": "Article"
+                },
+                {
+                    "id": "article_tab",
+                    "type": "article",
+                    "label": "Article"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Snippets",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "Snippets",
+                    "info": "To render snippets, create a snippet in snippets folder ie: reviews_shopify.liquid"
+                },
+                {
+                    "id": "tab_title",
+                    "type": "text",
+                    "label": "Tab Title",
+                    "default": "Text"
+                },
+                {
+                    "id": "text_tab",
+                    "type": "text",
+                    "label": "Text",
+                    "placeholder": "reviews_shopify",
+                    "info": "Snippet file name only, .liquid not required"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
