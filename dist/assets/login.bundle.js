@@ -445,6 +445,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_theme_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/theme.js */ "./src/js/layout/theme.js");
 
 
+if (window.location.hash == "#recover") {
+  document.querySelector("#sign-in").classList.add('hidden');
+  document.querySelector("#recover").classList.remove('hidden');
+}
+
+document.querySelector(".recover-link").addEventListener('click', function (e) {
+  document.querySelector("#sign-in").classList.add('hidden');
+  document.querySelector("#recover").classList.remove('hidden');
+});
+
 /***/ }),
 
 /***/ "./src/js/theme-cart.js":
