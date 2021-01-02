@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   {%- if template == "product" -%}
     {{ 'photoswipe.min.css' | asset_url | stylesheet_tag }}
+    {{ 'photoswipe_default_skin.min.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
   {{ 'line-awesome.min.css' | asset_url | stylesheet_tag }}
   {{ 'application.bundle.css' | asset_url | stylesheet_tag }}
