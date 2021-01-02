@@ -55,6 +55,26 @@
     ]
   },
   {
+    "name": "Shopping Cart Icon",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_icon",
+        "options": [
+          {
+            "value": "bag",
+            "label": "Shopping Bag"
+          },
+          {
+            "value": "cart",
+            "label": "Shopping Cart"
+          }
+        ],
+        "default": "cart"
+      }
+    ]
+  },
+  {
     "name": "Social Media",
     "settings": [
       {

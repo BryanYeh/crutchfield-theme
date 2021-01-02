@@ -1,0 +1,24 @@
+{%- if section.settings.show_payments == true -%}
+<div class="flex flex-col flex-wrap text-center">
+    <div class="text-center text-2xl p-4">Forms of Payment</div>
+    <div class="bg-white shadow-md p-4 flex flex-wrap justify-around border mb-4">
+      {% for type in shop.enabled_payment_types %}
+        {{ type | payment_type_svg_tag }}
+      {% endfor %}
+    </div>
+</div>  
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Payments",
+    "settings": [
+      {
+        "id": "show_payments",
+        "type": "checkbox",
+        "label": "Show Payments",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

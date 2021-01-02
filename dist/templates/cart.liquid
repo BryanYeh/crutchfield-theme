@@ -1,46 +1,76 @@
 {% if cart.item_count > 0 %}
-  <h1>cart</h1>
-  <form action="/cart" method="post" novalidate>
-    <table>
-      <thead>
-        <th colspan="2">Prod</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>total</th>
-      </thead>
-      <tbody>
-        {% for item in cart.items %}
-          <tr>
-            <td>
-              <a href="{{ item.url | within: collections.all }}">
-                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
-              </a>
-            </td>
-            <td>
-              <a href="{{ item.url }}">{{ item.product.title }}</a>
-              {{ item.variant.title }}
-              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
-            </td>
-            <td>{{ item.price | money }}</td>
-            <td>
-              <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
-            </td>
-            <td>
-              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
-              {{ item.line_price | money }}
-              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div>
-      <p>sub total : {{ cart.total_price | money }}</p>
-      <button type="submit" name="update">Update</button>
-      <button type="submit" name="checkout">Checkout</button>
+    <div class="container mx-auto w-full">
+        <h1 class="font-bold text-4xl p-4">
+            {%- if settings.cart_icon == 'cart' -%}
+                <i class="las la-shopping-cart"></i> Your Cart
+            {%- else -%}
+                <i class="las la-shopping-bag"></i> Your Bag
+            {%- endif -%}
+        </h1>
+
+        <form action="/cart" method="post" class="flex flex-wrap p-4">
+            <div class="w-full md:w-8/12">
+                {% for item in cart.items %}
+                    <div class="border shadow-md mb-4 p-4 flex">
+                        <div class="w-4/12">
+                            <a href="{{ item.url | within: collections.all }}">
+                                <img class="mb-4 w-full" src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                            </a>
+                            <a class="mt-4" href="/cart/change?line={{ forloop.index }}&amp;quantity=0"><i class="las la-times"></i> Remove</a>
+                        </div>
+                        <div class="w-5/12 lg:w-6/12 px-4">
+                            <a class="font-bold text-lg md:text-xl" href="{{ item.url }}">{{ item.product.title }}</a>
+                            {%- if item.variant.title != "Default Title" -%}
+                                <p class="text-sm text-gray-600">{{ item.variant.title }}</p>
+                            {%- endif -%}
+                            {%- if item.variant.sku != blank -%}
+                                <p class="text-sm">#{{ item.variant.sku }}</p>
+                            {%- endif -%}
+                            {%- if item.product.compare_at_price -%}
+                                <p class="text-red-600 line-through">{{ item.product.compare_at_price | money }}</p>
+                            {%- endif -%}
+                            <p class="font-semibold text-lg">{{ item.original_price | money }}</p>
+                        </div>
+                        <div class="w-3/12 lg:w-2/12">
+                            <div class="px-4 w-full">
+                                <input class="focus:border-blue-200 focus:outline-none w-full" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
+                            </div>
+                            <div class="px-4 w-full text-right font-bold">
+                                <p class="text-2xl">{{ item.line_price | money }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="w-full md:w-4/12 md:px-4">
+                <button type="submit" name="update" class="border-2 border-red-600 bg-white text-red-600 p-4 w-full mb-4 hover:bg-red-600 hover:text-white shadow-md text-xl font-semibold"><i class="las la-sync"></i> Update Cart</button>
+            
+                {% section 'cart_notes' %}
+
+                <div class="flex flex-col flex-wrap shadow-md bg-white border mb-4">
+                    <div class="bg-black text-white text-center text-2xl font-bold py-4">Your Total</div>
+                    <div class="p-4">
+                        <div class="flex pb-2">Subtotal <span class="flex-1 text-right">{{ cart.items_subtotal_price | money }}</span></div>
+                        <div class="flex pb-2">Shipping <span class="flex-1 text-right">Calculated at checkout</span></div>
+                        <div class="flex border-b border-gray-500 pb-2 text-xl font-bold">Total <span class="flex-1 text-right">{{ cart.total_price | money }}</span></div>
+                    </div>
+                    <div class="px-4 pb-4">
+                        <button type="submit" name="checkout" class="border border-green-600 bg-green-600 text-white text-2xl p-4 w-full rounded hover:bg-white hover:text-green-600"><i class="las la-shield-alt"></i> Go to Secure Checkout <i class="las la-angle-right"></i></button>         
+                    </div>
+                </div>
+
+                {% section 'cart_payments' %}
+            </div>
+        </form>
     </div>
-  </form>
 {% else %}
-  <h2>cart</h2>
-  Cart is empty
+    <h1 class="text-center text-3xl font-bold p-4">Empty Cart</h1>
+    <div class="text-center p-4">
+        <a class="bg-red-600 border border-red-600 focus:outline-none font-semibold hover:bg-transparent hover:text-red-600 p-4 text-white" href="/collections/all">
+            View Collections
+        </a>
+    </div>
+    <div class="mx-auto py-4 w-10/12">
+        {% render 'svg_empty_cart' %}
+    </div>
 {% endif %}
