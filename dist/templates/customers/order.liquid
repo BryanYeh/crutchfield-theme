@@ -1,1 +1,120 @@
-<!-- /templates/customers/order.liquid -->
+<div class="container mx-auto p-4">
+    <h1 class="font-bold text-4xl p-4">Order {{ order.name }}</h1>
+
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-8/12 p-4">
+            <table class="table-fixed w-full shadow-md border">
+                <thead>
+                    <tr class="text-left">
+                        <th class="w-1/4 p-4">Item</th>
+                        <th class="w-1/4 p-4">Price</th>
+                        <th class="w-1/4 p-4">Quantity</th>
+                        <th class="w-1/4 p-4">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for line_item in order.line_items %}
+                        <tr>
+                            <td class="px-4 pb-4">
+                                <a class="font-semibold text-red-600 hover:text-red-800" href="{{ line_item.variant.url }}">{{ line_item.product.title }}</a>
+                                {% unless line_item.product.has_only_default_variant %}
+                                    <ul>
+                                        {% for option in line_item.options_with_values %}
+                                            <li class="text-xs text-gray-700"><span class="font-medium">{{ option.name }}</span>: {{ option.value }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endunless %}
+                            </td>
+                            <td class="px-4 pb-4">{{ line_item.original_price | money }}</td>
+                            <td class="px-4 pb-4">{{ line_item.quantity }}</td>
+                            <td class="px-4 pb-4">{{ line_item.line_price | money }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="w-full shadow-md border p-4 mt-4">
+                {%- for discount_application in order.discount_applications -%}
+                    <div class="border-b flex flex-wrap py-2">
+                        <div class="w-8/12">
+                            Discount ({{ discount_application.title }}): 
+                            {% if discount_application.value_type == 'percentage' %} 
+                                {{ discount_application.value }}% Off 
+                            {% else %} 
+                                -{{ discount_application.value | money }}
+                            {% endif %}
+                        </div>
+                        <div class="w-4/12">
+                            -{{ discount_application.total_allocated_amount | money }}
+                        </div>
+                    </div>
+                {%- endfor -%}
+                <div class="border-b flex flex-wrap py-2">
+                    <div class="w-8/12">Subtotal</div>
+                    <div class="w-4/12">{{ order.subtotal_price | money }}</div>
+                </div>
+                {% for tax_line in order.tax_lines %}
+                    <div class="border-b flex flex-wrap py-2">
+                        <div class="w-8/12">
+                            Tax ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)
+                        </div>
+                        <div class="w-4/12">{{ tax_line.price | money }}</div>
+                    </div>
+                {% endfor %}  
+                <div class="flex flex-wrap py-2">
+                    <div class="w-8/12">Total</div>
+                    <div class="w-4/12">{{ order.total_price | money }}</div>
+                </div>                              
+            </div>
+        </div>
+        <div class="w-full md:w-4/12 p-4">
+            <div><span class="font-semibold">Order Date</span>: {{ order.created_at | date: format: 'abbreviated_date' }}</div>
+            <div><span class="font-semibold">Tracking</span>: <a class="text-red-600 hover:text-red-800" href="{{ order.order_status_url }}">View</a></div>
+            <p><span class="font-semibold">Payment Status</span>: {{ order.financial_status | capitalize }}</p>
+            <p><span class="font-semibold">Fulfillment Status</span>: {{ order.fulfillment_status | capitalize }}</p>
+
+            {% capture variant_ids %}{% for line_item in order.line_items %}{{ line_item.variant_id }},{% endfor %}{% endcapture %}
+            {% capture variant_quantities %}{% for line_item in order.line_items %}{{ line_item.quantity }},{% endfor %}{% endcapture %}
+            {% capture variant_inventories %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_quantity }},{% endfor %}{% endcapture %}
+            {% capture variant_inventory_policies %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_policy }},{% endfor %}{% endcapture %}
+            {% capture variant_inventory_trackers %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_management }},{% endfor %}{% endcapture %}
+
+            <div class="pt-4">
+                <button
+                    class="reorder px-4 py-2 bg-white border border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                    data-variant-ids="{{ variant_ids }}"
+                    data-variant-quantities="{{ variant_quantities }}"
+                    data-variant-inventories="{{ variant_inventories }}"
+                    data-variant-inventory-policies="{{ variant_inventory_policies }}"
+                    data-variant-inventory-trackers="{{ variant_inventory_trackers }}">
+                    Reorder
+                </button>
+            </div>
+
+            <div class="mt-4">
+                <h2 class="font-semibold text-xl">Billing Address</h2>
+                <p>{{ order.billing_address.name }}</p>
+                <p>{{ order.billing_address.company }}</p>
+                <p>{{ order.billing_address.street }}</p>
+                <p>{{ order.billing_address.city }}, {{ order.billing_address.province }}</p>
+                <p>{{ order.billing_address.country }} {{ order.billing_address.zip }}</p>
+                <p>{{ order.billing_address.phone }}</p>        
+            </div>
+
+            <div class="mt-4">
+                <h2 class="font-semibold text-xl">Shipping Address</h2>
+                <p>{{ order.shipping_address.name }}</p>
+                <p>{{ order.shipping_address.company }}</p>
+                <p>{{ order.shipping_address.street }}</p>
+                <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</p>
+                <p>{{ order.shipping_address.country }} {{ order.shipping_address.zip }}</p>
+                <p>{{ order.shipping_address.phone }}</p>        
+            </div>
+
+            {% if order.note != blank %}
+                <h2 class="font-semibold text-xl">Order Note</h2>
+                <div class="mt-4">{{ order.note }}</div>          
+            {% endif %}            
+        </div>
+    </div>
+</div>
