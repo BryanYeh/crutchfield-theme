@@ -1,1 +1,17 @@
-<!-- /templates/customers/register.liquid -->
+{{ form.errors | default_errors }}
+<div class="border shadow w-10/12 md:w-6/12 lg:w-4/12 mx-auto p-8 my-4">
+    <h1 class="text-center text-bold text-4xl uppercase pb-2">Register</h1>
+    <form action="{{ routes.account_url }}" method="post">
+        <label for="customer_email" class="text-gray-700 pt-2 font-medium block">Email Address</label>
+        <input type="email" required name="customer[email]" class="w-full border-gray-400 focus:border-blue-200 focus:outline-none shadow"/>
+
+        <label for="customer_password" class="text-gray-700 pt-2 font-medium block">Password</label>
+        <input type="password" required name="customer[password]" class="w-full border-gray-400 focus:border-blue-200 focus:outline-none shadow pr-32"/>
+
+        <input type="submit" value="Register" class="bg-red-600 border border-red-600 cursor-pointer font-semibold hover:bg-white hover:text-red-600 mt-4 px-4 py-2 text-lg text-white w-full" />   
+
+        <div class="text-sm text-gray-700 mt-2">
+            Already have an account? <a href="{{ routes.account_login_url }}" class="text-red-600 hover:text-gray-600 font-semibold">Sign In</a>
+        </div>     
+    </form>
+</div>
