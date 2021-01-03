@@ -20,6 +20,18 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+              {% if paginate.pages > 1 %}
+                <div class="flex pb-4 px-4">
+                    {% for part in paginate.parts %}
+                        {% if part.is_link %}
+                            <a href="{{ part.url }}" class="px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600 hover:bg-red-600  hover:text-white">{{ part.title }}</a>
+                        {% else %}
+                            <a class=" px-4 py-2 border border-red-600 {% if forloop.last == false %} border-r-0 {% endif %} text-red-600">{{ part.title }}</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
         {% endpaginate %}
     </div>
     <div class="w-full md:w-4/12 p-4">
