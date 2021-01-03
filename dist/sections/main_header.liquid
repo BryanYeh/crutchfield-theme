@@ -60,8 +60,8 @@
                 </div>
                 <div class="bg-white border border-gray-400 shadow-md absolute p-4 right-2 space-y-4 mt-4 hidden z-20">
                     {%- if customer -%}
-                        <a href="{{ routes.account_url }}">My Account</a>
-                        <a href="{{ routes.account_logout_url }}">Logout</a>
+                        <a href="{{ routes.account_url }}" class="text-white bg-red-500 px-5 py-2 rounded mr-2 hover:bg-white hover:text-red-500 border border-red-500">My Account</a>
+                        <a href="{{ routes.account_logout_url }}" class="text-red-500 bg-white border border-red-500 px-5 py-2 rounded hover:text-white hover:bg-red-500">Logout</a>
                     {%- else -%}
                         <div class="text-center py-2">
                             <a href="{{ routes.account_login_url }}" class="text-white bg-red-500 px-5 py-2 rounded mr-2 hover:bg-white hover:text-red-500 border border-red-500">Sign In</a>
