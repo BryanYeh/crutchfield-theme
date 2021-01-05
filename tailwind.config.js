@@ -14,7 +14,8 @@ module.exports = {
   theme: {
     extend: {
       minHeight: {
-        '96': '24rem'
+        '96': '24rem',
+        '40': '10rem'
       }
     },
   },

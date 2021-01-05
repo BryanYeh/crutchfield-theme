@@ -1,1 +1,181 @@
-<!-- /templates/customers/addresses.liquid -->
+<div class="container p-4">
+    <h1 class="font-bold text-4xl">Your Addresses</h1>
+    {% paginate customer.addresses by 11 %}
+        <div class="p-4 md:px-0 mx-auto container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {%- for address in customer.addresses -%}
+                <div class="border-2 p-4 flex flex-col">
+                    {%- if address == customer.default_address -%}
+                        <h2 class="font-semibold text-xl">Default</h2>
+                    {%- endif -%}
+
+                    <div class="flex-grow">
+                        {{ address | format_address }}
+                    </div>
+                    
+                    <div>
+                        <button
+                            type="button"
+                            class="address-edit border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 py-2 px-4"
+                            data-address-id = "{{ address.id }}"
+                            data-first-name = "{{ address.first_name }}"
+                            data-last-name = "{{ address.last_name }}"
+                            data-company = "{{ address.company }}"
+                            data-address1 = "{{ address.address1 }}"
+                            data-address2 = "{{ address.address2 }}"
+                            data-city = "{{ address.city }}"
+                            data-province = "{{ address.province }}"
+                            data-country = "{{ address.country }}"
+                            data-zip = "{{ address.zip }}"
+                            data-phone = "{{ address.phone }}"
+                            data-default = "{%- if address == customer.default_address -%}1{%- else -%}0{%- endif -%}"
+                            >
+                            Edit
+                        </button>
+
+                        <button
+                            type="button"
+                            class="address-delete border border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white py-2 px-4"
+                            data-address-id = "{{ address.id }}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            {%- endfor -%}
+            
+            <div class="border-2 border-dashed cursor-pointer flex group hover:border-red-400 items-center justify-around p-4 min-h-40 add-address">
+                <p class="group-hover:text-red-600 text-2xl">Add a new address</p>
+            </div>
+
+            {%- if paginate.pages > 1 -%}
+                <div class="border-2 border-dashed cursor-pointer flex group hover:border-red-400 items-center justify-around p-4 min-h-40">
+                    <p class="group-hover:text-red-600 text-2xl">Next page of addresses</p>
+                </div>
+            {%- endif -%}
+        </div>
+
+        <form method="post" data-address="root" class="lg:w-4/12 md:w-6/12 mx-auto w-10/12 address-edit-form hidden">
+            <input type="hidden" name="form_type" value="customer_address">
+            <input type="hidden" name="utf8" value="✓">
+            <input type="hidden" name="_method" value="put">
+            <div class="flex flex-col pt-2">
+                <label for="AddressFirstName" class="text-gray-700">First Name</label>
+                <input type="text" id="AddressFirstName" name="address[first_name]">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressLastName" class="text-gray-700">Last Name</label>
+                <input type="text" id="AddressLastName" name="address[last_name]">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressCompany" class="text-gray-700">Company</label>
+                <input type="text" id="AddressCompany" name="address[company]">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressAddress1" class="text-gray-700">Address</label>
+                <input type="text" id="AddressAddress1" name="address[address1]">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressAddress2" class="text-gray-700">Address 2</label>
+                <input type="text" id="AddressAddress2" name="address[address2]">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressCity" class="text-gray-700">City</label>
+                <input type="text" id="AddressCity" name="address[city]">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressCountry" class="text-gray-700">Country</label>
+                <select id="AddressCountry" name="address[country]" data-default=""></select>
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressProvince" class="text-gray-700">Province</label>
+                <select id="AddressProvince" name="address[province]" data-default=""></select>
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressZip" class="text-gray-700">Postal Code</label>
+                <input type="text" id="AddressZip" name="address[zip]" autocapitalize="characters">
+            </div>
+
+            <div class="flex flex-col pt-2">
+                <label for="AddressPhone" class="text-gray-700">Phone</label>
+                <input type="tel" id="AddressPhone" name="address[phone]">
+            </div>
+
+            <div class="pt-2 w-full">
+                <input type="checkbox" id="AddressDefault" name="address[default]">
+                <label for="AddressDefault">Set as default address</label>
+            </div>
+
+            <div class="pt-2 w-full">
+                <input type="submit" value="Submit" class="border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 py-2 px-4">
+            </div>
+        </form>
+    {% endpaginate %}
+
+    {%- form 'customer_address', customer.new_address, class: 'lg:w-4/12 md:w-6/12 mx-auto w-10/12 hidden address', data-address: 'root' -%}
+        <div class="flex flex-col pt-2">
+            <label for="AddressFirstName" class="text-gray-700">First Name</label>
+            <input type="text" id="AddressFirstName" name="address[first_name]" value="{{ form.first_name }}">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressLastName" class="text-gray-700">Last Name</label>
+            <input type="text" id="AddressLastName" name="address[last_name]" value="{{ form.last_name }}">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressCompany" class="text-gray-700">Company</label>
+            <input type="text" id="AddressCompany" name="address[company]" value="{{ form.company }}">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressAddress1" class="text-gray-700">Address</label>
+            <input type="text" id="AddressAddress1" name="address[address1]" value="{{ form.address1 }}">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressAddress2" class="text-gray-700">Address 2</label>
+            <input type="text" id="AddressAddress2" name="address[address2]" value="{{ form.address2 }}">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressCity" class="text-gray-700">City</label>
+            <input type="text" id="AddressCity" name="address[city]" value="{{ form.city }}">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressCountry" class="text-gray-700">Country</label>
+            <select id="AddressCountry" name="address[country]" data-default="{{ form.country }}"></select>
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressProvince" class="text-gray-700">Province</label>
+            <select id="AddressProvince" name="address[province]" data-default="{{ form.province }}"></select>
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressZip" class="text-gray-700">Postal Code</label>
+            <input type="text" id="AddressZip" name="address[zip]" value="{{ form.zip }}" autocapitalize="characters">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="AddressPhone" class="text-gray-700">Phone</label>
+            <input type="tel" id="AddressPhone" name="address[phone]" value="{{ form.phone }}">
+        </div>
+
+        <div class="pt-2 w-full">
+          <input type="checkbox" id="AddressDefault" name="address[default]" value="1">
+          <label for="AddressDefault">Set as default address</label>
+        </div>
+
+        <div class="pt-2 w-full">
+            <input type="submit" value="Submit" class="border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 py-2 px-4">
+        </div>
+    {%- endform -%}
+</div>

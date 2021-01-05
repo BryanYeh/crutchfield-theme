@@ -16,3 +16,6 @@ html {
   @apply text-gray-500;
   content: "/";
 }
+[data-address='root'] [data-aria-hidden='true'] {
+  display: none;
+}

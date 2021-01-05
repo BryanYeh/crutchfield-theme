@@ -15463,6 +15463,10 @@ select {
   min-height: 0px;
 }
 
+.min-h-40 {
+  min-height: 10rem;
+}
+
 .min-h-96 {
   min-height: 24rem;
 }
@@ -33370,6 +33374,10 @@ html {
   content: "/";
 }
 
+[data-address='root'] [data-aria-hidden='true'] {
+  display: none;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -48089,6 +48097,10 @@ html {
 
   .sm\:min-h-0 {
     min-height: 0px;
+  }
+
+  .sm\:min-h-40 {
+    min-height: 10rem;
   }
 
   .sm\:min-h-96 {
@@ -80621,6 +80633,10 @@ html {
     min-height: 0px;
   }
 
+  .md\:min-h-40 {
+    min-height: 10rem;
+  }
+
   .md\:min-h-96 {
     min-height: 24rem;
   }
@@ -113149,6 +113165,10 @@ html {
 
   .lg\:min-h-0 {
     min-height: 0px;
+  }
+
+  .lg\:min-h-40 {
+    min-height: 10rem;
   }
 
   .lg\:min-h-96 {
@@ -145681,6 +145701,10 @@ html {
     min-height: 0px;
   }
 
+  .xl\:min-h-40 {
+    min-height: 10rem;
+  }
+
   .xl\:min-h-96 {
     min-height: 24rem;
   }
@@ -178211,6 +178235,10 @@ html {
     min-height: 0px;
   }
 
+  .\32xl\:min-h-40 {
+    min-height: 10rem;
+  }
+
   .\32xl\:min-h-96 {
     min-height: 24rem;
   }
@@ -196019,4 +196047,3 @@ html {
             animation: bounce 1s infinite;
   }
 }
-
