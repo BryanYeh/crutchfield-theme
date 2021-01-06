@@ -1,14 +1,42 @@
-<h1>{{ page.title }}</h1>
-{% form 'contact' %}
-  {% if form.posted_successfully? %} Thank you for your contact {% endif %}
-  {{ form.errors | default_errors }}
-  <label for="ContactFormName">name</label>
-  <input type="text" id="ContactFormName" name="contact[name]">
-  <label for="ContactFormEmail">email</label>
-  <input type="email" id="ContactFormEmail" name="contact[email]">
-  <label for="ContactFormPhone">phone</label>
-  <input type="tel" id="ContactFormPhone" name="contact[phone]">
-  <label for="ContactFormMessage">message</label>
-  <textarea rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
-  <input type="submit" value="send">
-{% endform %}
+<div class="container p-4 mx-auto">
+    <h1 class="font-bold text-4xl text-center">{{ page.title }}</h1>
+
+    {% form 'contact', class: 'lg:w-4/12 md:w-6/12 mx-auto w-10/12' %}
+        {%- if form.posted_successfully? -%}
+            <div class="bg-green-100 border-green-500 border-t-4 my-2 px-4 py-3 rounded-b shadow-md text-green-900" role="alert">
+                <div class="flex">
+                    <svg class="h-6 mr-4 text-green-500 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"></path></svg>
+                    <div>
+                        <p class="font-bold">Thank you, we will be in contact with you soon.</p>
+                        <p class="hidden text-sm">Make sure you know how these changes affect you.</p>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+        {{ form.errors | default_errors }}
+
+        <div class="flex flex-col pt-2">
+            <label for="ContactFormName" class="text-gray-700">Name</label>
+            <input type="text" id="ContactFormName" name="contact[name]">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="ContactFormEmail" class="text-gray-700">Email</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="ContactFormPhone" class="text-gray-700">Phone</label>
+            <input type="tel" id="ContactFormPhone" name="contact[phone]">
+        </div>
+
+        <div class="flex flex-col pt-2">
+            <label for="ContactFormMessage" class="text-gray-700">Message</label>
+            <textarea rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
+        </div>
+
+        <input type="submit" value="Send" class="px-4 py-2 mt-2 border border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 cursor-pointer">
+    {% endform %}    
+</div>
+
+
