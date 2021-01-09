@@ -1,0 +1,53 @@
+<div class="p-4 md:px-0 mx-auto container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {%- if section.settings.display_type == 'all' -%}
+        {% for collection in collections %}
+            {% render 'collection', collection: collection %}
+        {% endfor %}
+    {%- else -%}
+        {% for block in section.blocks %}
+            {% render 'collection', collection: collections[block.settings.collection] %}
+        {% endfor %}
+    {%- endif -%}
+
+</div>
+
+{% schema %}
+    {
+        "name": "Collections list page",
+        "settings": [
+            {
+                "type": "paragraph",
+                "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+            },
+            {
+                "type": "radio",
+                "id": "display_type",
+                "label": "Select collections to show",
+                "default": "all",
+                "options": [
+                    {
+                        "value": "all",
+                        "label": "All"
+                    },
+                    {
+                        "value": "selected",
+                        "label": "Selected"
+                    }
+                ]
+            }
+        ],
+        "blocks": [
+            {
+                "type": "collection",
+                "name": "Collection",
+                "settings": [
+                    {
+                        "label": "Collection",
+                        "id": "collection",
+                        "type": "collection"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

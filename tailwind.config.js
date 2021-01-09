@@ -23,6 +23,7 @@ module.exports = {
     extend: {
       translate: ['group-hover'],
       animation: ['group-hover'],
+      display: ['group-hover'],
     }
   },
   plugins: [
