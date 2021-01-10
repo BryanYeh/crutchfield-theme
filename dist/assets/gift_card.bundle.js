@@ -1,6 +1,87 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@shopify/theme-currency/currency.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@shopify/theme-currency/currency.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "formatMoney": () => /* binding */ formatMoney
+/* harmony export */ });
+/**
+ * Currency Helpers
+ * -----------------------------------------------------------------------------
+ * A collection of useful functions that help with currency formatting
+ *
+ * Current contents
+ * - formatMoney - Takes an amount in cents and returns it as a formatted dollar value.
+ *
+ */
+
+const moneyFormat = '${{amount}}';
+
+/**
+ * Format money values based on your shop currency settings
+ * @param  {Number|string} cents - value in cents or dollar amount e.g. 300 cents
+ * or 3.00 dollars
+ * @param  {String} format - shop money_format setting
+ * @return {String} value - formatted value
+ */
+function formatMoney(cents, format) {
+  if (typeof cents === 'string') {
+    cents = cents.replace('.', '');
+  }
+  let value = '';
+  const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+  const formatString = format || moneyFormat;
+
+  function formatWithDelimiters(
+    number,
+    precision = 2,
+    thousands = ',',
+    decimal = '.'
+  ) {
+    if (isNaN(number) || number == null) {
+      return 0;
+    }
+
+    number = (number / 100.0).toFixed(precision);
+
+    const parts = number.split('.');
+    const dollarsAmount = parts[0].replace(
+      /(\d)(?=(\d\d\d)+(?!\d))/g,
+      `$1${thousands}`
+    );
+    const centsAmount = parts[1] ? decimal + parts[1] : '';
+
+    return dollarsAmount + centsAmount;
+  }
+
+  switch (formatString.match(placeholderRegex)[1]) {
+    case 'amount':
+      value = formatWithDelimiters(cents, 2);
+      break;
+    case 'amount_no_decimals':
+      value = formatWithDelimiters(cents, 0);
+      break;
+    case 'amount_with_comma_separator':
+      value = formatWithDelimiters(cents, 2, '.', ',');
+      break;
+    case 'amount_no_decimals_with_comma_separator':
+      value = formatWithDelimiters(cents, 0, '.', ',');
+      break;
+  }
+
+  return formatString.replace(placeholderRegex, value);
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/@shopify/theme-images/images.js":
 /*!******************************************************!*\
   !*** ./node_modules/@shopify/theme-images/images.js ***!
@@ -271,10 +352,12 @@ ready(function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shopify_theme_images__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shopify/theme-images */ "./node_modules/@shopify/theme-images/images.js");
-/* harmony import */ var _theme_cart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../theme-cart */ "./src/js/theme-cart.js");
-/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../dropdown */ "./src/js/dropdown.js");
-/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_dropdown__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _alert_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../alert-toast */ "./src/js/alert-toast.js");
+/* harmony import */ var _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shopify/theme-currency */ "./node_modules/@shopify/theme-currency/currency.js");
+/* harmony import */ var _theme_cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../theme-cart */ "./src/js/theme-cart.js");
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dropdown */ "./src/js/dropdown.js");
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_dropdown__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _alert_toast__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../alert-toast */ "./src/js/alert-toast.js");
+
 
 
 
@@ -355,13 +438,13 @@ ready(function () {
         e.target.textContent = "Adding to Cart";
         e.target.setAttribute("disabled", true);
         var quantity = 1;
-        _theme_cart__WEBPACK_IMPORTED_MODULE_1__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
+        _theme_cart__WEBPACK_IMPORTED_MODULE_2__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
           quantity: quantity
         }).then(function (result) {
           if (result.status == 422) {
-            _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("error", result.message, result.description);
+            _alert_toast__WEBPACK_IMPORTED_MODULE_4__.showToast("error", result.message, result.description);
           } else {
-            _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
+            _alert_toast__WEBPACK_IMPORTED_MODULE_4__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
           }
         });
         e.target.removeAttribute("disabled");
@@ -371,7 +454,7 @@ ready(function () {
   }); // close notification toast
 
   document.querySelector(".alert-toast").addEventListener("click", function (e) {
-    _alert_toast__WEBPACK_IMPORTED_MODULE_3__.hideToast();
+    _alert_toast__WEBPACK_IMPORTED_MODULE_4__.hideToast();
   }); // edit variation
 
   document.querySelectorAll(".variation-select").forEach(function (variationSelect) {
@@ -389,8 +472,19 @@ ready(function () {
           if (product_card_variations.every(function (i) {
             return variation.options.includes(i);
           })) {
+            // update prices
+            product_card.querySelector('.price').innerHTML = _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__.formatMoney(variation.price);
+
+            if (variation.compare_at_price != null) {
+              product_card.querySelector('.price-original').innerHTML = _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__.formatMoney(variation.compare_at_price);
+              product_card.querySelector('.discount-amount').innerHTML = _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__.formatMoney(variation.compare_at_price - variation.price) + ' Discount';
+            } else {
+              product_card.querySelector('.price-original').innerHTML = "";
+              product_card.querySelector('.discount-amount').innerHTML = "";
+            }
+
             var available_classes = ["bg-red-600", "text-white", "hover:bg-white", "hover:text-red-600", "add-to-cart"];
-            var unavailable_classes = ["bg-white", "text-red-600", "cursor-not-allowed"];
+            var unavailable_classes = ["bg-white", "text-red-600", "cursor-not-allowed", "sold-out"];
 
             if (variation.available) {
               available_classes.forEach(function (a_class) {

@@ -352,10 +352,12 @@ ready(function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shopify_theme_images__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @shopify/theme-images */ "./node_modules/@shopify/theme-images/images.js");
-/* harmony import */ var _theme_cart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../theme-cart */ "./src/js/theme-cart.js");
-/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../dropdown */ "./src/js/dropdown.js");
-/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_dropdown__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _alert_toast__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../alert-toast */ "./src/js/alert-toast.js");
+/* harmony import */ var _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shopify/theme-currency */ "./node_modules/@shopify/theme-currency/currency.js");
+/* harmony import */ var _theme_cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../theme-cart */ "./src/js/theme-cart.js");
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../dropdown */ "./src/js/dropdown.js");
+/* harmony import */ var _dropdown__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_dropdown__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _alert_toast__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../alert-toast */ "./src/js/alert-toast.js");
+
 
 
 
@@ -436,13 +438,13 @@ ready(function () {
         e.target.textContent = "Adding to Cart";
         e.target.setAttribute("disabled", true);
         var quantity = 1;
-        _theme_cart__WEBPACK_IMPORTED_MODULE_1__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
+        _theme_cart__WEBPACK_IMPORTED_MODULE_2__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
           quantity: quantity
         }).then(function (result) {
           if (result.status == 422) {
-            _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("error", result.message, result.description);
+            _alert_toast__WEBPACK_IMPORTED_MODULE_4__.showToast("error", result.message, result.description);
           } else {
-            _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
+            _alert_toast__WEBPACK_IMPORTED_MODULE_4__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
           }
         });
         e.target.removeAttribute("disabled");
@@ -452,7 +454,7 @@ ready(function () {
   }); // close notification toast
 
   document.querySelector(".alert-toast").addEventListener("click", function (e) {
-    _alert_toast__WEBPACK_IMPORTED_MODULE_3__.hideToast();
+    _alert_toast__WEBPACK_IMPORTED_MODULE_4__.hideToast();
   }); // edit variation
 
   document.querySelectorAll(".variation-select").forEach(function (variationSelect) {
@@ -470,8 +472,19 @@ ready(function () {
           if (product_card_variations.every(function (i) {
             return variation.options.includes(i);
           })) {
+            // update prices
+            product_card.querySelector('.price').innerHTML = _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__.formatMoney(variation.price);
+
+            if (variation.compare_at_price != null) {
+              product_card.querySelector('.price-original').innerHTML = _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__.formatMoney(variation.compare_at_price);
+              product_card.querySelector('.discount-amount').innerHTML = _shopify_theme_currency__WEBPACK_IMPORTED_MODULE_1__.formatMoney(variation.compare_at_price - variation.price) + ' Discount';
+            } else {
+              product_card.querySelector('.price-original').innerHTML = "";
+              product_card.querySelector('.discount-amount').innerHTML = "";
+            }
+
             var available_classes = ["bg-red-600", "text-white", "hover:bg-white", "hover:text-red-600", "add-to-cart"];
-            var unavailable_classes = ["bg-white", "text-red-600", "cursor-not-allowed"];
+            var unavailable_classes = ["bg-white", "text-red-600", "cursor-not-allowed", "sold-out"];
 
             if (variation.available) {
               available_classes.forEach(function (a_class) {

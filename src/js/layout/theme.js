@@ -1,4 +1,5 @@
 import * as images from "@shopify/theme-images";
+import * as currency from '@shopify/theme-currency';
 import * as cart from "../theme-cart";
 import "../dropdown";
 import * as toast from "../alert-toast";
@@ -136,6 +137,17 @@ ready(() => {
                 variation.options.includes(i)
               )
             ) {
+              // update prices
+              product_card.querySelector('.price').innerHTML = currency.formatMoney(variation.price);
+              if(variation.compare_at_price != null){
+                product_card.querySelector('.price-original').innerHTML = currency.formatMoney(variation.compare_at_price);
+                product_card.querySelector('.discount-amount').innerHTML = currency.formatMoney(variation.compare_at_price - variation.price) + ' Discount';
+              }
+              else{
+                product_card.querySelector('.price-original').innerHTML = "";
+                product_card.querySelector('.discount-amount').innerHTML = "";
+              }
+
               let available_classes = [
                 "bg-red-600",
                 "text-white",
@@ -147,6 +159,7 @@ ready(() => {
                 "bg-white",
                 "text-red-600",
                 "cursor-not-allowed",
+                "sold-out"
               ];
               if (variation.available) {
                 available_classes.forEach((a_class) => {
