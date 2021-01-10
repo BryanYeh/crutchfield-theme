@@ -10,11 +10,19 @@
                 <div class="swiper-wrapper">
                     {% for image in product.images %}
                         <div class="swiper-slide" {% if image.src == featured_image %} data-default-slide="{{ forloop.index0 }}" {% endif %}>
-                        <img src="{{ image.src | img_url: 'master' }}" class="mx-auto" alt="{{ image.alt | escape }}">
-                        <div class="zoom text-center">
-                            <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
-                            <i class="las la-search-plus float-right text-2xl"></i>
+                            <img src="{{ image.src | img_url: 'master' }}" class="mx-auto" alt="{{ image.alt | escape }}">
+                            <div class="zoom text-center">
+                                <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
+                                <i class="las la-search-plus float-right text-2xl"></i>
+                            </div>
                         </div>
+                    {% else %}
+                        <div class="swiper-slide" {% if image.src == featured_image %} data-default-slide="0" {% endif %}>
+                            {{ 'collection-1' | placeholder_svg_tag: 'w-full mx-auto' }}
+                            <div class="zoom text-center">
+                                <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
+                                <i class="las la-search-plus float-right text-2xl"></i>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -24,6 +32,8 @@
             <div class="gallery-thumbs pt-1 pb-2 flex flex-wrap">
                 {% for image in product.images %}
                     <img src="{{ image.src | img_url: '90x90' }}" class="m-1 border border-gray-400 current-thumb p-3 hover:border-black" alt="{{ image.alt | escape }}" data-thumbs-index="{{ forloop.index0 }}">
+                {% else %}
+                    {{ 'collection-1' | placeholder_svg_tag: 'm-1 border border-gray-400 current-thumb p-2 hover:border-black w-20' | replace: 'class', 'data-thumbs-index="0" class' }}
                 {% endfor %}
             </div>
         </div>

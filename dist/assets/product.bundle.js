@@ -443,7 +443,9 @@ ready(function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_theme_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/theme.js */ "./src/js/layout/theme.js");
- // add swiperjs main picture
+
+var thumbnails = document.querySelector(".gallery-thumbs img") !== null ? '.gallery-thumbs img' : '.gallery-thumbs svg';
+var mainImage = document.querySelector(".gallery-top img") !== null ? '.gallery-top img' : '.gallery-top svg'; // add swiperjs main picture
 
 var galleryTop = new Swiper(".gallery-top", {
   spaceBetween: 10,
@@ -459,9 +461,9 @@ var galleryTop = new Swiper(".gallery-top", {
     init: function init() {
       var realIndex = this.realIndex; // make border black to the current thumbail
 
-      document.querySelector(".gallery-thumbs img").classList.remove("border-black");
-      document.querySelector(".gallery-thumbs img").classList.add("border-gray-400");
-      document.querySelectorAll(".gallery-thumbs img").forEach(function (img) {
+      document.querySelector(thumbnails).classList.remove("border-black");
+      document.querySelector(thumbnails).classList.add("border-gray-400");
+      document.querySelectorAll(thumbnails).forEach(function (img) {
         if (img.dataset.thumbsIndex == realIndex) {
           img.classList.add("border-black");
           img.classList.remove("border-gray-400");
@@ -471,7 +473,7 @@ var galleryTop = new Swiper(".gallery-top", {
     // everytime the main image changes, update to the current thumbnail
     slideChange: function slideChange() {
       var realIndex = this.realIndex;
-      document.querySelectorAll(".gallery-thumbs img").forEach(function (img) {
+      document.querySelectorAll(thumbnails).forEach(function (img) {
         // make border black to the current thumbail
         if (img.dataset.thumbsIndex == realIndex) {
           img.classList.add("border-black");
@@ -485,7 +487,7 @@ var galleryTop = new Swiper(".gallery-top", {
   }
 }); // clicking each thumbnail will switch the main image
 
-document.querySelectorAll(".gallery-thumbs img").forEach(function (thumbnail) {
+document.querySelectorAll(thumbnails).forEach(function (thumbnail) {
   thumbnail.addEventListener("click", function (e) {
     galleryTop.slideToLoop(thumbnail.dataset.thumbsIndex);
   });
@@ -495,7 +497,7 @@ var openPhotoSwipe = function openPhotoSwipe() {
   var pswpElement = document.querySelectorAll(".pswp")[0];
   var items = []; // get all big pictures and sizes
 
-  document.querySelectorAll(".gallery-top img").forEach(function (img) {
+  document.querySelectorAll(mainImage).forEach(function (img) {
     items.push({
       src: img.src,
       w: img.naturalWidth,
@@ -520,11 +522,14 @@ var openPhotoSwipe = function openPhotoSwipe() {
 }; // open photoswipe when big picture is clicked
 
 
-document.querySelectorAll(".zoom i, .gallery-top img").forEach(function (img) {
-  img.addEventListener("click", function (e) {
-    openPhotoSwipe();
+if (mainImage === ".gallery-top img") {
+  document.querySelectorAll(".zoom i, " + mainImage).forEach(function (img) {
+    img.addEventListener("click", function (e) {
+      openPhotoSwipe();
+    });
   });
-}); // update on selecting variation
+} // update on selecting variation
+
 
 document.querySelectorAll(".variation-option-select").forEach(function (optionSelect) {
   optionSelect.addEventListener("change", function (e) {
@@ -576,6 +581,7 @@ document.querySelectorAll(".variation-option-select").forEach(function (optionSe
 
 
         if (option.featured_image) {
+          console.log(option.featured_image.position - 1);
           galleryTop.slideToLoop(option.featured_image.position - 1); // swiperjs starts with index 0
         }
       }
