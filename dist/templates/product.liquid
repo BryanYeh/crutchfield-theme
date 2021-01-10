@@ -56,10 +56,25 @@
                 </select>
                 {% endfor %}
             {% endunless %}
+
+            <div class="mt-4">
+                <div class="price-original text-gray-700 line-through">
+                    {%- if current_variant.compare_at_price -%}
+                        {{ current_variant.compare_at_price | money }}
+                    {%- endif -%}
+                </div>
+                <div class="discount-amount text-red-600 text-lg font-semibold">
+                    {%- if current_variant.compare_at_price -%}
+                        {{ current_variant.compare_at_price | minus:current_variant.price | money }} Discount
+                    {%- endif -%}
+                </div>
+                <div class="price font-bold text-5xl">{{ current_variant.price | money }}</div>            
+            </div>
+
             {% if product.available %}
                 <button class="add-to-cart border border-red-600 bg-red-600 text-white text-3xl hover:bg-white hover:text-red-600 focus:outline-none focus:shadow-md px-10 py-3 mt-3 block rounded">Add to Cart</button>
             {% else %}
-                <button class="border border-red-600 bg-white text-red-600 cursor-not-allowed px-10 py-3 mt-2 text-3xl block rounded">Sold Out</button>
+                <button class="add-to-cart sold-out border border-red-600 bg-white text-red-600 cursor-not-allowed px-10 py-3 mt-2 text-3xl block rounded">Sold Out</button>
             {% endif %}
         </div>
     </div>

@@ -83,27 +83,29 @@ ready(() => {
   // add to cart
   document.querySelectorAll(".add-to-cart").forEach((button) => {
     button.addEventListener("click", (e) => {
-      e.target.textContent = "Adding to Cart";
-      e.target.setAttribute("disabled", true);
-      let quantity = 1;
-      cart
-        .addItem(Number(e.target.closest("[data-id]").dataset.id), {
-          quantity: quantity,
-        })
-        .then((result) => {
-          if (result.status == 422) {
-            toast.showToast("error", result.message, result.description);
-          } else {
-            toast.showToast(
-              "success",
-              "Successfully added to cart",
-              quantity + " " + result.title
-            );
-          }
-        });
+      if(!button.classList.contains('sold-out')){
+        e.target.textContent = "Adding to Cart";
+        e.target.setAttribute("disabled", true);
+        let quantity = 1;
+        cart
+          .addItem(Number(e.target.closest("[data-id]").dataset.id), {
+            quantity: quantity,
+          })
+          .then((result) => {
+            if (result.status == 422) {
+              toast.showToast("error", result.message, result.description);
+            } else {
+              toast.showToast(
+                "success",
+                "Successfully added to cart",
+                quantity + " " + result.title
+              );
+            }
+          });
 
-      e.target.removeAttribute("disabled");
-      e.target.textContent = "Add to Cart";
+        e.target.removeAttribute("disabled");
+        e.target.textContent = "Add to Cart";
+      }
     });
   });
 

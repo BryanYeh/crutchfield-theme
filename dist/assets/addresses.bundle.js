@@ -808,20 +808,22 @@ ready(function () {
 
   document.querySelectorAll(".add-to-cart").forEach(function (button) {
     button.addEventListener("click", function (e) {
-      e.target.textContent = "Adding to Cart";
-      e.target.setAttribute("disabled", true);
-      var quantity = 1;
-      _theme_cart__WEBPACK_IMPORTED_MODULE_1__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
-        quantity: quantity
-      }).then(function (result) {
-        if (result.status == 422) {
-          _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("error", result.message, result.description);
-        } else {
-          _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
-        }
-      });
-      e.target.removeAttribute("disabled");
-      e.target.textContent = "Add to Cart";
+      if (!button.classList.contains('sold-out')) {
+        e.target.textContent = "Adding to Cart";
+        e.target.setAttribute("disabled", true);
+        var quantity = 1;
+        _theme_cart__WEBPACK_IMPORTED_MODULE_1__.addItem(Number(e.target.closest("[data-id]").dataset.id), {
+          quantity: quantity
+        }).then(function (result) {
+          if (result.status == 422) {
+            _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("error", result.message, result.description);
+          } else {
+            _alert_toast__WEBPACK_IMPORTED_MODULE_3__.showToast("success", "Successfully added to cart", quantity + " " + result.title);
+          }
+        });
+        e.target.removeAttribute("disabled");
+        e.target.textContent = "Add to Cart";
+      }
     });
   }); // close notification toast
 

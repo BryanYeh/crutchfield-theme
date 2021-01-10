@@ -1,4 +1,5 @@
 import "../layout/theme.js";
+import * as currency from '@shopify/theme-currency';
 
 var thumbnails = (document.querySelector(".gallery-thumbs img") !== null) ? '.gallery-thumbs img' : '.gallery-thumbs svg';
 var mainImage = (document.querySelector(".gallery-top img") !== null) ? '.gallery-top img' : '.gallery-top svg';
@@ -122,6 +123,17 @@ document
         if (product_options.every((v, i) => option.options.includes(v))) {
           e.target.closest("[data-id]").dataset.id = option.id;
 
+          // update prices
+          document.querySelector('.price').innerHTML = currency.formatMoney(option.price);
+          if(option.compare_at_price != null){
+            document.querySelector('.price-original').innerHTML = currency.formatMoney(option.compare_at_price);
+            document.querySelector('.discount-amount').innerHTML = currency.formatMoney(option.compare_at_price - option.price) + ' Discount';
+          }
+          else{
+            document.querySelector('.price-original').innerHTML = "";
+            document.querySelector('.discount-amount').innerHTML = "";
+          }
+
           // tw classes to use for sold out and in stock
           let available_classes = [
             "bg-red-600",
@@ -133,6 +145,7 @@ document
             "bg-white",
             "text-red-600",
             "cursor-not-allowed",
+            "sold-out"
           ];
 
           // get add to cart button
@@ -171,7 +184,6 @@ document
 
           // there is an image for the option, update the swiperjs slider
           if(option.featured_image){
-            console.log(option.featured_image.position-1)
             galleryTop.slideToLoop(option.featured_image.position-1); // swiperjs starts with index 0
           }
         }

@@ -29,6 +29,7 @@
   "dependencies": {
     "@shopify/theme-addresses": "^4.1.0",
     "@shopify/theme-cart": "^4.1.0",
+    "@shopify/theme-currency": "^4.1.0",
     "@shopify/theme-images": "^4.1.0",
     "@shopify/themekit": "^1.1.6",
     "@tailwindcss/forms": "^0.2.1",
