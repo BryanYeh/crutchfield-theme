@@ -14,7 +14,10 @@
                     <div class="border shadow-md mb-4 p-4 flex">
                         <div class="w-4/12">
                             <a href="{{ item.url | within: collections.all }}">
-                                <img class="mb-4 w-full" src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                                <img class="mb-4 w-full lozad" data-src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                                <noscript>
+                                    <img class="mb-4 w-full" src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                                </noscript>
                             </a>
                             <a class="mt-4" href="/cart/change?line={{ forloop.index }}&amp;quantity=0"><i class="las la-times"></i> Remove</a>
                         </div>

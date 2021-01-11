@@ -1,53 +1,55 @@
 <div class="flex w-full md:hidden bg-red-700 bg-opacity-75 text-white shadow-md justify-between p-3">
-  <a href="#"><i class="las la-bars text-3xl"></i></a>
-  <a href="{{ shop.secure_url }}"><img src="//images.crutchfieldonline.com/ImageBank/v20170406092800/common/header/logo-white.svg" class="nav-logo w-full"></a>
-  <a href="/cart"><i class="las la-shopping-cart text-3xl"></i></a>
+    <a href="#"><i class="las la-bars text-3xl"></i></a>
+    <a href="{{ shop.secure_url }}">
+        {%- if settings.logo == blank -%}
+            <h1 class="text-2xl font-bold">{{ shop.name }}</h1>
+        {%- else -%}
+            <img src="{{ settings.logo | img_url: 'master' }}" class="nav-logo w-full">
+        {%- endif -%}
+    </a>
+    <a href="/cart"><i class="las la-shopping-cart text-3xl"></i></a>
 </div>
 
 <div class="bg-black bg-opacity-50 w-full h-full fixed overflow-auto md:bg-transparent md:bg-opacity-0 md:h-auto md:static md:overflow-visible hidden md:block nav-container">
-  <nav
-    class="items-center justify-between md:flex-wrap md:px-4 md:border-solid md:border-b-2 md:border-t-2 md:border-gray-200 md:flex md:my-0 mt-6 mb-40 w-full h-full">
-    <div class="bg-white mx-auto shadow-md w-11/12 md:shadow-none md:w-full md:flex md:flex-grow">
-      {% for link in linklists[section.settings.desktop].links %}
-      {% assign child_list_handle = link.title | handleize %}
-      {% if linklists[child_list_handle].links != blank %}
-      <div class="subnav block border-b-2 border-gray-300 px-4 py-3 relative md:flex md:border-0 md:p-0 md:static ">
-        <span class="md:p-4 hover:text-red-800 font-medium cursor-pointer block">{{ link.title }} <i
-            class="las la-angle-down float-right md:float-none"></i></span>
-        {% if linklists[child_list_handle].levels > 1 %}
-        <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto z-10">
-          <div class="font-semibold border-b-2 boder-solid border-gray-300 py-3 px-6 w-full">
-            <a href="{{ link.url }}" class="block hover:text-red-800 ">{{ link.title }}</a>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-3">
-            {% for childlink in linklists[child_list_handle].links %}
-            <div class="block">
-              <a href="{{ childlink.url }}"
-                class="block py-2 px-5 hover:text-red-800 font-semibold">{{ childlink.title }}</a>
-              {% assign grandchild_handle = childlink.title | handleize %}
-              {% for grandchildlink in linklists[grandchild_handle].links %}
-              <a href="{{ grandchildlink.url }}"
-                class="block py-1 px-5 hover:text-red-800">{{ grandchildlink.title }}</a>
-              {% endfor %}
-            </div>
+    <nav
+        class="items-center justify-between md:flex-wrap md:px-4 md:border-solid md:border-b-2 md:border-t-2 md:border-gray-200 md:flex md:my-0 mt-6 mb-40 w-full h-full">
+        <div class="bg-white mx-auto shadow-md w-11/12 md:shadow-none md:w-full md:flex md:flex-grow">
+            {% for link in linklists[section.settings.desktop].links %}
+                {% assign child_list_handle = link.title | handleize %}
+                {% if linklists[child_list_handle].links != blank %}
+                    <div class="subnav block border-b-2 border-gray-300 px-4 py-3 relative md:flex md:border-0 md:p-0 md:static">
+                        <span class="md:p-4 hover:text-red-800 font-medium cursor-pointer block">{{ link.title }} <i class="las la-angle-down float-right md:float-none"></i></span>
+                        {% if linklists[child_list_handle].levels > 1 %}
+                            <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto z-10">
+                                <div class="font-semibold border-b-2 boder-solid border-gray-300 py-3 px-6 w-full">
+                                    <a href="{{ link.url }}" class="block hover:text-red-800 ">{{ link.title }}</a>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pb-3">
+                                    {% for childlink in linklists[child_list_handle].links %}
+                                        <div class="block">
+                                            <a href="{{ childlink.url }}" class="block py-2 px-5 hover:text-red-800 font-semibold">{{ childlink.title }}</a>
+                                            {% assign grandchild_handle = childlink.title | handleize %}
+                                            {% for grandchildlink in linklists[grandchild_handle].links %}
+                                                <a href="{{ grandchildlink.url }}" class="block py-1 px-5 hover:text-red-800">{{ grandchildlink.title }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto">
+                                {% for childlink in linklists[child_list_handle].links %}
+                                    <a href="{{ childlink.url }}" class="block md:border-0 py-3 px-5 hover:text-red-800 {% if forloop.last == false %}border-b-2{% endif %}">{{ childlink.title }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <a href="{{ link.url }}" class="block px-4 py-3 border-solid border-b-2 border-gray-300 hover:text-red-700 font-medium md:p-4 md:border-0">{{ link.title }}</a>
+                {% endif %}
             {% endfor %}
-          </div>
         </div>
-        {% else %}
-        <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto">
-          {% for childlink in linklists[child_list_handle].links %}
-          <a href="{{ childlink.url }}" class="block md:border-0 py-3 px-5 hover:text-red-800 {% if forloop.last == false %}border-b-2{% endif %}">{{ childlink.title }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-      </div>
-      {% else %}
-      <a href="{{ link.url }}" class="
-      block px-4 py-3 border-solid border-b-2 border-gray-300 hover:text-red-700 font-medium md:p-4 md:border-0">{{ link.title }}</a>
-      {% endif %}
-      {% endfor %}
-    </div>
-  </nav>
+    </nav>
 </div>
 
 {% schema %}

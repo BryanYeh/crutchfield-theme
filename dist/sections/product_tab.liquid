@@ -24,7 +24,10 @@
                             <div class="flex flex-wrap-reverse pb-4">
                                 {% if article.image %}
                                     <div class="flex w-full md:w-1/2 px-2">
-                                        <img src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}" class="w-full">
+                                        <img data-src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}" class="w-full lozad">
+                                        <noscript>
+                                            <img src="{{ article | img_url: 'master' }}" alt="{{ article.image.alt }}" class="w-full">
+                                        </noscript>
                                     </div>
                                 {% endif %}
                                 <div class="flex flex-wrap md:w-1/2 px-2 self-center w-full">

@@ -4,7 +4,10 @@
         data-id="{{ product.first_available_variant.id }}">
     <div class="h-full"> 
         <a href="{{ product.url | within: collection }}" class="">
-            <img src="{{ product.featured_image.src | img_url: '500x500' }}" alt="{{ product.featured_image.alt | escape }}" class="w-full">
+            <img data-src="{{ product.featured_image.src | img_url: '500x500' }}" alt="{{ product.featured_image.alt | escape }}" class="w-full lozad">
+            <noscript>
+                <img src="{{ product.featured_image.src | img_url: '500x500' }}" alt="{{ product.featured_image.alt | escape }}" class="w-full">
+            </noscript>
             <div class="font-bold text-lg group-hover:text-red-600 py-2">{{ product.title }}</div>
         </a>
         <div class="sku">{% if product.sku %}Item #: {{ product.sku }}{% endif %}</div>

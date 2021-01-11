@@ -11,7 +11,10 @@
         {%- if collection_image == blank -%}
             {{ 'collection-1' | placeholder_svg_tag: 'w-full group-hover:opacity-40' }}
         {%- else -%}
-            <img src="{{ collection_image | img_url: '500x500' }}" alt="{{ collection_image.alt | escape }}" class="w-full group-hover:opacity-40">
+            <img data-src="{{ collection_image | img_url: '500x500' }}" alt="{{ collection_image.alt | escape }}" class="w-full group-hover:opacity-40 lozad">
+            <noscript>
+                <img src="{{ collection_image | img_url: '500x500' }}" alt="{{ collection_image.alt | escape }}" class="w-full group-hover:opacity-40">
+            </noscript>
         {%- endif -%}
         
         <div class="font-bold text-xl hidden group-hover:block py-2 absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">{{ collection.title | escape }}</div>

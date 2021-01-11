@@ -14,10 +14,16 @@
     {% for block in section.blocks %}
         {% if block.settings.link != blank %}
             <a href="{{ block.settings.link }}">
-        {% endif %}
-        <img src="{{ block.settings.img | img_url: 'master' }}" alt="{{ block.settings.img.alt }}">
-        {% if block.settings.link != blank %}
+                <img data-src="{{ block.settings.img | img_url: 'master' }}" alt="{{ block.settings.img.alt }}" class="w-full lozad">
+                <noscript>
+                    <img src="{{ block.settings.img | img_url: 'master' }}" alt="{{ block.settings.img.alt }}" class="w-full">
+                </noscript>
             </a>
+        {% else %}
+            <img data-src="{{ block.settings.img | img_url: 'master' }}" alt="{{ block.settings.img.alt }}" class="w-full lozad">
+            <noscript>
+                <img src="{{ block.settings.img | img_url: 'master' }}" alt="{{ block.settings.img.alt }}" class="w-full">
+            </noscript>
         {% endif %}
     {% endfor %}
 </div>
