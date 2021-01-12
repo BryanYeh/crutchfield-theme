@@ -85,3 +85,26 @@
 <script type="application/json" id="v_json">{{ product.variants | json }}</script>
 
 {% render 'photoswipe' %}
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org/",
+        "@type": "Product",
+        "name": "{{ product.title | escape }}",
+        {%- if product.sku != blank -%}"sku": {{ product.sku }},{%- endif -%}
+        "productID": "{{ product.id }}",
+        "image": "https:{{ product.featured_image | product_img_url: 'master' }}",
+        "description": "{{ product.description | strip_html | escape }}",
+        "brand": { 
+            "@type": "Thing",
+            "name": "{{ product.vendor }}"      
+        }, 
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "{{ shop.currency }}",
+            "price": "{{ product.price | money_without_currency }}",
+            "availability": "{% if product.available %}http://schema.org/InStock{% else %}http://schema.org/OutOfStock{% endif %}",
+            "url":"{{ shop.secure_url }}{{ product.url }}"
+        }
+    }
+</script>
