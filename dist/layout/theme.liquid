@@ -41,6 +41,32 @@
 
     {% render 'notification_toast' %}
     {% section 'footer' %}
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "{{ shop.url }}",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ shop.url }}/search?&q={query}",
+            "query-input": "required name=query"
+        },
+        "organization" : {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "{{ shop.address.province }}, {{ shop.address.country }}",
+                "postalCode": "{{ shop.address.zip }}",
+                "streetAddress": "{{ shop.address.street }}"
+            },
+            "email": "{{ shop.email }}",
+            "name": "{{ shop.name }}",
+            "telephone": "{{ shop.phone }}"
+        }
+    }
+    </script>
     
     {{ 'lozad.min.js' | asset_url | script_tag }}
     <script>
