@@ -69,3 +69,35 @@
         </div>
     {% endif %}
 </div>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage":{
+            "@type":"WebPage",
+            "@id":"{{ shop.url }}{{ article.url }}"
+        },
+        "headline": "{{ article.title }}",
+        {% if article.image %}
+            "image": {
+                "@type": "ImageObject",
+                "url": "{{ article | img_url: 'master' }}",
+                "height": {{ article.image.height }},
+                "width": {{ article.image.width }}
+            },
+        {% endif %}
+        "datePublished": "{{ article.published_at }}",
+        "dateModified": "{{ article.updated_at }}",
+        "author": {
+            "@type": "Person",
+            "name": "{{ article.author }}"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "{{ shop.name }}"
+        },
+        "description": "{{ article.exerpt }}",
+        "articleBody": "{{ article.content | strip_html }}"
+    }
+</script>
