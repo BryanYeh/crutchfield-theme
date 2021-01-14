@@ -8,6 +8,8 @@ module.exports = {
       './dist/layout/*.liquid',
       './dist/templates/*.liquid',
       './dist/templates/customers/*.liquid',
+      './dist/sections/*.liquid',
+      './dist/snippets/*.liquid'
     ]
   },
   darkMode: false, // or 'media' or 'class'
