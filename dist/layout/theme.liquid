@@ -17,9 +17,11 @@
     <link rel="canonical" href="{{ canonical_url }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 
-    {{ content_for_header }} <!-- Header hook for plugins -->
+    {{ content_for_header }} 
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    {%- if template == "product" or template == "index" -%}
+        {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
 
     {%- if template == "product" -%}
         {{ 'photoswipe.min.css' | asset_url | stylesheet_tag }}
@@ -78,7 +80,7 @@
         {{ 'photoswipe-ui-default.min.js' | asset_url | script_tag }}
     {%- endif -%}
     {%- if template == "product" or template == "index" -%}
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        {{ 'swiper-bundle.min.js' | asset_url | script_tag }}
     {%- endif -%}
 
     {% capture layout_bundle_js %}{{ template.name }}.bundle.js{% endcapture %}
