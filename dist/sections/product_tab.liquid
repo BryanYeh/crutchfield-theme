@@ -9,7 +9,7 @@
 <div class="bg-gray-300 flex flex-wrap px-4">
     <div class="bg-white container mx-auto my-10 shadow-md">
         {% for block in section.blocks %}
-            <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="{{ block.settings.tab_title | handle }}-{{ block.id }}"><i class="las la-angle-up"></i> {{ block.settings.tab_title }}</a>
+            <a class="product-tab-mobile block font-semibold lg:hidden px-4 py-2 text-2xl text-red-600 w-full cursor-pointer border-b-2" data-href="{{ block.settings.tab_title | handle }}-{{ block.id }}"><i class="la-angle-up"></i> {{ block.settings.tab_title }}</a>
             <div id="{{ block.settings.tab_title | handle }}-{{ block.id }}" class="product-tab-content {% if forloop.first %} block {% else %} hidden {% endif %} py-6 px-10 lg:px-20">
                 <div class="prose max-w-none">
                     {%- if block.type == "checkbox" and block.settings.show_description == true -%}

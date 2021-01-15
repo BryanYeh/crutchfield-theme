@@ -13,7 +13,7 @@
                             <img src="{{ image.src | img_url: 'master' }}" class="mx-auto" alt="{{ image.alt | escape }}">
                             <div class="zoom text-center">
                                 <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
-                                <i class="las la-search-plus float-right text-2xl"></i>
+                                <i class="la-search-plus float-right text-2xl"></i>
                             </div>
                         </div>
                     {% else %}
@@ -21,7 +21,7 @@
                             {{ 'collection-1' | placeholder_svg_tag: 'w-full mx-auto' }}
                             <div class="zoom text-center">
                                 <span class="gallery-image-caption font-bold text-lg">{{ product.title }} - {{ image.alt | escape }}</span>
-                                <i class="las la-search-plus float-right text-2xl"></i>
+                                <i class="la-search-plus float-right text-2xl"></i>
                             </div>
                         </div>
                     {% endfor %}
@@ -41,9 +41,9 @@
         <div class="w-full md:w-6/12 lg:w-5/12 md:pl-4 border-l md:border-solid md:border-gray-300">
             <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
             {% if current_variant.available %}
-                <div class="text-lg"><i class="availability las la-check-circle"></i> <span class="availability_text">In Stock<span></div>
+                <div class="text-lg"><i class="availability la-check-circle"></i> <span class="availability_text">In Stock<span></div>
             {% else %}
-                <div class="text-lg"><i class="availability las la-times-circle"></i> <span class="availability_text">Out of Stock<span></div>
+                <div class="text-lg"><i class="availability la-times-circle"></i> <span class="availability_text">Out of Stock<span></div>
             {% endif %}
 
             {% unless product.has_only_default_variant %}

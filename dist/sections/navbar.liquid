@@ -1,5 +1,5 @@
 <div class="flex w-full md:hidden bg-red-700 bg-opacity-75 text-white shadow-md justify-between p-3">
-    <a href="#"><i class="las la-bars text-3xl"></i></a>
+    <a href="#"><i class="la-bars text-3xl"></i></a>
     <a href="{{ shop.secure_url }}">
         {%- if settings.logo == blank -%}
             <h1 class="text-2xl font-bold">{{ shop.name }}</h1>
@@ -7,7 +7,7 @@
             <img src="{{ settings.logo | img_url: 'master' }}" class="nav-logo w-full">
         {%- endif -%}
     </a>
-    <a href="/cart"><i class="las la-shopping-cart text-3xl"></i></a>
+    <a href="/cart"><i class="la-shopping-cart text-3xl"></i></a>
 </div>
 
 <div class="bg-black bg-opacity-50 w-full h-full fixed overflow-auto md:bg-transparent md:bg-opacity-0 md:h-auto md:static md:overflow-visible hidden md:block nav-container">
@@ -18,7 +18,7 @@
                 {% assign child_list_handle = link.title | handleize %}
                 {% if linklists[child_list_handle].links != blank %}
                     <div class="subnav block border-b-2 border-gray-300 px-4 py-3 relative md:flex md:border-0 md:p-0 md:static">
-                        <span class="md:p-4 hover:text-red-800 font-medium cursor-pointer block">{{ link.title }} <i class="las la-angle-down float-right md:float-none"></i></span>
+                        <span class="md:p-4 hover:text-red-800 font-medium cursor-pointer block">{{ link.title }} <i class="la-angle-down float-right md:float-none"></i></span>
                         {% if linklists[child_list_handle].levels > 1 %}
                             <div class="md:absolute bg-white border border-gray-400 border-solid md:shadow-md mt-3 md:mt-16 hidden w-full md:w-auto z-10">
                                 <div class="font-semibold border-b-2 boder-solid border-gray-300 py-3 px-6 w-full">

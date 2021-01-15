@@ -19,7 +19,7 @@
                                     <img class="mb-4 w-full" src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
                                 </noscript>
                             </a>
-                            <a class="mt-4" href="/cart/change?line={{ forloop.index }}&amp;quantity=0"><i class="las la-times"></i> Remove</a>
+                            <a class="mt-4" href="/cart/change?line={{ forloop.index }}&amp;quantity=0"><i class="la-times"></i> Remove</a>
                         </div>
                         <div class="w-5/12 lg:w-6/12 px-4">
                             <a class="font-bold text-lg md:text-xl" href="{{ item.url }}">{{ item.product.title }}</a>
@@ -46,7 +46,7 @@
                 {% endfor %}
             </div>
             <div class="w-full md:w-4/12 md:px-4">
-                <button type="submit" name="update" class="border-2 border-red-600 bg-white text-red-600 p-4 w-full mb-4 hover:bg-red-600 hover:text-white shadow-md text-xl font-semibold"><i class="las la-sync"></i> Update Cart</button>
+                <button type="submit" name="update" class="border-2 border-red-600 bg-white text-red-600 p-4 w-full mb-4 hover:bg-red-600 hover:text-white shadow-md text-xl font-semibold"><i class="la-sync"></i> Update Cart</button>
             
                 {% section 'cart_notes' %}
 
@@ -58,7 +58,7 @@
                         <div class="flex border-b border-gray-500 pb-2 text-xl font-bold">Total <span class="flex-1 text-right">{{ cart.total_price | money }}</span></div>
                     </div>
                     <div class="px-4 pb-4">
-                        <button type="submit" name="checkout" class="border border-green-600 bg-green-600 text-white text-2xl p-4 w-full rounded hover:bg-white hover:text-green-600"><i class="las la-shield-alt"></i> Go to Secure Checkout <i class="las la-angle-right"></i></button>         
+                        <button type="submit" name="checkout" class="border border-green-600 bg-green-600 text-white text-2xl p-4 w-full rounded hover:bg-white hover:text-green-600"><i class="la-shield-alt"></i> Go to Secure Checkout <i class="las la-angle-right"></i></button>         
                     </div>
                 </div>
 

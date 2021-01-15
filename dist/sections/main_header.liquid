@@ -47,7 +47,7 @@
         {%- if section.settings.contact_page != blank -%}
             <a class="mx-2" href="{{ section.settings.contact_page }}">
                 <div class="text-center">
-                    <i class="las la-comment hidden text-4xl md:block"></i>
+                    <i class="la-comment hidden text-4xl md:block"></i>
                     Contact Us
                 </div>
             </a>            
@@ -55,7 +55,7 @@
         {% if shop.customer_accounts_enabled %}
             <div class="mx-2 hidden md:block cursor-pointer subnav">
                 <div class="text-center">
-                    <i class="las la-user text-4xl block"></i>
+                    <i class="la-user text-4xl block"></i>
                     Your Account
                 </div>
                 <div class="bg-white border border-gray-400 shadow-md absolute p-4 right-2 space-y-4 mt-4 hidden z-20">
@@ -79,10 +79,10 @@
         <a href="/cart" class="mx-2 hidden md:block">
             <div class="text-center">
                 {%- if section.settings.cart_icon == 'bag' -%}
-                    <i class="las la-shopping-bag text-4xl block"></i>
+                    <i class="la-shopping-bag text-4xl block"></i>
                     Your Bag
                 {%- else -%}
-                    <i class="las la-shopping-cart text-4xl block"></i>
+                    <i class="la-shopping-cart text-4xl block"></i>
                     Your Cart
                 {%- endif -%}
             </div>
