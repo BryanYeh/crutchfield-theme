@@ -79,18 +79,6 @@
             {% capture variant_inventory_policies %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_policy }},{% endfor %}{% endcapture %}
             {% capture variant_inventory_trackers %}{% for line_item in order.line_items %}{{ line_item.variant.inventory_management }},{% endfor %}{% endcapture %}
 
-            <div class="pt-4">
-                <button
-                    class="reorder px-4 py-2 bg-white border border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
-                    data-variant-ids="{{ variant_ids }}"
-                    data-variant-quantities="{{ variant_quantities }}"
-                    data-variant-inventories="{{ variant_inventories }}"
-                    data-variant-inventory-policies="{{ variant_inventory_policies }}"
-                    data-variant-inventory-trackers="{{ variant_inventory_trackers }}">
-                    Reorder
-                </button>
-            </div>
-
             <div class="mt-4">
                 <h2 class="font-semibold text-xl">Billing Address</h2>
                 <p>{{ order.billing_address.name }}</p>
