@@ -6,3 +6,6 @@ development:
   ignore_files:
     - assets/theme.bundle.js
     - assets/application.bundle.js
+    - assets/dropdown.bundle.js
+    - assets/theme-cart.bundle.js
+    - assets/alert-toast.bundle.js
